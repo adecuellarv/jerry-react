@@ -21,7 +21,7 @@ const getTitle = (text) => {
   }
 }
 
-export default function Modal({ setShowModal, type = 'cafeteria', }) {
+export default function Modal({ setShowModal, typeModal = 'cafeteria', }) {
 
   return (
     <div className="overlay">
@@ -36,7 +36,7 @@ export default function Modal({ setShowModal, type = 'cafeteria', }) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.9 }}
           style={{
-            backgroundImage: `url(${getImage(type)})`,
+            backgroundImage: `url(${getImage(typeModal)})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -45,7 +45,7 @@ export default function Modal({ setShowModal, type = 'cafeteria', }) {
           }}
           className="left-panel"
         >
-          <h2>{getTitle(type)}</h2>
+          <h2>{getTitle(typeModal)}</h2>
         </motion.div>
 
         <motion.div
