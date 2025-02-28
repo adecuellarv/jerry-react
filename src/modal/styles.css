@@ -32,12 +32,15 @@ body {
 }
 .left-panel{
   width: 35%;
+  background-position: 50% 50% !important;
+  background-size: cover !important;
 }
 .right-panel{
   width: 65%;
+  padding: 100px;
+  font-size: 22px;
 }
 .left-panel {
-  background-color: #3b82f6;
   color: white;
 }
 

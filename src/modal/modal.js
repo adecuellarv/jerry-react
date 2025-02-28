@@ -1,9 +1,27 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import "./styles.css";
+import cafeteria from './img/CAFETERA.jpg'
 
-export default function Modal({ setShowModal }) {
-  const [isOpen, setIsOpen] = useState(true);
+const getImage = (text) => {
+  switch (text) {
+    case 'cafeteria':
+      return cafeteria;
+    default:
+      break;
+  }
+}
+
+const getTitle = (text) => {
+  switch (text) {
+    case 'cafeteria':
+      return 'Cafetería Lupsisn';
+    default:
+      break;
+  }
+}
+
+export default function Modal({ setShowModal, type = 'cafeteria', }) {
 
   return (
     <div className="overlay">
@@ -13,30 +31,34 @@ export default function Modal({ setShowModal }) {
         exit={{ opacity: 0 }}
         className="modal-content"
       >
-        {/* Lado Izquierdo con animación de bajada */}
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.9 }}
+          style={{
+            backgroundImage: `url(${getImage(type)})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            width: "35%",
+            height: "100vh"
+          }}
           className="left-panel"
         >
-          <h2>Lado Izquierdo</h2>
-          <p>Contenido con efecto de bajada.</p>
+          <h2>{getTitle(type)}</h2>
         </motion.div>
 
-        {/* Lado Derecho con animación de subida */}
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.9 }}
           className="right-panel"
         >
-          <h2>Lado Derecho</h2>
-          <p>Contenido con efecto de subida.</p>
+          <h2>Descripción</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </motion.div>
       </motion.div>
 
-      {/* Botón para cerrar el modal */}
       <button onClick={() => setShowModal(false)} className="close-button">
         Cerrar
       </button>

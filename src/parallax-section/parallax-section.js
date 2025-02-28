@@ -37,7 +37,7 @@ const ParallaxSection = () => {
       </div>
       <div className={`parallax-container ${turnOfLigth ? 'turn-off' : ''}`}>
         <div ref={sceneRef} className="parallax-scene">
-          {/* Fondo: Movimiento mínimo */}
+
           <div className="layer" data-depth="0.01">
             <img src={S1} className="img-scenes" alt="Fondo" />
             <div className="div-video">
@@ -45,7 +45,6 @@ const ParallaxSection = () => {
             </div>
           </div>
 
-          {/* Elementos con movimiento sutil */}
           <div className="layer div-layer-mezcladora" data-depth="0.02" onClick={() => alert("Mezcladora")}>
             <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" />
           </div>
@@ -62,7 +61,6 @@ const ParallaxSection = () => {
             <img src={S4} className="img-scenes layer-sillon" alt="sillon" />
           </div>
 
-          {/* Partículas flotantes */}
           <div className="parent-particles">
             <div className="particle particle-1"></div>
             <div className="particle particle-2"></div>
