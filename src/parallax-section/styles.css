@@ -1,0 +1,28 @@
+.div-video{
+  position: absolute;
+    width: 291px;
+    height: auto;
+    z-index: 1;
+    left: 774px;
+    top: 300px;
+}
+
+.div-layer-sillon{
+  bottom: -112px !important;
+  top: initial !important;
+}
+
+.prender{
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  z-index: 1;
+  background: transparent;
+  top: 420px;
+  left: 40px;
+  cursor: pointer;
+}
+
+.turn-off{
+  filter: brightness(50%);
+}
