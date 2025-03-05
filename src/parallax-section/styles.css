@@ -1,10 +1,10 @@
 .div-video{
   position: absolute;
-    width: 291px;
+    width: 15%;
     height: auto;
     z-index: 1;
-    left: 774px;
-    top: 300px;
+    left: 40.4%;
+    top: 28%;
 }
 
 .div-layer-sillon{
@@ -25,4 +25,15 @@
 
 .turn-off{
   filter: brightness(50%);
+}
+
+.sen-cafetera{
+  position: absolute;
+  z-index: 4;
+  width: 14%;
+  height: 178px;
+  background: transparent;
+  bottom: 20%;
+  left: 2%;
+  cursor: pointer;
 }

@@ -1,10 +1,11 @@
 /* styles.css */
 .video-container {
   position: relative;
-  /* width: 291px; */
-  height: 148px;
+  width: 100%; /* Ajusta al contenedor padre */
+  aspect-ratio: 16 / 9; /* Ajusta según la relación de aspecto del video */
   overflow: hidden;
 }
+
 
 .video-element {
   position: absolute;

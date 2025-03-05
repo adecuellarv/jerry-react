@@ -15,7 +15,6 @@ const ParallaxSection = () => {
   const parallaxInstanceRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [typeModal, setTypeModal] = useState('');
-  const [turnOfLight, setTurnOfLight] = useState(false);
 
   const handleModal = (type) => {
     setTypeModal(type);
@@ -53,7 +52,7 @@ const ParallaxSection = () => {
         animationRef.current = requestAnimationFrame(simulateMouseMove);
       };
 
-      simulateMouseMove();
+      //simulateMouseMove();
     }
 
     return () => {
@@ -70,27 +69,26 @@ const ParallaxSection = () => {
     <>
       <div className="sen-areas">
         <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
-        <div className="prender" onClick={() => setTurnOfLight(!turnOfLight)}></div>
         <div className="premios" onClick={() => handleModal('premios')}></div>
       </div>
-      <div className={`parallax-container ${turnOfLight ? 'turn-off' : ''}`}>
+      <div className="parallax-container">
         <div ref={sceneRef} className="parallax-scene">
-          <div className="layer" data-depth="0.01">
+          <div className="layer" data-depth="0.04">
             <img src={S1} className="img-scenes" alt="Fondo" />
             <div className="div-video">
               <Video />
             </div>
           </div>
-          <div className="layer div-layer-mezcladora" data-depth="0.02" onClick={() => alert('Mezcladora')}>
+          <div className="layer div-layer-mezcladora" data-depth="0.10" onClick={() => alert('Mezcladora')}>
             <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" />
           </div>
-          <div className="layer div-layer-lampara" data-depth="0.0" onClick={() => alert('lampara')}>
+          <div className="layer div-layer-lampara" data-depth="0.12" onClick={() => alert('lampara')}>
             <img src={S5} className="img-scenes layer-lampara" alt="lampara" />
           </div>
-          <div className="layer div-layer-cafetera" data-depth="0.0" onClick={() => alert('cafetera')}>
+          <div className="layer div-layer-cafetera" data-depth="0.20" onClick={() => alert('cafetera')}>
             <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" />
           </div>
-          <div className="layer div-layer-sillon" data-depth="0.15">
+          <div className="layer div-layer-sillon" data-depth="0.30">
             <img src={S4} className="img-scenes layer-sillon" alt="sillon" />
           </div>
           <div className="parent-particles">
