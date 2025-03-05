@@ -37,10 +37,15 @@ body {
   background-size: cover !important;
 }
 .right-panel{
-  background: #fff;
+  background: #252525;
   width: 65%;
   padding: 100px;
   font-size: 22px;
+  color: #fff
+}
+.right-panel h2 {
+  color: #f1cfa0;
+  text-transform: uppercase;
 }
 .left-panel {
   color: white;

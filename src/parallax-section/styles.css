@@ -37,3 +37,14 @@
   left: 2%;
   cursor: pointer;
 }
+
+.se-console{
+  position: absolute;
+  z-index: 4;
+  width: 8%;
+  height: 88px;
+  background: transparent;
+  top: 47%;
+  left: 47%;
+  cursor: pointer;
+}

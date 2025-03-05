@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Parallax from 'parallax-js';
 import Modal from '../modal/modal';
 import Video from '../video/video';
+import SSLConsole from '../ssl-console/ssl-console';
 import S1 from './img/scenes/studio-cerrado/1.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -15,6 +16,7 @@ const ParallaxSection = () => {
   const parallaxInstanceRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [typeModal, setTypeModal] = useState('');
+  const [showConsole, setShowConsole] = useState(false);
 
   const handleModal = (type) => {
     setTypeModal(type);
@@ -70,6 +72,7 @@ const ParallaxSection = () => {
       <div className="sen-areas">
         <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
         <div className="premios" onClick={() => handleModal('premios')}></div>
+        <div className="se-console" onClick={() => setShowConsole(true)}></div>
       </div>
       <div className="parallax-container">
         <div ref={sceneRef} className="parallax-scene">
@@ -100,6 +103,7 @@ const ParallaxSection = () => {
         </div>
       </div>
       {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
+      {showConsole && <SSLConsole setShowConsole={setShowConsole} /> }
     </>
   );
 };

@@ -1,10 +1,10 @@
-.div-close-btn{
+.div-close-btn-ssl{
   position: absolute !important;
-  top:10px;
-  left: 35%;
+  top:-5px;
+  left: 40px;
   padding-bottom: 0px;
 }
-.div-close-btn span{
+.div-close-btn-ssl span{
   margin-left: 25px;
   position: relative;
   top: -12px;
