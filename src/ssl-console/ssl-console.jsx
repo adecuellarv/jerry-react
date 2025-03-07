@@ -122,7 +122,7 @@ const SSLConsole = ({ setShowConsole }) => {
                 <span>producer : MONORAMA</span>
               </div>
               <div>
-                <span>engineer : ADELA CUELLAR</span>
+                <span>engineer : ADE CUELLAR</span>
               </div>
               <div>
                 <span>assitant : MIKE GUERRERO</span>
