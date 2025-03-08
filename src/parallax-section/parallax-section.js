@@ -103,8 +103,12 @@ const ParallaxSection = () => {
       </div>
       <div className="sen-areas">
         <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
-        <div className="premios" onClick={() => handleModal('premios')}></div>
         <div className="se-console" onClick={() => setShowConsole(true)}></div>
+        <div className="sen-grammy1" onClick={() => handleModal('grammy1')}></div>
+        <div className="sen-grammy2" onClick={() => handleModal('grammy2')}></div>
+        <div className="sen-grammyl1" onClick={() => handleModal('grammyl1')}></div>
+        <div className="sen-grammyl2" onClick={() => handleModal('grammyl2')}></div>
+        <div className="sen-grammyl3" onClick={() => handleModal('grammyl3')}></div>
       </div>
       <div className="parallax-container">
         <div ref={sceneRef} className="parallax-scene">

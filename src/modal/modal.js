@@ -6,11 +6,26 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css";
 import "./button.css";
 import cafeteria from './img/CAFETERA.jpg'
+import grammy1 from './img/GRAMMY01.jpg'
+import grammy2 from './img/GRAMMY02.jpg'
+import grammyl1 from './img/LATINGRAMMY01.jpg'
+import grammyl2 from './img/LATINGRAMMY02.jpg'
+import grammyl3 from './img/LATINGRAMMY03.jpg'
 
 const getImage = (text) => {
   switch (text) {
     case 'cafeteria':
       return cafeteria;
+    case 'grammy1':
+      return grammy1;
+    case 'grammy2':
+      return grammy2;
+    case 'grammyl1':
+      return grammyl1;
+    case 'grammyl2':
+      return grammyl2;
+    case 'grammyl3':
+      return grammyl3;
     default:
       break;
   }
@@ -20,6 +35,16 @@ const getTitle = (text) => {
   switch (text) {
     case 'cafeteria':
       return 'Cafetería Lupsisn';
+    case 'grammy1':
+      return 'Grammy 1';
+    case 'grammy2':
+      return 'Grammy 2';
+    case 'grammyl1':
+      return 'Grammy Latino 1';
+    case 'grammyl2':
+      return 'Grammy Latino 2';
+    case 'grammyl3':
+      return 'Grammy Latino 3';
     default:
       break;
   }

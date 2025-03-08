@@ -27,6 +27,19 @@
   filter: brightness(50%);
 }
 
+.div-logo{
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 1;
+}
+
+.div-logo img{
+  width: 80%;
+}
+
+/**sensibles areas**/
+
 .sen-cafetera{
   position: absolute;
   z-index: 4;
@@ -49,13 +62,57 @@
   cursor: pointer;
 }
 
-.div-logo{
+.sen-grammy1{
   position: absolute;
-  top: 40px;
-  left: 40px;
-  z-index: 1;
+  z-index: 4;
+  width: 4%;
+  height: 75px;
+  background: transparent;
+  top: 47%;
+  left: 7%;
+  cursor: pointer;
 }
 
-.div-logo img{
-  width: 80%;
+.sen-grammy2{
+  position: absolute;
+  z-index: 4;
+  width: 4%;
+  height: 60px;
+  background: transparent;
+  top: 47%;
+  left: 12%;
+  cursor: pointer;
+}
+
+.sen-grammyl1{
+  position: absolute;
+  z-index: 4;
+  width: 4%;
+  height: 60px;
+  background: transparent;
+  top: 37%;
+  left: 7%;
+  cursor: pointer;
+}
+
+.sen-grammyl2{
+  position: absolute;
+  z-index: 4;
+  width: 4%;
+  height: 60px;
+  background: transparent;
+  top: 37%;
+  left: 12%;
+  cursor: pointer;
+}
+
+.sen-grammyl3{
+  position: absolute;
+  z-index: 4;
+  width: 4%;
+  height: 60px;
+  background: transparent;
+  top: 26%;
+  left: 8%;
+  cursor: pointer;
 }
