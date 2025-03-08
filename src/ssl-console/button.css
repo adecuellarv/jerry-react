@@ -1,14 +1,16 @@
 .div-close-btn-ssl{
   position: absolute !important;
-  top:-5px;
+  top:3px;
   left: 40px;
   padding-bottom: 0px;
+  display: flex;
 }
 .div-close-btn-ssl span{
-  margin-left: 25px;
+  margin-left: 10px;
   position: relative;
-  top: -12px;
+  top: 10px;
   color: #fff;
+  font-family: monserratregular !important;
 }
 .close-button {
   background-color: #252525;

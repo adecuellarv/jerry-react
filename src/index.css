@@ -1,3 +1,36 @@
+@font-face {
+  font-family: "modeseven";
+  src: url("./fonts/Modeseven-L3n5.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "monserratblack";
+  src: url("./fonts/MONTSERRAT-BLACK.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "monserratmedium";
+  src: url("./fonts/MONTSERRAT-MEDIUM.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "monserratregular";
+  src: url("./fonts/MONTSERRAT-REGULAR.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+body {
+  font-family: "monserratregular" !important;
+}
+
+
 .parallax-container {
   width: 100%;
   height: 100vh;
