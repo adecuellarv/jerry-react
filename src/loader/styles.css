@@ -1,0 +1,13 @@
+.div-loader{
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 999;
+  background: #3a3a3a;
+  top: 0px;
+  left: 0px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

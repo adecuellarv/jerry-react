@@ -3,6 +3,7 @@ import Parallax from 'parallax-js';
 import Modal from '../modal/modal';
 import Video from '../video/video';
 import SSLConsole from '../ssl-console/ssl-console';
+import LoaderComponent from '../loader/loader-component';
 import S1 from './img/scenes/studio-cerrado/1.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -10,6 +11,7 @@ import S4 from './img/scenes/studio-cerrado/4.png';
 import S5 from './img/scenes/studio-cerrado/5.png';
 import './styles.css';
 
+//let elementsLoaded = 0;
 const ParallaxSection = () => {
   const sceneRef = useRef(null);
   const animationRef = useRef(null);
@@ -17,11 +19,33 @@ const ParallaxSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [typeModal, setTypeModal] = useState('');
   const [showConsole, setShowConsole] = useState(false);
+  const [loader, setLoader] = useState(true);
+  const [elementsLoaded, setElementsLoaded] = useState({
+    mezcladora: false,
+    lampara: false,
+    cafetera: false,
+    sillon: false
+  });
 
   const handleModal = (type) => {
     setTypeModal(type);
     setShowModal(true);
   };
+
+  const handleLoaded = (nameImg) => {
+    setElementsLoaded((prevState) => ({
+      ...prevState,
+      [nameImg]: true,
+    }));
+  };
+
+  useEffect(() => {
+    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon) {
+      setTimeout(() => {
+        setLoader(false);
+      }, 7000);
+    }
+  }, [elementsLoaded]);
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -83,16 +107,16 @@ const ParallaxSection = () => {
             </div>
           </div>
           <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
-            <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" />
+            <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} />
           </div>
           <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
-            <img src={S5} className="img-scenes layer-lampara" alt="lampara" />
+            <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} />
           </div>
           <div className="layer div-layer-cafetera" data-depth="0.12" onClick={() => alert('cafetera')}>
-            <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" />
+            <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} />
           </div>
           <div className="layer div-layer-sillon" data-depth="0.14">
-            <img src={S4} className="img-scenes layer-sillon" alt="sillon" />
+            <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} />
           </div>
           <div className="parent-particles">
             <div className="particle particle-1"></div>
@@ -103,7 +127,8 @@ const ParallaxSection = () => {
         </div>
       </div>
       {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
-      {showConsole && <SSLConsole setShowConsole={setShowConsole} /> }
+      {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
+      {loader && <LoaderComponent />}
     </>
   );
 };
