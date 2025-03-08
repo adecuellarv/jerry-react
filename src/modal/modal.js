@@ -81,10 +81,10 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', }) {
       </motion.div>
       {showButton &&
         <div className="div-close-btn">
-          <button className="close-button" onClick={handleClose}>
+          <button className="close-button-m" onClick={handleClose}>
             <FontAwesomeIcon icon={faTimes} />
           </button>
-          <span>Cerrar</span>
+          <span>Close</span>
         </div>
       }
     </div>

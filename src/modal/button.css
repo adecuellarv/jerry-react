@@ -3,16 +3,17 @@
   top:10px;
   left: 35%;
   padding-bottom: 0px;
+  display: flex;
 }
 .div-close-btn span{
-  margin-left: 25px;
+  margin-left: 7px;
   position: relative;
-  top: -12px;
+  top: 11px;
   color: #fff;
 }
-.close-button {
-  background-color: white;
-  border: 2px solid black;
+.close-button-m {
+  background-color: #252525;
+  border: 2px solid #f2d0a1;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -25,34 +26,34 @@
   transition: background-color 0.3s ease;
 }
 
-.close-button::before {
+.close-button-m::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   width: 0;
   height: 0;
-  background-color: black;
+  background-color: #fff;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.3s ease, height 0.3s ease;
 }
 
-.close-button:hover::before {
+.close-button-m:hover::before {
   width: 200%;
   height: 200%;
 }
 
-.close-button:hover {
-  background-color: black;
+.close-button-m:hover {
+  background-color: #fff;
 }
 
-.close-button svg {
-  color: black;
+.close-button-m svg {
+  color: #fff;
   transition: color 0.3s ease;
   z-index: 1;
 }
 
-.close-button:hover svg {
-  color: white;
+.close-button-m:hover svg {
+  color: #000;
 }
