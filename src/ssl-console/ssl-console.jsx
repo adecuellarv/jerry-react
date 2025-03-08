@@ -27,7 +27,6 @@ const SSLConsole = ({ setShowConsole }) => {
   const [showCursor, setShowCursor] = useState(true);
   const inputRef = useRef(null);
   const consoleRef = useRef(null);
-  //const [audio] = useState(new Audio(audioFile));
 
   const playSound = () => {
     const sound = new Audio(audio);

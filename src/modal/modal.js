@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -5,7 +6,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css";
 import "./button.css";
 import cafeteria from './img/CAFETERA.jpg'
-import { useEffect } from "react";
 
 const getImage = (text) => {
   switch (text) {

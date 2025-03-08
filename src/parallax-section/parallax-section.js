@@ -4,6 +4,7 @@ import Modal from '../modal/modal';
 import Video from '../video/video';
 import SSLConsole from '../ssl-console/ssl-console';
 import LoaderComponent from '../loader/loader-component';
+import WelcomeModal from '../welcome-modal/welcome-modal';
 import S1 from './img/scenes/studio-cerrado/1.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -21,6 +22,7 @@ const ParallaxSection = () => {
   const [typeModal, setTypeModal] = useState('');
   const [showConsole, setShowConsole] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [showModalWelcome, setShowModalWelcome] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -45,6 +47,7 @@ const ParallaxSection = () => {
     if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo) {
       setTimeout(() => {
         setLoader(false);
+        setShowModalWelcome(true);
       }, 7000);
     }
   }, [elementsLoaded]);
@@ -134,6 +137,7 @@ const ParallaxSection = () => {
       {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
       {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
       <LoaderComponent open={loader} />
+      {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} /> }
     </>
   );
 };
