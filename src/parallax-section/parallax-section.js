@@ -128,7 +128,7 @@ const ParallaxSection = () => {
       </div>
       {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
       {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
-      {loader && <LoaderComponent />}
+      <LoaderComponent open={loader} />
     </>
   );
 };
