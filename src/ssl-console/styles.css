@@ -9,6 +9,7 @@
   justify-content: center;
   align-items: center;
   font-family: modeseven !important;
+  z-index: 11;
 }
 
 .ssl-console {

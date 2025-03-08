@@ -1,26 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import audio from './ET_PHONE_HOME.mp3';
 import './styles.css';
 import './button.css';
 
 const getFormattedDate = () => {
   const date = new Date();
 
-  // Obtener horas y minutos
   let hours = date.getHours();
   const minutes = date.getMinutes();
   const ampm = hours >= 12 ? "PM" : "AM";
 
-  // Convertir a formato 12 horas
   hours = hours % 12 || 12;
 
-  // Obtener mes abreviado y día
   const month = date.toLocaleString("en-US", { month: "short" }).toUpperCase();
   const day = date.getDate();
   const year = date.getFullYear();
 
-  // Formatear el resultado
   return `${hours}:${minutes.toString().padStart(2, "0")} ${ampm} ${month} ${day} ${year}`;
 };
 
@@ -30,12 +27,22 @@ const SSLConsole = ({ setShowConsole }) => {
   const [showCursor, setShowCursor] = useState(true);
   const inputRef = useRef(null);
   const consoleRef = useRef(null);
+  //const [audio] = useState(new Audio(audioFile));
+
+  const playSound = () => {
+    const sound = new Audio(audio);
+    sound.loop = true;
+    sound.play();
+  };
 
   const handleCommandSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes agregar la lógica para procesar los comandos
     setOutput([...output, `> ${command}`]);
     setCommand('');
+    if (command === 'error') {
+      playSound()
+    }
   };
 
   useEffect(() => {

@@ -1,10 +1,10 @@
 .div-video{
   position: absolute;
-    width: 15%;
-    height: auto;
-    z-index: 1;
-    left: 40.4%;
-    top: 28%;
+  width: 15%;
+  height: auto;
+  z-index: 1;
+  left: 40.4%;
+  top: 28%;
 }
 
 .div-layer-sillon{
@@ -47,4 +47,15 @@
   top: 47%;
   left: 47%;
   cursor: pointer;
+}
+
+.div-logo{
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 1;
+}
+
+.div-logo img{
+  width: 80%;
 }

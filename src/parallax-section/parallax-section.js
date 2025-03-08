@@ -9,6 +9,7 @@ import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
 import S4 from './img/scenes/studio-cerrado/4.png';
 import S5 from './img/scenes/studio-cerrado/5.png';
+import logo from './img/logo_jerryordonez_mainpage.png';
 import './styles.css';
 
 //let elementsLoaded = 0;
@@ -24,7 +25,8 @@ const ParallaxSection = () => {
     mezcladora: false,
     lampara: false,
     cafetera: false,
-    sillon: false
+    sillon: false,
+    logo: false
   });
 
   const handleModal = (type) => {
@@ -40,7 +42,7 @@ const ParallaxSection = () => {
   };
 
   useEffect(() => {
-    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon) {
+    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo) {
       setTimeout(() => {
         setLoader(false);
       }, 7000);
@@ -93,6 +95,9 @@ const ParallaxSection = () => {
 
   return (
     <>
+      <div className="div-logo">
+        <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
+      </div>
       <div className="sen-areas">
         <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
         <div className="premios" onClick={() => handleModal('premios')}></div>
