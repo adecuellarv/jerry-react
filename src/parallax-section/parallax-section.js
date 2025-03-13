@@ -7,6 +7,7 @@ import Video from '../video/video';
 import SSLConsole from '../ssl-console/ssl-console';
 import LoaderComponent from '../loader/loader-component';
 import WelcomeModal from '../welcome-modal/welcome-modal';
+import Menu from '../menu/menu';
 import S1 from './img/scenes/studio-cerrado/1.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -14,7 +15,6 @@ import S4 from './img/scenes/studio-cerrado/4.png';
 import S5 from './img/scenes/studio-cerrado/5.png';
 import logo from './img/logo_jerryordonez_mainpage.png';
 import './styles.css';
-import './menu.css';
 
 //let elementsLoaded = 0;
 const ParallaxSection = () => {
@@ -106,19 +106,7 @@ const ParallaxSection = () => {
 
   return (
     <>
-      <div className={`parallax-container ${isMenuOpen ? 'menu-open' : ''}`}>
-        {false &&
-          <div className="hamburger-menu" onClick={toggleMenu}>
-            <FontAwesomeIcon icon={faBars} color='#fff' />
-          </div>
-        }
-        <div className="menu-overlay">
-          <ul>
-            <li>Opción 1</li>
-            <li>Opción 2</li>
-            <li>Opción 3</li>
-          </ul>
-        </div>
+      <div className={`div-main ${isMenuOpen ? 'menu-open' : ''}`}>
         <div className="div-logo">
           <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
         </div>
@@ -164,6 +152,7 @@ const ParallaxSection = () => {
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} />}
       </div>
+      <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
     </>
   );
 };

@@ -7,14 +7,21 @@
   font-size: 27px;
 }
 
+.hamburger-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1001; 
+  color: #fff; 
+}
 
 .menu-overlay {
   position: fixed;
   top: 0;
-  right: -300px;
-  width: 300px;
+  width: 306px;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: #252525;
   transition: right 0.3s ease;
   z-index: 999;
 }
@@ -22,15 +29,18 @@
 .menu-overlay ul {
   list-style: none;
   padding: 20px;
+  margin-top: 87px;
 }
 
 .menu-overlay ul li {
-  color: white;
+  color: #fff;
   margin-bottom: 20px;
   cursor: pointer;
+  font-family: 'monserratmedium';
+  font-size: 22px;
 }
 
-.parallax-container.menu-open {
+.div-main.menu-open {
   transform: translateX(-300px);
   transition: transform 0.3s ease;
 }
