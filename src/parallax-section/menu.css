@@ -1,0 +1,36 @@
+.hamburger-menu {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 27px;
+}
+
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: right 0.3s ease;
+  z-index: 999;
+}
+
+.menu-overlay ul {
+  list-style: none;
+  padding: 20px;
+}
+
+.menu-overlay ul li {
+  color: white;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.parallax-container.menu-open {
+  transform: translateX(-300px);
+  transition: transform 0.3s ease;
+}

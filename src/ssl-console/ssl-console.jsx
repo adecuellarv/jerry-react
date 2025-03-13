@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import audio from './ET_PHONE_HOME.mp3';
+import audioEnter from './I_DONT_UNDERSTAND.mp3';
 import './styles.css';
 import './button.css';
 
@@ -34,12 +35,18 @@ const SSLConsole = ({ setShowConsole }) => {
     sound.play();
   };
 
+  const playSoundEnter = () => {
+    const sound = new Audio(audioEnter);
+    sound.play();
+  };
+
   const handleCommandSubmit = (e) => {
     e.preventDefault();
     // Aquí puedes agregar la lógica para procesar los comandos
     setOutput([...output, `> ${command}`]);
     setCommand('');
-    if (command === 'error') {
+    playSoundEnter();
+    if (command === 'et phone home') {
       playSound()
     }
   };
@@ -71,7 +78,7 @@ const SSLConsole = ({ setShowConsole }) => {
         <button className="close-button" onClick={() => setShowConsole(false)}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
-        <span>Cerrar</span>
+        <span>Close</span>
       </div>
 
       <div className="ssl-console">
