@@ -1,0 +1,60 @@
+.share-menu-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.share-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: #000;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  z-index: 2; /* Asegura que el botón esté por encima de los iconos */
+}
+.share-button span{
+  font-size: 11px;
+  font-family: 'monserratregular';
+}
+
+.share-button:hover {
+  transform: scale(1.1);
+}
+
+.social-icons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 5px; /* Espacio para que los iconos estén arriba del botón */
+  opacity: 0;
+  transform: translateY(20px); /* Inicia ligeramente abajo */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1; /* Asegura que los iconos estén detrás del botón */
+}
+
+.social-icons.open {
+  opacity: 1;
+  transform: translateY(0); /* Mueve los iconos a su posición final */
+}
+
+.social-icon {
+  margin: 5px 0;
+  font-size: 24px;
+  color: #333;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #f2d0a1;
+  transform: scale(1.1); /* Efecto de escala al hacer hover */
+}

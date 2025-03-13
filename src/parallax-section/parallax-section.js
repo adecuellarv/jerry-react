@@ -6,6 +6,7 @@ import SSLConsole from '../ssl-console/ssl-console';
 import LoaderComponent from '../loader/loader-component';
 import WelcomeModal from '../welcome-modal/welcome-modal';
 import Menu from '../menu/menu';
+import ShareMenu from '../share-menu/ShareMenu';
 import S1 from './img/scenes/studio-cerrado/1.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -151,6 +152,7 @@ const ParallaxSection = () => {
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} />}
       </div>
       {showMenuIcon && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
+      {showMenuIcon && <ShareMenu />}
     </>
   );
 };

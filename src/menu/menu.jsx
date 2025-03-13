@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import logoMonorama from './img/logo_monorama.png'
 import './menu.css';
 
 const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
@@ -34,6 +35,9 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
           <li><a>DISCOGRAPHY</a></li>
           <li><a>CONTACT</a></li>
         </ul>
+        <div className="div-monorama">
+          <img src={logoMonorama} alt="monorama" />
+        </div>
       </div>
 
     </>
