@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Parallax from 'parallax-js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../modal/modal';
 import Video from '../video/video';
 import SSLConsole from '../ssl-console/ssl-console';
@@ -27,6 +25,7 @@ const ParallaxSection = () => {
   const [loader, setLoader] = useState(true);
   const [showModalWelcome, setShowModalWelcome] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showMenuIcon, setShowMenuIcon] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -47,15 +46,14 @@ const ParallaxSection = () => {
     }));
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   useEffect(() => {
     if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo) {
       setTimeout(() => {
         setLoader(false);
         setShowModalWelcome(true);
+        setTimeout(() => {
+          setShowMenuIcon(true);
+        }, 700);
       }, 7000);
     }
   }, [elementsLoaded]);
@@ -152,7 +150,7 @@ const ParallaxSection = () => {
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} />}
       </div>
-      <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      {showMenuIcon && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
     </>
   );
 };
