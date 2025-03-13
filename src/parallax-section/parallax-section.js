@@ -117,6 +117,16 @@ const ParallaxSection = () => {
           <div className="sen-grammyl1" onClick={() => handleModal('grammyl1')}></div>
           <div className="sen-grammyl2" onClick={() => handleModal('grammyl2')}></div>
           <div className="sen-grammyl3" onClick={() => handleModal('grammyl3')}></div>
+          <div className="sen-honeymommas" onClick={() => handleModal('honeymommas')}></div>
+          <div className="sen-hu" onClick={() => handleModal('hu')}></div>
+          <div className="sen-incienso" onClick={() => handleModal('incienso')}></div>
+          <div className="sen-iphone" onClick={() => handleModal('iphone')}></div>
+          <div className="sen-mac" onClick={() => handleModal('mac')}></div>
+          <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
+          <div className="sen-tonnys" onClick={() => handleModal('tonnys')}></div>
+          <div className="sen-vela" onClick={() => handleModal('vela')}></div>
+          <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
+          <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
@@ -151,8 +161,8 @@ const ParallaxSection = () => {
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} />}
       </div>
-      {showMenuIcon && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
-      {showMenuIcon && <ShareMenu />}
+      {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
+      {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
     </>
   );
 };
