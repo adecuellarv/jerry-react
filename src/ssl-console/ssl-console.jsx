@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import audio from './ET_PHONE_HOME.mp3';
+import audioSend from './I_DONT_UNDERSTAND.mp3';
 import './styles.css';
 import './button.css';
 
@@ -34,12 +35,18 @@ const SSLConsole = ({ setShowConsole }) => {
     sound.play();
   };
 
+  const playSendSoud = () => {
+    const sendSoud = new Audio(audioSend);
+    sendSoud.play();
+  };
+
   const handleCommandSubmit = (e) => {
     e.preventDefault();
+    playSendSoud();
     // Aquí puedes agregar la lógica para procesar los comandos
     setOutput([...output, `> ${command}`]);
     setCommand('');
-    if (command === 'error') {
+    if (command.toLowerCase() === 'et phone home') {
       playSound()
     }
   };
