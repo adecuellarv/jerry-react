@@ -1,10 +1,10 @@
 .div-video{
   position: absolute;
-  width: 15%;
+  width: 12.9%;
   height: auto;
   z-index: 1;
-  left: 40.4%;
-  top: 28%;
+  left: 41.7%;
+  top: 29%;
 }
 
 .div-layer-sillon{
@@ -37,7 +37,14 @@
 .div-logo img{
   width: 80%;
 }
-
+.div-main{
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  transform: translateX(0px);
+  transition: transform 0.3s ease;
+}
 /**sensibles areas**/
 
 .sen-cafetera{
@@ -116,3 +123,114 @@
   left: 8%;
   cursor: pointer;
 }
+
+.sen-honeymommas{
+  position: absolute;
+  z-index: 4;
+  width: 5%;
+  height: 30px;
+  background: transparent;
+  top: 65%;
+  right: 20%;
+  cursor: pointer;
+}
+
+.sen-hu{
+  position: absolute;
+  z-index: 4;
+  width: 2%;
+  height:5%;
+  background: transparent;
+  bottom: 30%;
+  left: 17.2%;
+  cursor: pointer;
+}
+
+.sen-incienso{
+  position: absolute;
+  z-index: 4;
+  width: 2%;
+  height:5%;
+  background: transparent;
+  bottom: 31%;
+  left: 20.2%;
+  cursor: pointer;
+}
+
+.sen-iphone{
+  position: absolute;
+  z-index: 4;
+  width: 4%;
+  height: 20px;
+  background: transparent;
+  top: 63%;
+  right: 22%;
+  cursor: pointer;
+}
+
+.sen-mac{
+  position: absolute;
+  z-index: 4;
+  width: 6%;
+  height: 60px;
+  background: transparent;
+  top: 54%;
+  right: 22%;
+  cursor: pointer;
+}
+
+.sen-tepemachine{
+  position: absolute;
+  z-index: 4;
+  width: 10%;
+  height:200px;
+  background: transparent;
+  top: 41%;
+  left: 24%;
+  cursor: pointer;
+}
+
+.sen-tonnys{
+  position: absolute;
+  z-index: 4;
+  width: 5%;
+  height: 30px;
+  background: transparent;
+  top: 57%;
+  right: 37%;
+  cursor: pointer;
+}
+
+.sen-vela{
+  position: absolute;
+  z-index: 4;
+  width: 3%;
+  height: 45px;
+  background: transparent;
+  top: 57%;
+  right: 28%;
+  cursor: pointer;
+}
+
+.sen-vinil{
+  position: absolute;
+  z-index: 4;
+  width: 10%;
+  height: 60px;
+  background: transparent;
+  bottom: 27%;
+  right: 12%;
+  cursor: pointer;
+}
+
+.sen-yamaha{
+  position: absolute;
+  z-index: 4;
+  width: 5%;
+  height: 50px;
+  background: transparent;
+  top: 44%;
+  right: 42%;
+  cursor: pointer;
+}
+

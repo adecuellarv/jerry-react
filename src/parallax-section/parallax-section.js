@@ -5,6 +5,8 @@ import Video from '../video/video';
 import SSLConsole from '../ssl-console/ssl-console';
 import LoaderComponent from '../loader/loader-component';
 import WelcomeModal from '../welcome-modal/welcome-modal';
+import Menu from '../menu/menu';
+import ShareMenu from '../share-menu/ShareMenu';
 import S1 from './img/scenes/studio-cerrado/1.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -23,6 +25,8 @@ const ParallaxSection = () => {
   const [showConsole, setShowConsole] = useState(false);
   const [loader, setLoader] = useState(true);
   const [showModalWelcome, setShowModalWelcome] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showMenuIcon, setShowMenuIcon] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -48,6 +52,9 @@ const ParallaxSection = () => {
       setTimeout(() => {
         setLoader(false);
         setShowModalWelcome(true);
+        setTimeout(() => {
+          setShowMenuIcon(true);
+        }, 700);
       }, 7000);
     }
   }, [elementsLoaded]);
@@ -98,50 +105,64 @@ const ParallaxSection = () => {
 
   return (
     <>
-      <div className="div-logo">
-        <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
-      </div>
-      <div className="sen-areas">
-        <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
-        <div className="se-console" onClick={() => setShowConsole(true)}></div>
-        <div className="sen-grammy1" onClick={() => handleModal('grammy1')}></div>
-        <div className="sen-grammy2" onClick={() => handleModal('grammy2')}></div>
-        <div className="sen-grammyl1" onClick={() => handleModal('grammyl1')}></div>
-        <div className="sen-grammyl2" onClick={() => handleModal('grammyl2')}></div>
-        <div className="sen-grammyl3" onClick={() => handleModal('grammyl3')}></div>
-      </div>
-      <div className="parallax-container">
-        <div ref={sceneRef} className="parallax-scene">
-          <div className="layer" data-depth="0.06">
-            <img src={S1} className="img-scenes" alt="Fondo" />
-            <div className="div-video">
-              <Video />
+      <div className={`div-main ${isMenuOpen ? 'menu-open' : ''}`}>
+        <div className="div-logo">
+          <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
+        </div>
+        <div className="sen-areas">
+          <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
+          <div className="se-console" onClick={() => setShowConsole(true)}></div>
+          <div className="sen-grammy1" onClick={() => handleModal('grammy1')}></div>
+          <div className="sen-grammy2" onClick={() => handleModal('grammy2')}></div>
+          <div className="sen-grammyl1" onClick={() => handleModal('grammyl1')}></div>
+          <div className="sen-grammyl2" onClick={() => handleModal('grammyl2')}></div>
+          <div className="sen-grammyl3" onClick={() => handleModal('grammyl3')}></div>
+          <div className="sen-honeymommas" onClick={() => handleModal('honeymommas')}></div>
+          <div className="sen-hu" onClick={() => handleModal('hu')}></div>
+          <div className="sen-incienso" onClick={() => handleModal('incienso')}></div>
+          <div className="sen-iphone" onClick={() => handleModal('iphone')}></div>
+          <div className="sen-mac" onClick={() => handleModal('mac')}></div>
+          <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
+          <div className="sen-tonnys" onClick={() => handleModal('tonnys')}></div>
+          <div className="sen-vela" onClick={() => handleModal('vela')}></div>
+          <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
+          <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
+        </div>
+        <div className="parallax-container">
+          <div ref={sceneRef} className="parallax-scene">
+            <div className="layer" data-depth="0.06">
+              <img src={S1} className="img-scenes" alt="Fondo" />
+              <div className="div-video">
+                <Video />
+              </div>
+            </div>
+            <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
+              <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} />
+            </div>
+            <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
+              <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} />
+            </div>
+            <div className="layer div-layer-cafetera" data-depth="0.12" onClick={() => alert('cafetera')}>
+              <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} />
+            </div>
+            <div className="layer div-layer-sillon" data-depth="0.14">
+              <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} />
+            </div>
+            <div className="parent-particles">
+              <div className="particle particle-1"></div>
+              <div className="particle particle-2"></div>
+              <div className="particle particle-3"></div>
+              <div className="particle particle-4"></div>
             </div>
           </div>
-          <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
-            <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} />
-          </div>
-          <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
-            <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} />
-          </div>
-          <div className="layer div-layer-cafetera" data-depth="0.12" onClick={() => alert('cafetera')}>
-            <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} />
-          </div>
-          <div className="layer div-layer-sillon" data-depth="0.14">
-            <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} />
-          </div>
-          <div className="parent-particles">
-            <div className="particle particle-1"></div>
-            <div className="particle particle-2"></div>
-            <div className="particle particle-3"></div>
-            <div className="particle particle-4"></div>
-          </div>
         </div>
+        {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
+        {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
+        <LoaderComponent open={loader} />
+        {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} />}
       </div>
-      {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
-      {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
-      <LoaderComponent open={loader} />
-      {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} /> }
+      {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
+      {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
     </>
   );
 };

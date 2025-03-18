@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import audio from './ET_PHONE_HOME.mp3';
-import audioSend from './I_DONT_UNDERSTAND.mp3';
+import audioEnter from './I_DONT_UNDERSTAND.mp3';
 import './styles.css';
 import './button.css';
 
@@ -36,9 +36,9 @@ const SSLConsole = ({ setShowConsole }) => {
   };
 
   const playSendSoud = () => {
-    const sendSoud = new Audio(audioSend);
+    const sendSoud = new Audio(audioEnter);
     sendSoud.play();
-  };
+  }
 
   const handleCommandSubmit = (e) => {
     e.preventDefault();
@@ -47,9 +47,11 @@ const SSLConsole = ({ setShowConsole }) => {
     setOutput([...output, `> ${command}`]);
     setCommand('');
     if (command.toLowerCase() === 'et phone home') {
-      playSound()
+      if (command === 'et phone home') {
+        playSound()
+      }
     }
-  };
+  }
 
   useEffect(() => {
     // Hacer scroll al final cuando output cambie
@@ -78,7 +80,7 @@ const SSLConsole = ({ setShowConsole }) => {
         <button className="close-button" onClick={() => setShowConsole(false)}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
-        <span>Cerrar</span>
+        <span>Close</span>
       </div>
 
       <div className="ssl-console">

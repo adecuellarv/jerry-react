@@ -11,6 +11,16 @@ import grammy2 from './img/GRAMMY02.jpg'
 import grammyl1 from './img/LATINGRAMMY01.jpg'
 import grammyl2 from './img/LATINGRAMMY02.jpg'
 import grammyl3 from './img/LATINGRAMMY03.jpg'
+import honeymommas from './img/HONEYMOMMAS.jpg'
+import incienso from './img/INCIENSO.jpg'
+import iphone from './img/IPHONE.jpg'
+import hu from './img/HU.jpg'
+import mac from './img/MACBOOK.jpg'
+import tepemachine from './img/TAPEMACHINE.jpg'
+import tonnys from './img/TONYS.jpg'
+import vela from './img/VELA.jpg'
+import vinil from './img/VINILRECORDS.jpg'
+import yamaha from './img/YAMAHA.jpg'
 
 const getImage = (text) => {
   switch (text) {
@@ -26,6 +36,26 @@ const getImage = (text) => {
       return grammyl2;
     case 'grammyl3':
       return grammyl3;
+    case 'honeymommas':
+      return honeymommas;
+    case 'hu':
+      return hu;
+    case 'iphone':
+      return iphone;
+    case 'incienso':
+      return incienso;
+    case 'mac':
+      return mac;
+    case 'tepemachine':
+      return tepemachine;
+    case 'tonnys':
+      return tonnys;
+    case 'vela':
+      return vela;
+    case 'vinil':
+      return vinil;
+    case 'yamaha':
+      return yamaha;
     default:
       break;
   }
@@ -45,6 +75,26 @@ const getTitle = (text) => {
       return 'Grammy Latino 2';
     case 'grammyl3':
       return 'Grammy Latino 3';
+    case 'honeymommas':
+      return 'Honeymommas';
+    case 'hu':
+      return 'Hu';
+    case 'iphone':
+      return 'iphone'
+    case 'incienso':
+      return 'incienso'
+    case 'mac':
+      return 'mac';
+    case 'tepemachine':
+      return 'tepemachine';
+    case 'tonnys':
+      return 'tonnys';
+    case 'vela':
+      return 'vela';
+    case 'vinil':
+      return 'vinil';
+    case 'yamaha':
+      return 'yamaha';
     default:
       break;
   }
