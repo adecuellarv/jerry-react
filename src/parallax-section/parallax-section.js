@@ -12,7 +12,8 @@ import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
 import S4 from './img/scenes/studio-cerrado/4.png';
 import S5 from './img/scenes/studio-cerrado/5.png';
-import logo from './img/logo_jerryordonez_mainpage.png';
+import logo from './img/logo_jerryordonez_mainpage.png'
+import audio from './audio/audio.wav';
 import './styles.css';
 
 //let elementsLoaded = 0;
@@ -20,6 +21,7 @@ const ParallaxSection = () => {
   const sceneRef = useRef(null);
   const animationRef = useRef(null);
   const parallaxInstanceRef = useRef(null);
+  const audioRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [typeModal, setTypeModal] = useState('');
   const [showConsole, setShowConsole] = useState(false);
@@ -27,6 +29,7 @@ const ParallaxSection = () => {
   const [showModalWelcome, setShowModalWelcome] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMenuIcon, setShowMenuIcon] = useState(false);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -45,6 +48,13 @@ const ParallaxSection = () => {
       ...prevState,
       [nameImg]: true,
     }));
+  };
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.3;
+      audioRef.current.play();
+    }
   };
 
   useEffect(() => {
@@ -159,10 +169,15 @@ const ParallaxSection = () => {
         {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
         {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
         <LoaderComponent open={loader} />
-        {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} />}
+        {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
       </div>
       {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
+
+      <audio ref={audioRef} loop>
+        <source src={audio} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
     </>
   );
 };

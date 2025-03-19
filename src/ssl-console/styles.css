@@ -22,6 +22,7 @@
   flex-direction: column;
   font-family: 'modeseven';
   padding: 30px;
+  letter-spacing: 10px;
 }
 
 .ssl-content{
@@ -97,6 +98,7 @@
   flex: 1;
   height: 69px;
   overflow-y: auto;
+  letter-spacing: 5px;
 }
 /* Estilizar scrollbar */
 .ssl-console-body::-webkit-scrollbar {
