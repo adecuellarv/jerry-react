@@ -46,14 +46,18 @@
   transition: transform 0.3s ease;
 }
 /**sensibles areas**/
-
+.sen-areas{
+  position: absolute;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
 .sen-cafetera{
   position: absolute;
   z-index: 4;
   width: 14%;
-  height: 178px;
+  height: 10%;
   background: transparent;
-  bottom: 20%;
+  bottom: 38%;
   left: 2%;
   cursor: pointer;
 }
@@ -61,21 +65,21 @@
 .se-console{
   position: absolute;
   z-index: 4;
-  width: 8%;
-  height: 88px;
+  width: 10%;
+  height: 8.5%;
   background: transparent;
-  top: 47%;
-  left: 47%;
+  top: 42%;
+  left: 46%;
   cursor: pointer;
 }
 
 .sen-grammy1{
   position: absolute;
   z-index: 4;
-  width: 4%;
-  height: 75px;
+  width: 4.5%;
+  height: 5%;
   background: transparent;
-  top: 47%;
+  top: 42%;
   left: 7%;
   cursor: pointer;
 }
@@ -84,9 +88,9 @@
   position: absolute;
   z-index: 4;
   width: 4%;
-  height: 60px;
+  height: 5%;
   background: transparent;
-  top: 47%;
+  top: 41.5%;
   left: 12%;
   cursor: pointer;
 }
@@ -95,9 +99,9 @@
   position: absolute;
   z-index: 4;
   width: 4%;
-  height: 60px;
+  height: 5%;
   background: transparent;
-  top: 37%;
+  top: 33.5%;
   left: 7%;
   cursor: pointer;
 }
@@ -106,10 +110,10 @@
   position: absolute;
   z-index: 4;
   width: 4%;
-  height: 60px;
+  height: 5%;
   background: transparent;
-  top: 37%;
-  left: 12%;
+  top: 34%;
+  left: 11.5%;
   cursor: pointer;
 }
 
@@ -117,21 +121,21 @@
   position: absolute;
   z-index: 4;
   width: 4%;
-  height: 60px;
+  height: 5%;
   background: transparent;
-  top: 26%;
-  left: 8%;
+  top: 25%;
+  left: 9%;
   cursor: pointer;
 }
 
 .sen-honeymommas{
   position: absolute;
   z-index: 4;
-  width: 5%;
-  height: 30px;
+  width: 3%;
+  height: 1.5%;
   background: transparent;
-  top: 65%;
-  right: 20%;
+  top: 55.5%;
+  right: 22%;
   cursor: pointer;
 }
 
@@ -141,7 +145,7 @@
   width: 2%;
   height:5%;
   background: transparent;
-  bottom: 30%;
+  bottom: 40%;
   left: 17.2%;
   cursor: pointer;
 }
@@ -150,9 +154,9 @@
   position: absolute;
   z-index: 4;
   width: 2%;
-  height:5%;
+  height:4%;
   background: transparent;
-  bottom: 31%;
+  bottom: 42%;
   left: 20.2%;
   cursor: pointer;
 }
@@ -160,11 +164,11 @@
 .sen-iphone{
   position: absolute;
   z-index: 4;
-  width: 4%;
-  height: 20px;
+  width: 2%;
+  height: 2%;
   background: transparent;
-  top: 63%;
-  right: 22%;
+  top: 54%;
+  right: 23.5%;
   cursor: pointer;
 }
 
@@ -172,9 +176,9 @@
   position: absolute;
   z-index: 4;
   width: 6%;
-  height: 60px;
+  height: 5%;
   background: transparent;
-  top: 54%;
+  top: 49%;
   right: 22%;
   cursor: pointer;
 }
@@ -183,43 +187,43 @@
   position: absolute;
   z-index: 4;
   width: 10%;
-  height:200px;
+  height:16%;
   background: transparent;
-  top: 41%;
-  left: 24%;
+  top: 38%;
+  left: 23%;
   cursor: pointer;
 }
 
 .sen-tonnys{
   position: absolute;
   z-index: 4;
-  width: 5%;
-  height: 30px;
+  width: 3%;
+  height: 3%;
   background: transparent;
-  top: 57%;
-  right: 37%;
+  top: 51%;
+  right: 45%;
   cursor: pointer;
 }
 
 .sen-vela{
   position: absolute;
   z-index: 4;
-  width: 3%;
-  height: 45px;
+  width: 2%;
+  height: 3%;
   background: transparent;
-  top: 57%;
-  right: 28%;
+  top: 50%;
+  right: 29%;
   cursor: pointer;
 }
 
 .sen-vinil{
   position: absolute;
   z-index: 4;
-  width: 10%;
-  height: 60px;
+  width: 8%;
+  height: 5.3%;
   background: transparent;
-  bottom: 27%;
-  right: 12%;
+  bottom: 39%;
+  right: 13%;
   cursor: pointer;
 }
 
@@ -227,10 +231,10 @@
   position: absolute;
   z-index: 4;
   width: 5%;
-  height: 50px;
+  height: 5%;
   background: transparent;
-  top: 44%;
-  right: 42%;
+  top: 39%;
+  right: 42.5%;
   cursor: pointer;
 }
 
