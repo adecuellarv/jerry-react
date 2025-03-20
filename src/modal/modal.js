@@ -100,7 +100,8 @@ const getTitle = (text) => {
   }
 }
 
-export default function Modal({ setShowModal, typeModal = 'cafeteria', }) {
+const images = [cafeteria, grammy1, grammy2, grammyl1, grammyl2, grammyl3, honeymommas, incienso, iphone, hu, mac, tepemachine, tonnys, vela, vinil, yamaha];
+export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalLoaded }) {
   const [open, setOpen] = useState(true);
   const [showButton, setShowButton] = useState(false);
 
@@ -119,6 +120,27 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', }) {
       }, 800);
     } else setShowButton(false);
   }, [open]);
+
+  useEffect(() => {
+    const loadImages = () => {
+      let loadedCount = 0;
+
+      images.forEach((imageSrc, index) => {
+        const img = new Image();
+        img.src = imageSrc;
+        img.onload = () => { 
+          loadedCount++;
+          if (loadedCount === images.length) {
+            setModalLoaded(true);
+          }
+        };
+        img.onerror = () => {
+          console.error(`Error al cargar la imagen ${index + 1}: ${imageSrc}`);
+        };
+      });
+    };
+    loadImages();
+  }, []);
 
   return (
     <div className="overlay">

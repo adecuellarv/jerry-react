@@ -31,6 +31,8 @@ const ParallaxSection = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMenuIcon, setShowMenuIcon] = useState(false);
   const [openWindow, setOpenWindow] = useState('initial');
+  const [curtainLoaded, setCurtainLoaded] = useState(false);
+  const [modalLoaded, setModalLoaded] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -59,16 +61,16 @@ const ParallaxSection = () => {
   };
 
   useEffect(() => {
-    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo) {
+    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded) {
       setTimeout(() => {
         setLoader(false);
         setShowModalWelcome(true);
         setTimeout(() => {
           setShowMenuIcon(true);
         }, 700);
-      }, 7000);
+      }, 4000);
     }
-  }, [elementsLoaded]);
+  }, [elementsLoaded, curtainLoaded]);
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -148,7 +150,7 @@ const ParallaxSection = () => {
                 <Video />
               </div>
               <div className="div-perciana">
-                <Curtain openWindow={openWindow} setOpenWindow={setOpenWindow} />
+                <Curtain openWindow={openWindow} setCurtainLoaded={setCurtainLoaded} />
               </div>
             </div>
             <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
@@ -171,7 +173,7 @@ const ParallaxSection = () => {
             </div>
           </div>
         </div>
-        {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} />}
+        {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
         {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}

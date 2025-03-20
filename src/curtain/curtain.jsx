@@ -12,8 +12,29 @@ import img10 from './persiana_animada/persiana10.png';
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
 
-const Curtain = ({ openWindow }) => {
+const Curtain = ({ openWindow, setCurtainLoaded }) => {
   const [currentImage, setCurrentImage] = useState(img1);
+
+  useEffect(() => {
+    const loadImages = () => {
+      let loadedCount = 0;
+
+      images.forEach((imageSrc, index) => {
+        const img = new Image();
+        img.src = imageSrc;
+        img.onload = () => {
+          loadedCount++;
+          if (loadedCount === images.length) {
+            setCurtainLoaded(true);
+          }
+        };
+        img.onerror = () => {
+          console.error(`Error al cargar la imagen ${index + 1}: ${imageSrc}`); // Depuración
+        };
+      });
+    };
+    loadImages();
+  }, []);
 
   useEffect(() => {
     if (openWindow === 'initial') {
