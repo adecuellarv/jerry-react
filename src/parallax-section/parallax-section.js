@@ -7,11 +7,12 @@ import LoaderComponent from '../loader/loader-component';
 import WelcomeModal from '../welcome-modal/welcome-modal';
 import Menu from '../menu/menu';
 import ShareMenu from '../share-menu/ShareMenu';
-import S1 from './img/scenes/studio-cerrado/1.jpg';
+import S1 from './img/scenes/studio-cerrado/fondo_sin_persiana.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
 import S4 from './img/scenes/studio-cerrado/4.png';
 import S5 from './img/scenes/studio-cerrado/5.png';
+import Curtain from '../curtain/curtain';
 import logo from './img/logo_jerryordonez_mainpage.png'
 import audio from './audio/audio.wav';
 import './styles.css';
@@ -29,7 +30,7 @@ const ParallaxSection = () => {
   const [showModalWelcome, setShowModalWelcome] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMenuIcon, setShowMenuIcon] = useState(false);
-  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const [openWindow, setOpenWindow] = useState('initial');
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -137,6 +138,7 @@ const ParallaxSection = () => {
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
           <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
+          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado' )}></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
@@ -144,6 +146,9 @@ const ParallaxSection = () => {
               <img src={S1} className="img-scenes" alt="Fondo" />
               <div className="div-video">
                 <Video />
+              </div>
+              <div className="div-perciana">
+                <Curtain openWindow={openWindow} setOpenWindow={setOpenWindow} />
               </div>
             </div>
             <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>

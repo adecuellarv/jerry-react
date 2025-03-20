@@ -7,6 +7,15 @@
   top: 29%;
 }
 
+.div-perciana{
+  position: absolute;
+  width: 13.5%;
+  height: auto;
+  z-index: 1;
+  right: 0%;
+  top: 20%;
+}
+
 .div-layer-sillon{
   bottom: -112px !important;
   top: initial !important;
@@ -238,3 +247,13 @@
   cursor: pointer;
 }
 
+.sen-cortina{
+  position: absolute;
+  z-index: 4;
+  width: 15%;
+  height: 35%;
+  background: transparent;
+  top: 23%;
+  right: 0%;
+  cursor: pointer;
+}
