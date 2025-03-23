@@ -15,6 +15,8 @@ import S5 from './img/scenes/studio-cerrado/5.png';
 import Curtain from '../curtain/curtain';
 import logo from './img/logo_jerryordonez_mainpage.png'
 import audio from './audio/audio.wav';
+import audioOpen from '../modal/sounds/open.wav';
+import audioClose from '../modal/sounds/close.wav';
 import './styles.css';
 
 //let elementsLoaded = 0;
@@ -53,11 +55,26 @@ const ParallaxSection = () => {
     }));
   };
 
+  const handleCloseModalSSL = () => {
+    setShowConsole(false);
+    playSoundClose();
+  }
+
   const toggleMusic = () => {
     if (audioRef.current) {
       audioRef.current.volume = 0.1;
       audioRef.current.play();
     }
+  };
+
+  const playSoundOpen = () => {
+    const sound = new Audio(audioOpen);
+    sound.play();
+  };
+
+  const playSoundClose = () => {
+    const sound = new Audio(audioClose);
+    sound.play();
   };
 
   useEffect(() => {
@@ -71,6 +88,12 @@ const ParallaxSection = () => {
       }, 4000);
     }
   }, [elementsLoaded, curtainLoaded]);
+
+  useEffect(() => {
+    if(showConsole){
+      playSoundOpen();
+    }
+  }, [showConsole]);
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -141,7 +164,7 @@ const ParallaxSection = () => {
           <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
           <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
-          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado' )}></div>
+          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado')}></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
@@ -175,7 +198,7 @@ const ParallaxSection = () => {
           </div>
         </div>
         {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
-        {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
+        {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
       </div>
