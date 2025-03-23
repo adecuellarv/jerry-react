@@ -55,7 +55,7 @@ const ParallaxSection = () => {
 
   const toggleMusic = () => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.3;
+      audioRef.current.volume = 0.1;
       audioRef.current.play();
     }
   };
@@ -140,6 +140,7 @@ const ParallaxSection = () => {
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
           <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
+          <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
           <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado' )}></div>
         </div>
         <div className="parallax-container">
