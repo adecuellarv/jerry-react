@@ -18,13 +18,13 @@ const ShareMenu = () => {
   return (
     <div className="share-menu-container">
       <div className={`social-icons ${isOpen ? 'open' : ''}`}>
-        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.allmusic.com/artist/gerardo-jerry-ord%C3%B3%C3%B1ez-mn0002893562" target="_blank" rel="noopener noreferrer">
           <img src={allImg} alt="all music" />
         </a>
         <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
           <img src={twImg} alt="x" />
         </a>
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/jerryaudio" target="_blank" rel="noopener noreferrer">
           <img src={igImg} alt="instagram" />
         </a>
       </div>
