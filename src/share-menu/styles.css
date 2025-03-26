@@ -20,9 +20,10 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
-  z-index: 2; /* Asegura que el botón esté por encima de los iconos */
+  z-index: 2; 
 }
-.share-button span{
+
+.share-button span {
   font-size: 11px;
   font-family: 'monserratregular';
 }
@@ -35,26 +36,64 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 5px; /* Espacio para que los iconos estén arriba del botón */
+  margin-bottom: 5px; 
   opacity: 0;
-  transform: translateY(20px); /* Inicia ligeramente abajo */
+  transform: translateY(20px); 
   transition: opacity 0.3s ease, transform 0.3s ease;
-  z-index: 1; /* Asegura que los iconos estén detrás del botón */
+  z-index: 1; 
 }
 
 .social-icons.open {
   opacity: 1;
-  transform: translateY(0); /* Mueve los iconos a su posición final */
+  transform: translateY(0);
+}
+
+.social-icon-link {
+  margin: 5px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+  border-radius: 50%;
 }
 
 .social-icon {
-  margin: 5px 0;
   font-size: 24px;
   color: #333;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.social-icon:hover {
-  color: #f2d0a1;
-  transform: scale(1.1); /* Efecto de escala al hacer hover */
+.social-icon-link:hover {
+  background-color: rgba(242, 208, 161, 0.2); 
+  filter: drop-shadow(0 0 16px rgb(248, 247, 248));}
+
+.social-icon-link:hover img {
+  transform: scale(1.15);
+  filter: brightness(1.2) contrast(1.1); 
 }
+.share-button span {
+  font-size: 11px;
+  font-family: 'monserratregular';
+}
+
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1.15);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
