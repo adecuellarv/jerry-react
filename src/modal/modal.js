@@ -21,13 +21,10 @@ import tonnys from './img/TONYS.jpg'
 import vela from './img/VELA.jpg'
 import vinil from './img/VINILRECORDS.jpg'
 import yamaha from './img/YAMAHA.jpg'
-<<<<<<< Updated upstream
-=======
 import audioOpen from './sounds/open.wav';
 import audioClose from './sounds/close.wav';
 import ContactModal from '../menu/contact-modal';
 
->>>>>>> Stashed changes
 
 const getImage = (text) => {
   switch (text) {
@@ -156,8 +153,6 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalL
 
   }
 
-<<<<<<< Updated upstream
-=======
 
   const handleCloseContactModal = () => {
     setOpen(false);
@@ -175,7 +170,6 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalL
     sound.play();
   };
 
->>>>>>> Stashed changes
   useEffect(() => {
     if (open) {
       setTimeout(() => {

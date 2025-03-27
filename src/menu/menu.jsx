@@ -1,22 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-<<<<<<< Updated upstream
-import logoMonorama from './img/logo_monorama.png'
-import './menu.css';
-
-const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
-  //const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  return (
-    <>
-      <div className="hamburger-icon" onClick={toggleMenu} style={{ right: isMenuOpen ? 110 : 20 }}>
-        {!isMenuOpen &&
-=======
 import logoMonorama from './img/logo_monorama.png';
 import ContactModal from './contact-modal'; 
 import Discography from './Discography'; 
@@ -87,7 +71,6 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
           <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
         }
         {(isContactModalOpen || isDiscographyModalOpen) && 
->>>>>>> Stashed changes
           <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
         }
         {isMenuOpen &&
@@ -105,21 +88,14 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
           <li>
             <a>HOME</a>
           </li>
-<<<<<<< Updated upstream
-          <li><a>DISCOGRAPHY</a></li>
-          <li><a>CONTACT</a></li>
-=======
           <li><a onClick={openDiscographyModal}>DISCOGRAPHY</a></li>
           <li><a onClick={openContactModal}>CONTACT</a></li>
->>>>>>> Stashed changes
         </ul>
         <div className="div-monorama">
           <img src={logoMonorama} alt="monorama" />
         </div>
       </div>
 
-<<<<<<< Updated upstream
-=======
       <ContactModal 
         isOpen={isContactModalOpen} 
         onClose={closeContactModal}
@@ -129,7 +105,6 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
         isOpen={isDiscographyModalOpen} 
         onClose={closeDiscographyModal}
       />
->>>>>>> Stashed changes
     </>
   );
 };
