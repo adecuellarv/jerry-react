@@ -7,6 +7,7 @@ import LoaderComponent from '../loader/loader-component';
 import WelcomeModal from '../welcome-modal/welcome-modal';
 import Menu from '../menu/menu';
 import ShareMenu from '../share-menu/ShareMenu';
+import SmoothIncenseSmoke from '../inciense/inciense';
 import S1 from './img/scenes/studio-cerrado/fondo_sin_persiana.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -205,15 +206,25 @@ const ParallaxSection = () => {
             </div>
             <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
               <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+              <div className="candle">
+                <div className="flame"></div>
+              </div>
             </div>
 
             <div className="layer div-layer-cafetera" data-depth="0.12" onClick={() => alert('cafetera')}>
               <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+
+              <SmoothIncenseSmoke turnOnLights={turnOnLights} />
             </div>
 
             <div className="layer div-layer-sillon" data-depth="0.14">
               <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} style={{ opacity: turnOnLights ? 1 : 0 }} />
             </div>
+
+
+
+
+
 
             <div className="parent-particles">
               <div className="particle particle-1"></div>
