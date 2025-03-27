@@ -4,6 +4,7 @@ import { faTimes, faChevronDown, faAngleDown } from '@fortawesome/free-solid-svg
 import './Discography.css';
 
 
+
 const Discography = ({ isOpen, onClose }) => {
   const [albums, setAlbums] = useState([]);
   const [filteredAlbums, setFilteredAlbums] = useState([]);
@@ -182,6 +183,16 @@ const Discography = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  const handleGenreFilter = (genre) => {
+    setFilter(genre);
+    setYearFilter(''); // Reset year filter when changing genre
+  };
+
+  const handleYearFilter = (year) => {
+    setYearFilter(yearFilter === year ? '' : year);
+    setFilter('ALL'); // Reset genre filter when changing year
+  };
+
   const genres = ['ALL', ...new Set(albums.map(album => album.genre))];
   
   const years = [...new Set(albums.map(album => album.year))].sort((a, b) => b - a);
@@ -198,12 +209,12 @@ const Discography = ({ isOpen, onClose }) => {
   if (selectedAlbum) {
     return (
       <div className="discography-modal">
-           <div className="div-close-btn">
-             <button className="close-button-m" onClick={closeModal}>
-               <FontAwesomeIcon icon={faTimes} />
-             </button>
-             <span>Close</span>
-           </div>
+        <div className="div-close-btnd"> 
+          <button className="close-button-m" onClick={closeModal}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+          <span className="text-white ml-2">Close</span>
+        </div>
 
         <h2 className="discography-title">DISCOGRAPHY</h2>
         
@@ -239,13 +250,11 @@ const Discography = ({ isOpen, onClose }) => {
 
   return (
     <div className="discography-modal">
-      <div className="close-button-container">
-        <button className="close-button" onClick={closeModal}>
-            <div className="close-icon-wrapper">
-              <FontAwesomeIcon icon={faTimes} />
-            </div>
-            <span>Close</span>
+      <div className="div-close-btnd"> 
+        <button className="close-button-m" onClick={closeModal}>
+          <FontAwesomeIcon icon={faTimes} />
         </button>
+        <span className="text-white ml-2">Close</span>
       </div>
 
       <h2 className="discography-title">DISCOGRAPHY</h2>
@@ -257,19 +266,22 @@ const Discography = ({ isOpen, onClose }) => {
           <div className="nav-container">
             <button 
               className={`nav-button ${filter === 'ALL' ? 'active' : ''}`} 
-              onClick={() => setFilter('ALL')}
+              onClick={() => {
+                setFilter('ALL');
+                setYearFilter('');
+              }}
             >
               ALL
             </button>
             
             <div className="genre-dropdown">
               <span className="genre-label">GENRE</span>
-              <div className="genre-list">
+              <div className="genre-list min-h-[250px]"> {/* Added min-height to maintain consistent size */}
                 {genres.filter(genre => genre !== 'ALL').map(genre => (
                   <div 
                     key={genre} 
                     className={`genre-item ${filter === genre ? 'active' : ''}`}
-                    onClick={() => setFilter(genre)}
+                    onClick={() => handleGenreFilter(genre)}
                   >
                     {genre}
                   </div>
@@ -279,12 +291,12 @@ const Discography = ({ isOpen, onClose }) => {
             
             <div className="year-dropdown">
               <span className="year-label">YEAR</span>
-              <div className="year-list">
+              <div className="year-list min-h-[250px]"> 
                 {years.map(year => (
                   <div 
                     key={year} 
                     className={`year-item ${yearFilter === year ? 'active' : ''}`}
-                    onClick={() => setYearFilter(yearFilter === year ? '' : year)}
+                    onClick={() => handleYearFilter(year)}
                   >
                     {year}
                   </div>
@@ -327,5 +339,4 @@ const Discography = ({ isOpen, onClose }) => {
     </div>
   );
 };
-
 export default Discography;

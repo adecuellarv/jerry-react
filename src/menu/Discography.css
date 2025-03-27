@@ -29,56 +29,18 @@
     margin: 20px 0 30px;
     text-align: center;
   }
+
+
   
  
-  .close-button-container {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10;
-  }
-  
-  .close-button {
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-        transition: opacity 0.2s;
-    padding: 10px;
-    width: 150px;
-    height: 40px;
-  }
-  .close-icon-wrapper {
-    background-color: #2f2a2a;
-    border: 2px solid #f2d0a1;
-    margin-right: 10px;
-    border-radius: 50%;
-    width: 50px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    transition: background-color 0.3s ease;
-  }
-  
-  .close-button:hover {
-    opacity: 0.8;
-  }
-  
-    .close-button svg {
-        margin-right: 8px;
-    }
-  
   .albums-main-container {
     background-color: #fff;
     border-radius: 12px;
     width: 90%;
     max-width: 1100px;
+    min-height: 500px;
+    height: auto;
+    max-height: 80vh;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
@@ -108,7 +70,7 @@
   .nav-button:hover, .nav-button.active {
     background-color: #333;
   }
-  
+
   .year-dropdown, .genre-dropdown {
     position: relative;
     display: flex;
@@ -161,7 +123,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 20px;
-  }
+}
   
   .album-item {
     cursor: pointer;
@@ -340,6 +302,26 @@
     font-size: 18px;
     color: #ccc;
   }
+  .genre-list, .year-list {
+    min-height: 250px; /* Ensures a consistent height */
+    max-height: 250px; /* Maintains the existing max-height */
+    overflow-y: auto; /* Allows scrolling if content exceeds height */
+  }
+  
+  .div-close-btnd{
+    position: fixed !important;
+    top:20px;
+    left: 5%;
+    padding-bottom: 0px;
+    display: flex;
+  }
+  .div-close-btnd span{
+    margin-left: 7px;
+    position: relative;
+    top: 11px;
+    color: #fff;
+  }
+
   
   /* Responsive adjustments */
   @media (max-width: 1200px) {
