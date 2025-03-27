@@ -21,9 +21,9 @@ import tonnys from './img/TONYS.jpg'
 import vela from './img/VELA.jpg'
 import vinil from './img/VINILRECORDS.jpg'
 import yamaha from './img/YAMAHA.jpg'
-import audioOpen from './sounds/open.wav';
-import audioClose from './sounds/close.wav';
-import ContactModal from '../menu/contact-modal';
+// import audioOpen from './sounds/open.wav';
+// import audioClose from './sounds/close.wav';
+import ContactModal from '../menu/contact-modal.jsx';
 
 
 const getImage = (text) => {
@@ -160,15 +160,16 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalL
       setShowModal(false)
     }, 1200);
   };
-  const playSoundOpen = () => {
-    const sound = new Audio(audioOpen);
-    sound.play();
-  };
 
-  const playSoundClose = () => {
-    const sound = new Audio(audioClose);
-    sound.play();
-  };
+  // const playSoundOpen = () => {
+  //   const sound = new Audio(audioOpen);
+  //   sound.play();
+  // };
+
+  // const playSoundClose = () => {
+  //   const sound = new Audio(audioClose);
+  //   sound.play();
+  // };
 
   useEffect(() => {
     if (open) {

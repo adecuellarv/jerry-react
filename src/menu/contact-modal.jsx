@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ReCAPTCHA from 'react-google-recaptcha';
-import './menu.css';
+import './contact-modal.css';
+import '../modal/button.css';
 
-const ContactModal = ({ isOpen, onClose, showCloseButton = true,customCloseButton = null}) => {
+const ContactModal = ({ isOpen, onClose, showCloseButton = true, customCloseButton = null }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -49,7 +50,9 @@ const ContactModal = ({ isOpen, onClose, showCloseButton = true,customCloseButto
     
     setIsSubmitting(true);
     setError('');
-/*
+    
+    // Simulación de envío (comentado como en el original)
+    /* 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -95,20 +98,19 @@ const ContactModal = ({ isOpen, onClose, showCloseButton = true,customCloseButto
   return (
     <div className={`contact-modal ${isOpen ? 'open' : ''}`}>
       <div className="contact-modal-content">
-       {customCloseButton ? (
+        {customCloseButton ? (
           customCloseButton
         ) : (
           showCloseButton && (
-            <div className="contact-modal-header">
-              <button className="contact-close-button" onClick={onClose}>
-                <div className="close-icon-wrapper">
-                  <FontAwesomeIcon icon={faTimes} />
-                </div>
-                <span>Close</span>
+            <div className="div-close-btn contact-close">
+              <button className="close-button-m" onClick={onClose}>
+                <FontAwesomeIcon icon={faTimes} />
               </button>
+              <span>Close</span>
             </div>
           )
         )}
+        
         <div className="contact-modal-body">
           <h2 className="contact-title">CONTACT</h2>
           <p className="contact-subtitle">"LET'S WORK TOGETHER!"</p>
@@ -178,8 +180,6 @@ const ContactModal = ({ isOpen, onClose, showCloseButton = true,customCloseButto
                 size="normal"
                 badge="inline"
                 hl="es" 
-                data-callback="onRecaptchaLoad"
-                data-error-callback="onRecaptchaError"
               />
               {error && <div className="error-message">{error}</div>}
             </div>

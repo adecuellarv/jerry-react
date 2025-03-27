@@ -9,41 +9,41 @@ const ShareMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleMouseEnter = () => {
-    setIsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    // Solo cerramos si no se hizo clic para abrir
-    if (!isOpen || isOpen === 'hover') {
-      setIsOpen(false);
-    }
-  };
-
-  // Este efecto maneja los clics fuera del menú para cerrarlo
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target) && isOpen === true) {
+    const handleMouseMove = (e) => {
+      if (!menuRef.current) return;
+      
+      const menuRect = menuRef.current.getBoundingClientRect();
+      
+      const isOutside = 
+        e.clientX < menuRect.left || 
+        e.clientX > menuRect.right || 
+        e.clientY < menuRect.top || 
+        e.clientY > menuRect.bottom;
+      
+      if (isOpen && isOutside) {
         setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    if (isOpen) {
+      document.addEventListener('mousemove', handleMouseMove);
+    }
+    
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isOpen]);
+
+  const handleMouseEnter = () => {
+    setIsOpen(true);
+  };
 
   return (
     <div 
       className="share-menu-container" 
       ref={menuRef}
       onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <div className={`social-icons ${isOpen ? 'open' : ''}`}>
         <a 
@@ -71,7 +71,7 @@ const ShareMenu = () => {
           <img src={igImg} alt="instagram" />
         </a>
       </div>
-      <button className="share-button" onClick={toggleMenu}>
+      <button className="share-button">
         <span>share</span>
         <img src={shareImg} alt="share" />
       </button>
