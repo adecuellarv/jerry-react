@@ -191,12 +191,13 @@ const ParallaxSection = () => {
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
             <div className="layer" data-depth="0.06">
-              <img src={turnOnLights ? S1 : bgO} className="img-scenes" alt="Fondo" />
+              <img src={bgO} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} />
+              <img src={S1} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} />
               <div className="div-video">
                 <Video />
               </div>
               <div className="div-perciana">
-                <Curtain openWindow={openWindow} setCurtainLoaded={setCurtainLoaded} />
+                <Curtain openWindow={openWindow} setCurtainLoaded={setCurtainLoaded} turnOnLights={turnOnLights} />
               </div>
             </div>
             <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>

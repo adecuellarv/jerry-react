@@ -12,7 +12,7 @@ import img10 from './persiana_animada/persiana10.png';
 
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
 
-const Curtain = ({ openWindow, setCurtainLoaded }) => {
+const Curtain = ({ openWindow, setCurtainLoaded, turnOnLights }) => {
   const [currentImage, setCurrentImage] = useState(img1);
 
   useEffect(() => {
@@ -57,7 +57,9 @@ const Curtain = ({ openWindow, setCurtainLoaded }) => {
     return () => clearInterval(interval);
   }, [openWindow]);
 
-  return <img src={currentImage} alt="persiana" />;
+  return <img src={currentImage} alt="persiana" style={{
+    filter: `brightness(${turnOnLights ? '1' : '0.15'})`
+  }} />;
 };
 
 export default Curtain;
