@@ -12,7 +12,8 @@ import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
 import S4 from './img/scenes/studio-cerrado/4.png';
 import S5 from './img/scenes/studio-cerrado/5.png';
-import bgO from './img/scenes/studio-oscuro/bg-apagado.jpg';
+import bgO from './img/scenes/studio-oscuro/bg-apagado.png';
+import S30 from './img/scenes/studio-oscuro/3.png';
 import Curtain from '../curtain/curtain';
 import logo from './img/logo_jerryordonez_mainpage.png'
 import audio from './audio/audio.wav';
@@ -199,7 +200,7 @@ const ParallaxSection = () => {
               </div>
             </div>
             <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
-              <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+              <img src={turnOnLights ? S3 : S30} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} />
             </div>
             <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
               <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} style={{ opacity: turnOnLights ? 1 : 0 }} />
