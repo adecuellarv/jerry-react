@@ -22,7 +22,7 @@ const getFormattedDate = () => {
   return `${hours}:${minutes.toString().padStart(2, "0")} ${ampm} ${month} ${day} ${year}`;
 };
 
-const SSLConsole = ({ setShowConsole }) => {
+const SSLConsole = ({ handleCloseModalSSL }) => {
   const [command, setCommand] = useState('');
   const [output, setOutput] = useState([]);
   const [showCursor, setShowCursor] = useState(true);
@@ -75,7 +75,7 @@ const SSLConsole = ({ setShowConsole }) => {
   return (
     <div className="ssl-console-popup">
       <div className="div-close-btn-ssl">
-        <button className="close-button" onClick={() => setShowConsole(false)}>
+        <button className="close-button" onClick={() => handleCloseModalSSL()}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <span>Close</span>

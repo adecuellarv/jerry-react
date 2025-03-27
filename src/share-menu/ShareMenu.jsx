@@ -46,12 +46,7 @@ const ShareMenu = () => {
       onMouseEnter={handleMouseEnter}
     >
       <div className={`social-icons ${isOpen ? 'open' : ''}`}>
-        <a 
-          href="https://allmusic.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="social-icon-link"
-        >
+        <a href="https://www.allmusic.com/artist/gerardo-jerry-ord%C3%B3%C3%B1ez-mn0002893562" className="social-icon-link" target="_blank" rel="noopener noreferrer">
           <img src={allImg} alt="all music" />
         </a>
         <a 
@@ -62,12 +57,7 @@ const ShareMenu = () => {
         >
           <img src={twImg} alt="x" />
         </a>
-        <a 
-          href="https://instagram.com" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="social-icon-link"
-        >
+        <a href="https://www.instagram.com/jerryaudio" className="social-icon-link" target="_blank" rel="noopener noreferrer">
           <img src={igImg} alt="instagram" />
         </a>
       </div>

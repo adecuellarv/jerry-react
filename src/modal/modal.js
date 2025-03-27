@@ -21,10 +21,9 @@ import tonnys from './img/TONYS.jpg'
 import vela from './img/VELA.jpg'
 import vinil from './img/VINILRECORDS.jpg'
 import yamaha from './img/YAMAHA.jpg'
-// import audioOpen from './sounds/open.wav';
-// import audioClose from './sounds/close.wav';
 import ContactModal from '../menu/contact-modal.jsx';
-
+import audioOpen from './sounds/open.wav';
+import audioClose from './sounds/close.wav';
 
 const getImage = (text) => {
   switch (text) {
@@ -153,30 +152,26 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalL
 
   }
 
-
-  const handleCloseContactModal = () => {
-    setOpen(false);
-    setTimeout(() => {
-      setShowModal(false)
-    }, 1200);
+  const playSoundOpen = () => {
+    const sound = new Audio(audioOpen);
+    sound.play();
   };
 
-  // const playSoundOpen = () => {
-  //   const sound = new Audio(audioOpen);
-  //   sound.play();
-  // };
-
-  // const playSoundClose = () => {
-  //   const sound = new Audio(audioClose);
-  //   sound.play();
-  // };
+  const playSoundClose = () => {
+    const sound = new Audio(audioClose);
+    sound.play();
+  };
 
   useEffect(() => {
     if (open) {
+      playSoundOpen();
       setTimeout(() => {
         setShowButton(true);
       }, 800);
-    } else setShowButton(false);
+    } else {
+      playSoundClose();
+      setShowButton(false);
+    }
   }, [open]);
 
   useEffect(() => {
@@ -186,7 +181,7 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalL
       images.forEach((imageSrc, index) => {
         const img = new Image();
         img.src = imageSrc;
-        img.onload = () => { 
+        img.onload = () => {
           loadedCount++;
           if (loadedCount === images.length) {
             setModalLoaded(true);

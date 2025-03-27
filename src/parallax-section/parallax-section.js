@@ -7,14 +7,19 @@ import LoaderComponent from '../loader/loader-component';
 import WelcomeModal from '../welcome-modal/welcome-modal';
 import Menu from '../menu/menu';
 import ShareMenu from '../share-menu/ShareMenu';
+import SmoothIncenseSmoke from '../inciense/inciense';
 import S1 from './img/scenes/studio-cerrado/fondo_sin_persiana.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
 import S4 from './img/scenes/studio-cerrado/4.png';
 import S5 from './img/scenes/studio-cerrado/5.png';
+import bgO from './img/scenes/studio-oscuro/bg-apagado.png';
+import S30 from './img/scenes/studio-oscuro/3.png';
 import Curtain from '../curtain/curtain';
 import logo from './img/logo_jerryordonez_mainpage.png'
 import audio from './audio/audio.wav';
+import audioOpen from '../modal/sounds/open.wav';
+import audioClose from '../modal/sounds/close.wav';
 import './styles.css';
 
 //let elementsLoaded = 0;
@@ -33,14 +38,17 @@ const ParallaxSection = () => {
   const [openWindow, setOpenWindow] = useState('initial');
   const [curtainLoaded, setCurtainLoaded] = useState(false);
   const [modalLoaded, setModalLoaded] = useState(false);
-
-
+  const [turnOnLights, setTurnOnLights] = useState(true);
+  const [fistLoad, setFirstLoad] = useState(true);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
     cafetera: false,
     sillon: false,
-    logo: false
+    logo: false,
+    bgLuz: false,
+    bgOscuro: false,
+    mezcladoraOscuro: false
   });
   
 
@@ -58,24 +66,61 @@ const ParallaxSection = () => {
     }));
   };
 
+  const handleCloseModalSSL = () => {
+    setShowConsole(false);
+    playSoundClose();
+  }
+
   const toggleMusic = () => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.3;
-      audioRef.current.play();
+      if (audioRef.current.paused) {
+        audioRef.current.volume = 0.1;
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
     }
   };
 
+  const playSoundOpen = () => {
+    const sound = new Audio(audioOpen);
+    sound.play();
+  };
+
+  const playSoundClose = () => {
+    const sound = new Audio(audioClose);
+    sound.play();
+  };
+
+  const goTo = (url, isTarget = false) => {
+    if (isTarget) {
+      window.open(url, '_blank');
+    } else {
+      window.location.href = url;
+    }
+  };
+
+
   useEffect(() => {
-    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded) {
+    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded && elementsLoaded.bgLuz && elementsLoaded.bgOscuro && elementsLoaded.mezcladoraOscuro) {
       setTimeout(() => {
         setLoader(false);
-        setShowModalWelcome(true);
+        if (fistLoad) {
+          setShowModalWelcome(true);
+          setFirstLoad(false);
+        }
         setTimeout(() => {
           setShowMenuIcon(true);
         }, 700);
       }, 4000);
     }
   }, [elementsLoaded, curtainLoaded]);
+
+  useEffect(() => {
+    if (showConsole) {
+      playSoundOpen();
+    }
+  }, [showConsole]);
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -138,38 +183,51 @@ const ParallaxSection = () => {
           <div className="sen-honeymommas" onClick={() => handleModal('honeymommas')}></div>
           <div className="sen-hu" onClick={() => handleModal('hu')}></div>
           <div className="sen-incienso" onClick={() => handleModal('incienso')}></div>
-          <div className="sen-iphone" onClick={() => handleModal('iphone')}></div>
-          <div className="sen-mac" onClick={() => handleModal('mac') }></div>
+          <div className="sen-iphone" onClick={() => goTo('https://www.instagram.com/jerryaudio', true)}></div>
+          <div className="sen-mac" onClick={() => handleModal('mac')}></div>
           <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
           <div className="sen-tonnys" onClick={() => handleModal('tonnys')}></div>
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
           <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
-          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado' )}></div>
+          <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
+          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado')}></div>
+          <div className="sen-ampli" onClick={toggleMusic}></div>
+          <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
             <div className="layer" data-depth="0.06">
-              <img src={S1} className="img-scenes" alt="Fondo" />
+              <img src={bgO} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
+              <img src={S1} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
               <div className="div-video">
                 <Video />
               </div>
               <div className="div-perciana">
-                <Curtain openWindow={openWindow} setCurtainLoaded={setCurtainLoaded} />
+                <Curtain openWindow={openWindow} setCurtainLoaded={setCurtainLoaded} turnOnLights={turnOnLights} />
               </div>
             </div>
             <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
-              <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} />
+              <img src={S30} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladoraOscuro')} style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} />
+              <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} />
             </div>
             <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
-              <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} />
+              <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+              <div className="candle">
+                <div className="flame"></div>
+              </div>
             </div>
+
             <div className="layer div-layer-cafetera" data-depth="0.12" onClick={() => alert('cafetera')}>
-              <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} />
+              <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+
+              <SmoothIncenseSmoke turnOnLights={turnOnLights} />
             </div>
+
             <div className="layer div-layer-sillon" data-depth="0.14">
-              <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} />
+              <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} style={{ opacity: turnOnLights ? 1 : 0 }} />
             </div>
+
             <div className="parent-particles">
               <div className="particle particle-1"></div>
               <div className="particle particle-2"></div>
@@ -179,7 +237,7 @@ const ParallaxSection = () => {
           </div>
         </div>
         {showModal && <Modal setShowModal={setShowModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
-        {showConsole && <SSLConsole setShowConsole={setShowConsole} />}
+        {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
       </div>
