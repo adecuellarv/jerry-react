@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState,route } from 'react';
 import Parallax from 'parallax-js';
 import Modal from '../modal/modal';
 import Video from '../video/video';
@@ -33,6 +33,8 @@ const ParallaxSection = () => {
   const [openWindow, setOpenWindow] = useState('initial');
   const [curtainLoaded, setCurtainLoaded] = useState(false);
   const [modalLoaded, setModalLoaded] = useState(false);
+
+
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -40,11 +42,14 @@ const ParallaxSection = () => {
     sillon: false,
     logo: false
   });
+  
 
   const handleModal = (type) => {
     setTypeModal(type);
     setShowModal(true);
   };
+
+
 
   const handleLoaded = (nameImg) => {
     setElementsLoaded((prevState) => ({
@@ -134,7 +139,7 @@ const ParallaxSection = () => {
           <div className="sen-hu" onClick={() => handleModal('hu')}></div>
           <div className="sen-incienso" onClick={() => handleModal('incienso')}></div>
           <div className="sen-iphone" onClick={() => handleModal('iphone')}></div>
-          <div className="sen-mac" onClick={() => handleModal('mac')}></div>
+          <div className="sen-mac" onClick={() => handleModal('mac') }></div>
           <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
           <div className="sen-tonnys" onClick={() => handleModal('tonnys')}></div>
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
