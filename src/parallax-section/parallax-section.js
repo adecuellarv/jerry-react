@@ -45,7 +45,10 @@ const ParallaxSection = () => {
     lampara: false,
     cafetera: false,
     sillon: false,
-    logo: false
+    logo: false,
+    bgLuz: false,
+    bgOscuro: false,
+    mezcladoraOscuro: false
   });
 
   const handleModal = (type) => {
@@ -96,7 +99,7 @@ const ParallaxSection = () => {
 
 
   useEffect(() => {
-    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded) {
+    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded && elementsLoaded.bgLuz && elementsLoaded.bgOscuro && elementsLoaded.mezcladoraOscuro) {
       setTimeout(() => {
         setLoader(false);
         if (fistLoad) {
@@ -192,8 +195,8 @@ const ParallaxSection = () => {
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
             <div className="layer" data-depth="0.06">
-              <img src={bgO} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} />
-              <img src={S1} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} />
+              <img src={bgO} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
+              <img src={S1} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
               <div className="div-video">
                 <Video />
               </div>
@@ -202,7 +205,8 @@ const ParallaxSection = () => {
               </div>
             </div>
             <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
-              <img src={turnOnLights ? S3 : S30} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} />
+              <img src={S30} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladoraOscuro')} style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} />
+              <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} />
             </div>
             <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
               <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} style={{ opacity: turnOnLights ? 1 : 0 }} />
@@ -220,11 +224,6 @@ const ParallaxSection = () => {
             <div className="layer div-layer-sillon" data-depth="0.14">
               <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} style={{ opacity: turnOnLights ? 1 : 0 }} />
             </div>
-
-
-
-
-
 
             <div className="parent-particles">
               <div className="particle particle-1"></div>
