@@ -16,9 +16,8 @@
   top: 16%;
 }
 
-.div-layer-sillon{
-  bottom: -112px !important;
-  top: initial !important;
+.layer-sillon{
+  bottom: 0px;
 }
 
 .prender{

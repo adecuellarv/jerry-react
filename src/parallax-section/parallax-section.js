@@ -28,6 +28,7 @@ const ParallaxSection = () => {
   const animationRef = useRef(null);
   const parallaxInstanceRef = useRef(null);
   const audioRef = useRef(null);
+  const bgElementRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [typeModal, setTypeModal] = useState('');
   const [showConsole, setShowConsole] = useState(false);
@@ -97,7 +98,6 @@ const ParallaxSection = () => {
     }
   };
 
-
   useEffect(() => {
     if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded && elementsLoaded.bgLuz && elementsLoaded.bgOscuro && elementsLoaded.mezcladoraOscuro) {
       setTimeout(() => {
@@ -118,6 +118,33 @@ const ParallaxSection = () => {
       playSoundOpen();
     }
   }, [showConsole]);
+
+  useEffect(() => {
+    const adjustLayout = () => {
+      if (bgElementRef.current) {
+        const screenHeight = window.innerHeight;
+        const bgHeight = bgElementRef.current.clientHeight;
+
+        if (bgHeight < screenHeight) {
+          document.documentElement.style.width = '150vw';
+          document.body.style.width = '150vw';
+          document.documentElement.style.overflowX = 'scroll';
+          document.body.style.overflowX = 'scroll';
+        } else {
+          document.documentElement.style.width = '';
+          document.body.style.width = '';
+          document.documentElement.style.overflowX = '';
+          document.body.style.overflowX = '';
+        }
+      }
+    };
+
+    adjustLayout();
+    window.addEventListener('resize', adjustLayout);
+    return () => {
+      window.removeEventListener('resize', adjustLayout);
+    };
+  }, []);
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -195,8 +222,8 @@ const ParallaxSection = () => {
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
             <div className="layer" data-depth="0.06">
-              <img src={bgO} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
-              <img src={S1} className="img-scenes" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
+              <img src={bgO} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
+              <img src={S1} ref={bgElementRef} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
               <div className="div-video">
                 <Video />
               </div>
@@ -221,7 +248,10 @@ const ParallaxSection = () => {
               <SmoothIncenseSmoke turnOnLights={turnOnLights} />
             </div>
 
-            <div className="layer div-layer-sillon" data-depth="0.14">
+            <div
+              className="layer div-layer-sillon"
+              data-depth="0.14"
+            >
               <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} style={{ opacity: turnOnLights ? 1 : 0 }} />
             </div>
 
