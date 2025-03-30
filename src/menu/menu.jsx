@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import logoMonorama from './img/logo_monorama.png';
-import ContactModal from './contact-modal'; // Update the path as needed
+import ContactModal from './contact-modal'; 
+import Discography from './Discography'; 
 import './menu.css';
 
 const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isDiscographyModalOpen, setIsDiscographyModalOpen] = useState(false); 
 
   const toggleMenu = () => {
-    // Si el modal de contacto está abierto, ciérralo primero
-    if (isContactModalOpen) {
+    if (isContactModalOpen || isDiscographyModalOpen) {
       setIsContactModalOpen(false);
-      // Esperar un poco antes de abrir el menú para evitar solapamiento visual
+      setIsDiscographyModalOpen(false);
       setTimeout(() => {
         setIsMenuOpen(true);
       }, 300);
     } else {
-      // Comportamiento normal - toggle del menú
       setIsMenuOpen(!isMenuOpen);
     }
   };
 
   const openContactModal = () => {
-    setIsMenuOpen(false); // Cerrar el menú cuando abrimos el modal de contacto
+    setIsMenuOpen(false); 
     setTimeout(() => {
       setIsContactModalOpen(true);
     }, 300);
@@ -33,12 +33,25 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
     setIsContactModalOpen(false);
   };
 
-  // Actualizar hamburgerIcon dependiendo de qué modal está abierto
+  // New functions for Discography modal
+  const openDiscographyModal = () => {
+    setIsMenuOpen(false);
+    setTimeout(() => {
+      setIsDiscographyModalOpen(true);
+    }, 300);
+  };
+
+  const closeDiscographyModal = () => {
+    setIsDiscographyModalOpen(false);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         if (isContactModalOpen) {
           closeContactModal();
+        } else if (isDiscographyModalOpen) {
+          closeDiscographyModal();
         } else if (isMenuOpen) {
           setIsMenuOpen(false);
         }
@@ -49,15 +62,15 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isContactModalOpen, isMenuOpen]);
+  }, [isContactModalOpen, isDiscographyModalOpen, isMenuOpen]);
 
   return (
     <>
       <div className="hamburger-icon" onClick={toggleMenu} style={{ right: isMenuOpen ? 110 : 20 }}>
-        {!isMenuOpen && !isContactModalOpen &&
+        {!isMenuOpen && !isContactModalOpen && !isDiscographyModalOpen &&
           <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
         }
-        {isContactModalOpen && 
+        {(isContactModalOpen || isDiscographyModalOpen) && 
           <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
         }
         {isMenuOpen &&
@@ -75,7 +88,7 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
           <li>
             <a>HOME</a>
           </li>
-          <li><a>DISCOGRAPHY</a></li>
+          <li><a onClick={openDiscographyModal}>DISCOGRAPHY</a></li>
           <li><a onClick={openContactModal}>CONTACT</a></li>
         </ul>
         <div className="div-monorama">
@@ -86,6 +99,11 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
       <ContactModal 
         isOpen={isContactModalOpen} 
         onClose={closeContactModal}
+      />
+      
+      <Discography 
+        isOpen={isDiscographyModalOpen} 
+        onClose={closeDiscographyModal}
       />
     </>
   );

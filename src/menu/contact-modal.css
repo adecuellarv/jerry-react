@@ -1,0 +1,176 @@
+/* contact modal */
+.contact-modal {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 65%;
+    height: 100%;
+    background-color: #252525;
+    color: #fff;
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    overflow-y: auto;
+  }
+  
+  .contact-modal.open {
+    right: 0;
+  }
+  
+  .contact-modal-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    padding-top: 10px;
+  }
+  
+  .contact-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 500;
+    color: #D4AF37;
+    margin-bottom: 5px;
+    margin-top: 40px;
+  }
+  
+  .contact-subtitle {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #D4AF37;
+  }
+  
+  .contact-form {
+    width: 90%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #D4AF37, 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+  
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: #999;
+    opacity: 0.8;
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  .captcha-container {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .error-message {
+    color: #ff5252;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .submit-button {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    display: block;
+    padding: 14px;
+    background-color: #D4AF37;
+    border: none;
+    border-radius: 4px;
+    color: #222;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+  }
+  
+  .submit-button:hover {
+    background-color: #c6a52b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .submit-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Estilos específicos para el botón de cierre en este modal */
+  .contact-modal .div-close-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 992px) {
+    .contact-modal {
+      width: 70%;
+      right: -70%;
+    }
+    
+    .contact-form {
+      width: 90%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .contact-modal {
+      width: 100%;
+      right: -100%;
+    }
+    
+    .contact-modal-content {
+      padding: 20px 15px;
+    }
+    
+    .contact-form {
+      width: 100%;
+    }
+    
+    .submit-button {
+      width: 100%;
+    }
+  }

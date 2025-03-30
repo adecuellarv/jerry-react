@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import ReCAPTCHA from 'react-google-recaptcha';
-import './menu.css';
+import './contact-modal.css';
+import '../modal/button.css';
 
-const ContactModal = ({ isOpen, onClose }) => {
+const ContactModal = ({ isOpen, onClose, showCloseButton = true, customCloseButton = null }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,12 +14,11 @@ const ContactModal = ({ isOpen, onClose }) => {
   });
   const [captchaValue, setCaptchaValue] = useState(null);
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const recaptchaRef = useRef();
 
-  // Forzar que aparezca el desafío de imágenes
   useEffect(() => {
     if (isOpen && window.grecaptcha && recaptchaRef.current) {
-      // Esto intentará forzar el desafío
       try {
         window.grecaptcha.execute(recaptchaRef.current);
       } catch (e) {
@@ -40,7 +40,7 @@ const ContactModal = ({ isOpen, onClose }) => {
     if (value) setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!captchaValue) {
@@ -48,38 +48,68 @@ const ContactModal = ({ isOpen, onClose }) => {
       return;
     }
     
-    console.log('Form submitted:', {
-      ...formData,
-      recaptchaToken: captchaValue
-    });
+    setIsSubmitting(true);
+    setError('');
     
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
-    setCaptchaValue(null);
-    
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
-    }
-    
-    onClose();
+    // Simulación de envío (comentado como en el original)
+    /* 
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken: captchaValue,
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al enviar el formulario');
+      }
+
+      const result = await response.json();
+      
+      // Resetear el formulario
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      });
+      setCaptchaValue(null);
+      
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset();
+      }
+
+      // Mostrar mensaje de éxito
+      alert('Mensaje enviado exitosamente');
+      onClose();
+    } catch (err) {
+      setError(err.message || 'Hubo un problema al enviar el formulario');
+    } finally {
+      setIsSubmitting(false);
+    }*/
   };
 
   return (
     <div className={`contact-modal ${isOpen ? 'open' : ''}`}>
       <div className="contact-modal-content">
-      <div className="contact-modal-header">
-          <button className="contact-close-button" onClick={onClose}>
-            <div className="close-icon-wrapper">
-              <FontAwesomeIcon icon={faTimes} />
+        {customCloseButton ? (
+          customCloseButton
+        ) : (
+          showCloseButton && (
+            <div className="div-close-btn contact-close">
+              <button className="close-button-m" onClick={onClose}>
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+              <span>Close</span>
             </div>
-            <span>Close</span>
-          </button>
-        </div>
+          )
+        )}
         
         <div className="contact-modal-body">
           <h2 className="contact-title">CONTACT</h2>
@@ -96,6 +126,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 required
                 placeholder="Enter your name"
+                disabled={isSubmitting}
               />
             </div>
             
@@ -109,6 +140,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 required
                 placeholder="Enter your email"
+                disabled={isSubmitting}
               />
             </div>
             
@@ -122,6 +154,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 required
                 placeholder="Enter your subject"
+                disabled={isSubmitting}
               />
             </div>
             
@@ -134,6 +167,7 @@ const ContactModal = ({ isOpen, onClose }) => {
                 onChange={handleChange}
                 rows="5"
                 placeholder="Enter your message"
+                disabled={isSubmitting}
               ></textarea>
             </div>
             
@@ -146,13 +180,17 @@ const ContactModal = ({ isOpen, onClose }) => {
                 size="normal"
                 badge="inline"
                 hl="es" 
-                data-callback="onRecaptchaLoad"
-                data-error-callback="onRecaptchaError"
               />
               {error && <div className="error-message">{error}</div>}
             </div>
             
-            <button type="submit" className="submit-button">SEND</button>
+            <button 
+              type="submit" 
+              className="submit-button" 
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? 'ENVIANDO...' : 'SEND'}
+            </button>
           </form>
         </div>
       </div>

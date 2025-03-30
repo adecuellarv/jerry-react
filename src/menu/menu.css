@@ -55,10 +55,10 @@
 .contact-modal {
   position: fixed;
   top: 0;
-  right: -50%;
-  width: 50%;
+  right: -65%;
+  width: 65%;
   height: 100%;
-  background-color: #222;
+  background-color: #252525;
   color: #fff;
   transition: right 0.3s ease-in-out;
   z-index: 1000;

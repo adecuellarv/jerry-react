@@ -1,0 +1,391 @@
+.discography-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    animation: fadeIn 0.3s ease;
+    padding: 30px;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+
+  .discography-title {
+    font-size: 24px;
+    color: #d4af37; 
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 20px 0 30px;
+    text-align: center;
+  }
+
+
+  
+ 
+  .albums-main-container {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 1100px;
+    min-height: 500px;
+    height: auto;
+    max-height: 80vh;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .nav-container {
+    display: flex;
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .nav-button {
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  
+  .nav-button:hover, .nav-button.active {
+    background-color: #333;
+  }
+
+  .year-dropdown, .genre-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  .year-label, .genre-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 15px 0;
+    cursor: pointer;
+  }
+  
+  .year-list, .genre-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #000;
+    z-index: 5;
+    width: 150px;
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none;
+  }
+  
+  .year-dropdown:hover .year-list,
+  .genre-dropdown:hover .genre-list {
+    display: block;
+  }
+  
+  .year-item, .genre-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .year-item:hover, .year-item.active,
+  .genre-item:hover, .genre-item.active {
+    background-color: #333;
+  }
+  
+  .albums-grid-container {
+    padding: 30px;
+  }
+  
+  .albums-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+}
+  
+  .album-item {
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .album-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .album-thumbnail {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; 
+  }
+  
+  .album-thumbnail img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .album-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .album-item:hover .album-overlay {
+    opacity: 1;
+  }
+  
+  .album-overlay-text {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .album-overlay-text p {
+    margin: 0;
+    color: #fff;
+    font-weight: 500;
+  }
+  
+  .artist-name {
+    font-size: 14px;
+    margin-bottom: 4px !important;
+  }
+  
+  .album-title {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+  
+  .scroll-button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0 30px;
+  }
+  
+  .scroll-button {
+    background: none;
+    border: none;
+    color: #000;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+  }
+  
+  .scroll-button:hover {
+    transform: translateY(3px);
+  }
+   .album-detail-container {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 40px;
+  }
+  
+  .album-detail-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  
+  .album-cover {
+    width: 300px;
+    height: 300px;
+    flex-shrink: 0;
+  }
+  
+  .album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .album-info {
+    flex: 1;
+  }
+  
+  .album-info h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    color: #000;
+  }
+  
+  .album-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .grammy-nominated {
+    display: flex;
+    align-items: center;
+    color: #d4af37; /* Gold color */
+    margin-top: 15px !important;
+  }
+  
+  .grammy-icon {
+    margin-right: 8px;
+  }
+  
+  .back-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    transition: opacity 0.2s;
+    padding: 10px;
+  }
+  
+  .back-button:hover {
+    opacity: 0.8;
+  }
+  
+  .back-button svg {
+    margin-right: 8px;
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    font-size: 18px;
+    color: #ccc;
+  }
+  .genre-list, .year-list {
+    min-height: 250px; /* Ensures a consistent height */
+    max-height: 250px; /* Maintains the existing max-height */
+    overflow-y: auto; /* Allows scrolling if content exceeds height */
+  }
+  
+  .div-close-btnd{
+    position: fixed !important;
+    top:20px;
+    left: 5%;
+    padding-bottom: 0px;
+    display: flex;
+  }
+  .div-close-btnd span{
+    margin-left: 7px;
+    position: relative;
+    top: 11px;
+    color: #fff;
+  }
+
+  
+  /* Responsive adjustments */
+  @media (max-width: 1200px) {
+    .albums-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .album-detail-content {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .album-cover {
+      width: 250px;
+      height: 250px;
+    }
+    
+    .album-info {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .albums-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .nav-container {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .nav-button, .year-dropdown, .genre-dropdown {
+      flex: 0 0 auto;
+      text-align: center;
+      min-width: 100px;
+    }
+    
+    .discography-modal {
+      padding: 20px;
+    }
+    
+    .close-button-container {
+      top: 10px;
+      left: 10px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .albums-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .album-detail-container, .albums-main-container {
+      width: 95%;
+      padding: 15px;
+    }
+    
+    .album-cover {
+      width: 200px;
+      height: 200px;
+    }
+  }

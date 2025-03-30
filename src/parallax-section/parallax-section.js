@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState,route } from 'react';
 import Parallax from 'parallax-js';
 import Modal from '../modal/modal';
 import Video from '../video/video';
@@ -51,11 +51,14 @@ const ParallaxSection = () => {
     bgOscuro: false,
     mezcladoraOscuro: false
   });
+  
 
   const handleModal = (type) => {
     setTypeModal(type);
     setShowModal(true);
   };
+
+
 
   const handleLoaded = (nameImg) => {
     setElementsLoaded((prevState) => ({
