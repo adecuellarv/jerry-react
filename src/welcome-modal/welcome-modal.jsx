@@ -12,7 +12,7 @@ const WelcomeModal = ({ setShowModalWelcome, toggleMusic }) => {
 
   return (
     <div className="modal-container" id="modal-welcome">
-      <div className="modal-welcome">
+      <div className="modal-welcome" id="modal-welcome-subcontainer">
         <p>Welcome! Click anywhere in the room to find out more.</p>
       </div>
       <div className="div-wb">

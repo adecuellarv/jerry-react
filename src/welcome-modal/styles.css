@@ -11,6 +11,10 @@
   color: #f2d0a1;
   font-size: 18px;
   max-width: 400px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  
 }
 .modal-container {
   position: fixed;

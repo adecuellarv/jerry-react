@@ -139,7 +139,7 @@ const getText = (text) => {
 }
 
 const images = [cafeteria, grammy1, grammy2, grammyl1, grammyl2, grammyl3, honeymommas, incienso, iphone, hu, mac, tepemachine, tonnys, vela, vinil, yamaha];
-export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalLoaded }) {
+export default function Modal({ closeModal, typeModal = 'cafeteria', setModalLoaded }) {
   const [open, setOpen] = useState(true);
   const [showButton, setShowButton] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -147,7 +147,7 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalL
   const handleClose = () => {
     setOpen(false);
     setTimeout(() => {
-      setShowModal(false)
+      closeModal()
     }, 1200);
 
   }
@@ -218,8 +218,6 @@ export default function Modal({ setShowModal, typeModal = 'cafeteria', setModalL
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
-            width: "35%",
-            height: "100vh"
           }}
           className="left-panel"
         >
