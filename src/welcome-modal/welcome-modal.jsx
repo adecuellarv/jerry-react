@@ -11,7 +11,7 @@ const WelcomeModal = ({ setShowModalWelcome, toggleMusic }) => {
   }
 
   return (
-    <div className="modal-container">
+    <div className="modal-container" id="modal-welcome">
       <div className="modal-welcome">
         <p>Welcome! Click anywhere in the room to find out more.</p>
       </div>

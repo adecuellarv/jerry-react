@@ -1,3 +1,11 @@
+#main-container{
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+#root{
+  overflow-x: scroll;
+  white-space: nowrap;
+}
 .div-video{
   position: absolute;
   width: 12.9%;

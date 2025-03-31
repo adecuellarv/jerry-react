@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState,route } from 'react';
+import React, { useEffect, useRef, useState, route } from 'react';
 import Parallax from 'parallax-js';
 import Modal from '../modal/modal';
 import Video from '../video/video';
@@ -41,6 +41,7 @@ const ParallaxSection = () => {
   const [modalLoaded, setModalLoaded] = useState(false);
   const [turnOnLights, setTurnOnLights] = useState(true);
   const [fistLoad, setFirstLoad] = useState(true);
+  const [resizePage, setResizePage] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -51,7 +52,7 @@ const ParallaxSection = () => {
     bgOscuro: false,
     mezcladoraOscuro: false
   });
-  
+
 
   const handleModal = (type) => {
     setTypeModal(type);
@@ -107,6 +108,7 @@ const ParallaxSection = () => {
         setLoader(false);
         if (fistLoad) {
           setShowModalWelcome(true);
+          setResizePage(true);
           setFirstLoad(false);
         }
         setTimeout(() => {
@@ -124,20 +126,44 @@ const ParallaxSection = () => {
 
   useEffect(() => {
     const adjustLayout = () => {
-      if (bgElementRef.current) {
-        const screenHeight = window.innerHeight;
-        const bgHeight = bgElementRef.current.clientHeight;
-
-        if (bgHeight < screenHeight) {
-          document.documentElement.style.width = '150vw';
-          document.body.style.width = '150vw';
+      if (bgElementRef.current && resizePage) {
+        const screenWidth = window.outerWidth;
+        const mainContainer = document.getElementById("main-container");
+        const modalWelcomeContainer = document.getElementById("modal-welcome");
+        if (screenWidth <= 1024) {
+          mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth - 100}vw` : '165vw';
+          mainContainer.style.overflowX = "scroll";
+          modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth - 100}vw` : '165vw';
+          modalWelcomeContainer.style.overflowX = "scroll";
+          document.body.style.width = screenWidth <= 740 ? `${window.outerWidth - 100}vw` : '165vw';
+          document.body.style.overflowX = 'scroll'
+          document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth - 100}vw` : '165vw';
           document.documentElement.style.overflowX = 'scroll';
-          document.body.style.overflowX = 'scroll';
+
+          setTimeout(() => {
+            mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
+            modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
+            document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
+            document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
+          }, 100);
+
+          /*
+          setTimeout(() => {
+            window.scrollTo({
+              left: (mainContainer.scrollWidth - window.outerWidth) / 2,
+              behavior: "smooth",
+            });
+          }, 1000);*/
+
         } else {
-          document.documentElement.style.width = '';
-          document.body.style.width = '';
-          document.documentElement.style.overflowX = '';
+          mainContainer.style.width = 'auto';
+          mainContainer.style.overflowX = '';
+          modalWelcomeContainer.style.width = 'auto';
+          modalWelcomeContainer.style.overflowX = '';
+          document.body.style.width = 'auto';
           document.body.style.overflowX = '';
+          document.documentElement.style.width = 'auto';
+          document.documentElement.style.overflowX = '';
         }
       }
     };
@@ -147,7 +173,7 @@ const ParallaxSection = () => {
     return () => {
       window.removeEventListener('resize', adjustLayout);
     };
-  }, []);
+  }, [elementsLoaded.bgLuz, elementsLoaded.bgOscuro, resizePage]);
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -195,7 +221,7 @@ const ParallaxSection = () => {
 
   return (
     <>
-      <div className={`div-main ${isMenuOpen ? 'menu-open' : ''}`}>
+      <div className={`div-main ${isMenuOpen ? 'menu-open' : ''}`} id="main-container">
         <div className="div-logo">
           <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
         </div>

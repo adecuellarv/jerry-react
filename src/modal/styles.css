@@ -6,6 +6,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  transition: width 2s;
+  overflow-x: auto;
   /*background-color: #e2e8f0;*/
 }
 

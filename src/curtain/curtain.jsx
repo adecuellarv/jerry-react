@@ -13,7 +13,7 @@ import img10 from './persiana_animada/persiana10.png';
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
 
 const Curtain = ({ openWindow, setCurtainLoaded, turnOnLights }) => {
-  const [currentImage, setCurrentImage] = useState(img1);
+  const [currentImage, setCurrentImage] = useState(images[0]);
 
   useEffect(() => {
     const loadImages = () => {
@@ -38,7 +38,7 @@ const Curtain = ({ openWindow, setCurtainLoaded, turnOnLights }) => {
 
   useEffect(() => {
     if (openWindow === 'initial') {
-      setCurrentImage(img1);
+      setCurrentImage(images[0]);
       return;
     }
 
