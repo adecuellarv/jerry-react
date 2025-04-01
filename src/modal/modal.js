@@ -67,7 +67,7 @@ const getImage = (text) => {
 const getTitle = (text) => {
   switch (text) {
     case 'cafeteria':
-      return 'Cafetería Lupsisn';
+      return 'Cofee';
     case 'grammy1':
       return 'Grammy 1';
     case 'grammy2':
@@ -79,23 +79,23 @@ const getTitle = (text) => {
     case 'grammyl3':
       return 'Grammy Latino 3';
     case 'honeymommas':
-      return 'Honeymommas';
+      return 'Honey Mama’s (Lavender Rose)';
     case 'hu':
-      return 'Hu';
+      return 'Hu Chocolate (Hazelnut Butter)';
     case 'iphone':
       return 'iphone'
     case 'incienso':
-      return 'incienso'
+      return 'Incense'
     case 'tepemachine':
       return 'tepemachine';
     case 'tonnys':
-      return 'tonnys';
+      return 'Tony’s Chocolonley (Milk Hazelnut)';
     case 'vela':
-      return 'vela';
+      return 'Malin + Goetz (Cannabis Candle) ';
     case 'vinil':
       return 'vinil';
     case 'yamaha':
-      return 'yamaha';
+      return 'Yamaha NS10s';
     default:
       break;
   }
@@ -104,7 +104,13 @@ const getTitle = (text) => {
 const getText = (text) => {
   switch (text) {
     case 'cafeteria':
-      return 'Music...yeah, sure…but first, Coffee!\n I really enjoy making coffee for me and my clients. In 2022 I went ALL in, bought an espresso machine, and I have never looked back. I believe great coffee can inspire better music.';
+      return (
+        <>
+          Music...yeah, sure…but first, Coffee! <br />
+          I really enjoy making coffee for me and my clients. In 2022 I went ALL in, I bought an espresso machine, and I’ve never looked back. <br />
+          Better coffee = Better music.
+        </>
+      );    
     case 'grammy1':
       return 'Best Latin Pop Album 2023';
     case 'grammy2':
@@ -116,23 +122,32 @@ const getText = (text) => {
     case 'grammyl3':
       return 'Best Singer/Songwriter Album 2023';
     case 'honeymommas':
-      return 'Honey Mammas (Lavender Rose): (Chef’s kiss)';
+      return '(Chef’s kiss)';
     case 'hu':
-      return 'Hu Chocolate (Hazelnut Butter): My favorite chocolate.';
+      return 'My favorite chocolate.';
     case 'iphone':
       return 'iphone'
     case 'incienso':
-      return 'I’m big on smells. All senses should be triggered with excellence while creating and if the artist is ok with me burning incense during the sessions, I’m going to have something really good burning.';
+      return (
+        <>
+          I’m big on smells. All senses should be triggered with excellence while creating art. <br />
+          If the artist is ok with incense during the sessions, there’ll always be something really nice burning.        </>
+      );  
     case 'tepemachine':
       return 'Analog Recording: I love the sound of music on tape, and even though I prefer it over digital, I’m happy to work on either format.';
     case 'tonnys':
-      return 'Tony’s Chocolonley (Milk Hazelnut): My new addiction. ';
+      return 'My new addiction. ';
     case 'vela':
-      return 'Malin + Goetz (Cannabis Candle) Anytime, anywhere. This is my favorite candle.';
+      return 'Anytime, anywhere. This is my favorite candle.';
     case 'vinil':
       return 'vinil';
     case 'yamaha':
-      return 'Yamaha NS10: Love or hate they say…well…I’m a lover. For most things really. I’m happy to work with any speaker but would always prefer to have NS10 as I know them well and to me, they sound very consistent in any room.';
+      return (
+        <>
+          Love them or hate them (they say) …<br />
+          Well…I’m a lover. I’m happy to work with any speaker but would always prefer to have NS10 as I know them well.
+        </>
+      );  
     default:
       break;
   }

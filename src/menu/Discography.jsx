@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faChevronDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 import './Discography.css';
-
-
 
 const Discography = ({ isOpen, onClose }) => {
   const [albums, setAlbums] = useState([]);
@@ -12,141 +11,55 @@ const Discography = ({ isOpen, onClose }) => {
   const [yearFilter, setYearFilter] = useState('');
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState(['ALL']);
+  const [years, setYears] = useState([]);
+
+  const API_BASE_URL = 'https://monorama.com.mx/jerryordonezadmin/wp-json/wp/v2/discografia';
 
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        const response = await fetch('your-api-endpoint-here');
-        const data = await response.json();
-        setAlbums(data);
-        setFilteredAlbums(data);
+        setLoading(true);
+        
+        const response = await axios.get(API_BASE_URL);
+        console.log("API response:", response);
+        
+        const data = response.data || [];
+        
+        const transformedData = Array.isArray(data) ? data.map(item => {
+          const content = item.content && item.content.rendered ? item.content.rendered : '';
+          const title = item.title && item.title.rendered ? item.title.rendered : '';
+          
+          return {
+            id: item.id || 0,
+            title: item.formatted_title || cleanupTitle(title),
+            content: content,
+            artist: extractArtistFromContent(content),
+            year: item.years && item.years.length > 0 ? item.years[0] : '',
+            genre: item.categorias && item.categorias.length > 0 ? item.categorias[0] : '',
+            credit: extractCreditFromContent(content),
+            isGrammyNominated: content.includes('Grammy') || content.includes('grammy'),
+            cover: item.thumbnail || 'default-album-cover.jpg'
+          };
+        }) : [];
+        
+        setAlbums(transformedData);
+        setFilteredAlbums(transformedData);
+        
+        const uniqueCategories = ['ALL', ...new Set(transformedData
+          .map(album => album.genre)
+          .filter(genre => genre !== ''))];
+        
+        const uniqueYears = [...new Set(transformedData
+          .map(album => album.year)
+          .filter(year => year !== ''))].sort((a, b) => b - a);
+        
+        setCategories(uniqueCategories);
+        setYears(uniqueYears);
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching albums:', error);
-        const sampleData = [
-          { 
-            id: 1, 
-            title: 'We', 
-            artist: 'Arcade Fire', 
-            year: '2022', 
-            genre: 'Alternative',
-            credit: 'Tape Op/Assistant Engineer',
-            isGrammyNominated: true,
-            cover: 'https://i.pinimg.com/236x/98/db/3d/98db3d7e59cf97ecef1a28cf128835d7.jpg'
-          },
-          { 
-            id: 2, 
-            title: 'A Day\'s Work', 
-            artist: 'Anonymous', 
-            year: '2018', 
-            genre: 'Electronic',
-            credit: 'Producer',
-            isGrammyNominated: false,
-            cover: 'https://hips.hearstapps.com/hmg-prod/images/mejores-albumes-historia-nevermind-nirvana-1623775313.jpg?crop=1xw:1xh;center,top&resize=980:*'
-          },
-          { 
-            id: 3, 
-            title: 'Stereotype', 
-            artist: 'Artist Name', 
-            year: '2014', 
-            genre: 'R&B',
-            credit: 'Mixer',
-            isGrammyNominated: false,
-            cover: 'https://hips.hearstapps.com/hmg-prod/images/mejores-albumes-historia-pink-floyd-dark-side-moon-1623775315.jpg?crop=1xw:1xh;center,top&resize=980:*'
-          },
-          { 
-            id: 4, 
-            title: 'Another Album', 
-            artist: 'Another Artist', 
-            year: '2012', 
-            genre: 'Pop',
-            credit: 'Producer',
-            isGrammyNominated: false,
-            cover: 'https://cdn.venngage.com/template/thumbnail/small/bf008bfe-9bf6-4511-b795-e86f070bfff5.webp'
-          },
-          { 
-            id: 5, 
-            title: 'Fifth Album', 
-            artist: 'Fifth Artist', 
-            year: '2015', 
-            genre: 'Rock',
-            credit: 'Engineer',
-            isGrammyNominated: false,
-            cover: 'album5.jpg'
-          },
-          { 
-            id: 6, 
-            title: 'Sixth Album', 
-            artist: 'Sixth Artist', 
-            year: '2016', 
-            genre: 'Jazz',
-            credit: 'Producer',
-            isGrammyNominated: false,
-            cover: 'album6.jpg'
-          },
-          { 
-            id: 7, 
-            title: 'Seventh Album', 
-            artist: 'Seventh Artist', 
-            year: '2017', 
-            genre: 'Classical',
-            credit: 'Mixer',
-            isGrammyNominated: true,
-            cover: 'album7.jpg'
-          },
-          { 
-            id: 8, 
-            title: 'Eighth Album', 
-            artist: 'Eighth Artist', 
-            year: '2018', 
-            genre: 'Hip Hop',
-            credit: 'Producer',
-            isGrammyNominated: false,
-            cover: 'album8.jpg'
-          },
-          { 
-            id: 9, 
-            title: 'Ninth Album', 
-            artist: 'Ninth Artist', 
-            year: '2011', 
-            genre: 'Electronic',
-            credit: 'Engineer',
-            isGrammyNominated: false,
-            cover: 'album9.jpg'
-          },
-          { 
-            id: 10, 
-            title: 'Tenth Album', 
-            artist: 'Tenth Artist', 
-            year: '2013', 
-            genre: 'Alternative',
-            credit: 'Producer',
-            isGrammyNominated: false,
-            cover: 'album10.jpg'
-          },
-          { 
-            id: 11, 
-            title: 'Eleventh Album', 
-            artist: 'Eleventh Artist', 
-            year: '2008', 
-            genre: 'Rock',
-            credit: 'Mixer',
-            isGrammyNominated: false,
-            cover: 'album11.jpg'
-          },
-          { 
-            id: 12, 
-            title: 'Twelfth Album', 
-            artist: 'Twelfth Artist', 
-            year: '2018', 
-            genre: 'Pop',
-            credit: 'Producer',
-            isGrammyNominated: true,
-            cover: 'album12.jpg'
-          },
-        ];
-        setAlbums(sampleData);
-        setFilteredAlbums(sampleData);
         setLoading(false);
       }
     };
@@ -156,23 +69,86 @@ const Discography = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (filter === 'ALL' && !yearFilter) {
-      setFilteredAlbums(albums);
-    } else {
-      let filtered = [...albums];
+  const extractArtistFromContent = (content) => {
+    const artistMatch = content.match(/Artist:\s*([^<\n]+)/i);
+    return artistMatch ? artistMatch[1].trim() : '';
+  };
+
+  const extractCreditFromContent = (content) => {
+    const creditMatch = content.match(/Credit:\s*([^<\n]+)/i);
+    return creditMatch ? creditMatch[1].trim() : 'Producer/Engineer';
+  };
+  
+  const cleanupTitle = (rawTitle) => {
+    if (!rawTitle) return '';
+    
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = rawTitle;
+    
+    let cleanTitle = tempElement.textContent || tempElement.innerText || '';
+    
+    cleanTitle = cleanTitle.trim();
+    
+    cleanTitle = cleanTitle.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+    
+    return cleanTitle;
+  };
+
+  const fetchFilteredAlbums = async (genre, year) => {
+    try {
+      setLoading(true);
       
-      if (filter !== 'ALL') {
-        filtered = filtered.filter(album => album.genre === filter);
+      let apiUrl = API_BASE_URL;
+      const params = {};
+      
+      if (genre && genre !== 'ALL') {
+        params.categoria = genre;
       }
       
-      if (yearFilter) {
-        filtered = filtered.filter(album => album.year === yearFilter);
+      if (year) {
+        params.year = year;
       }
       
-      setFilteredAlbums(filtered);
+      console.log("Fetching with params:", params);
+      
+      const response = await axios.get(apiUrl, { params });
+      
+      const data = response.data || [];
+      
+      if (!Array.isArray(data)) {
+        console.error("API didn't return an array:", data);
+        setFilteredAlbums([]);
+        setLoading(false);
+        return;
+      }
+      
+      const transformedData = data.map(item => {
+        const content = item.content && item.content.rendered ? item.content.rendered : '';
+        const title = item.title && item.title.rendered ? item.title.rendered : '';
+        
+        return {
+          id: item.id || 0,
+          title: item.formatted_title || cleanupTitle(title),
+          content: content,
+          artist: extractArtistFromContent(content),
+          year: item.years && item.years.length > 0 ? item.years[0] : '',
+          genre: item.categorias && item.categorias.length > 0 ? item.categorias[0] : '',
+          credit: extractCreditFromContent(content),
+          isGrammyNominated: content.includes('Grammy') || content.includes('grammy'),
+          cover: item.thumbnail || 'default-album-cover.jpg'
+        };
+      });
+      
+      setFilteredAlbums(transformedData);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching filtered albums:', error);
+      setFilteredAlbums([]);
+      setLoading(false);
     }
-  }, [filter, yearFilter, albums]);
+  };
 
   const handleAlbumClick = (album) => {
     setSelectedAlbum(album);
@@ -185,17 +161,26 @@ const Discography = ({ isOpen, onClose }) => {
 
   const handleGenreFilter = (genre) => {
     setFilter(genre);
-    setYearFilter(''); // Reset year filter when changing genre
+    setYearFilter('');
+    
+    if (genre === 'ALL') {
+      fetchFilteredAlbums(null, null);
+    } else {
+      fetchFilteredAlbums(genre, null);
+    }
   };
 
   const handleYearFilter = (year) => {
-    setYearFilter(yearFilter === year ? '' : year);
-    setFilter('ALL'); // Reset genre filter when changing year
+    const newYearFilter = yearFilter === year ? '' : year;
+    setYearFilter(newYearFilter);
+    setFilter('ALL');
+    
+    if (newYearFilter === '') {
+      fetchFilteredAlbums(null, null);
+    } else {
+      fetchFilteredAlbums(null, year);
+    }
   };
-
-  const genres = ['ALL', ...new Set(albums.map(album => album.genre))];
-  
-  const years = [...new Set(albums.map(album => album.year))].sort((a, b) => b - a);
 
   const scrollToMore = () => {
     window.scrollBy({
@@ -206,7 +191,19 @@ const Discography = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
-  if (selectedAlbum) {
+  if (selectedAlbum && typeof selectedAlbum === 'object') {
+    const { 
+      cover = 'default-album-cover.jpg', 
+      title = '', 
+      artist = '', 
+      year = '', 
+      genre = '', 
+      credit = '',
+      isGrammyNominated = false 
+    } = selectedAlbum;
+    
+    const formattedTitle = title;
+    
     return (
       <div className="discography-modal">
         <div className="div-close-btnd"> 
@@ -221,15 +218,15 @@ const Discography = ({ isOpen, onClose }) => {
         <div className="album-detail-container">
           <div className="album-detail-content">
             <div className="album-cover">
-              <img src={selectedAlbum.cover} alt={`${selectedAlbum.title} by ${selectedAlbum.artist}`} />
+              <img src={cover} alt={`${title} by ${artist}`} />
             </div>
             <div className="album-info">
-              <h3>{selectedAlbum.artist} - {selectedAlbum.title}</h3>
-              <p>{selectedAlbum.year} / {selectedAlbum.genre}</p>
-              <p>Year Released: {selectedAlbum.year}</p>
-              <p>Genre: {selectedAlbum.genre}</p>
-              <p>Credit: {selectedAlbum.credit}</p>
-              {selectedAlbum.isGrammyNominated && (
+              <h3>{artist} - {formattedTitle}</h3>
+              <p>{year} / {genre}</p>
+              <p>Year Released: {year}</p>
+              <p>Genre: {genre}</p>
+              <p>Credit: {credit}</p>
+              {isGrammyNominated && (
                 <p className="grammy-nominated">
                   <span className="grammy-icon">🏆</span> Grammy Nominated
                 </p>
@@ -259,8 +256,11 @@ const Discography = ({ isOpen, onClose }) => {
 
       <h2 className="discography-title">DISCOGRAPHY</h2>
       
-      {loading ? (
-        <div className="loading">Loading...</div>
+      {loading === true ? (
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Loading albums...</p>
+        </div>
       ) : (
         <div className="albums-main-container">
           <div className="nav-container">
@@ -269,6 +269,7 @@ const Discography = ({ isOpen, onClose }) => {
               onClick={() => {
                 setFilter('ALL');
                 setYearFilter('');
+                fetchFilteredAlbums(null, null);
               }}
             >
               ALL
@@ -276,8 +277,8 @@ const Discography = ({ isOpen, onClose }) => {
             
             <div className="genre-dropdown">
               <span className="genre-label">GENRE</span>
-              <div className="genre-list min-h-[250px]"> {/* Added min-height to maintain consistent size */}
-                {genres.filter(genre => genre !== 'ALL').map(genre => (
+              <div className="genre-list min-h-[250px]">
+                {categories.filter(genre => genre !== 'ALL').map(genre => (
                   <div 
                     key={genre} 
                     className={`genre-item ${filter === genre ? 'active' : ''}`}
@@ -307,23 +308,29 @@ const Discography = ({ isOpen, onClose }) => {
 
           <div className="albums-grid-container">
             <div className="albums-grid">
-              {filteredAlbums.map(album => (
-                <div 
-                  key={album.id} 
-                  className="album-item" 
-                  onClick={() => handleAlbumClick(album)}
-                >
-                  <div className="album-thumbnail">
-                    <img src={album.cover} alt={`${album.title} by ${album.artist}`} />
-                    <div className="album-overlay">
-                      <div className="album-overlay-text">
-                        <p className="artist-name">{album.artist}</p>
-                        <p className="album-title">{album.title}</p>
+              {filteredAlbums.length > 0 ? (
+                filteredAlbums.map(album => (
+                  <div 
+                    key={album.id} 
+                    className="album-item" 
+                    onClick={() => handleAlbumClick(album)}
+                  >
+                    <div className="album-thumbnail">
+                      <img src={album.cover} alt={`${album.title} by ${album.artist}`} />
+                      <div className="album-overlay">
+                        <div className="album-overlay-text">
+                          <p className="artist-name">{album.artist}</p>
+                          <p className="album-title" title={album.title}>
+                            {album.title.length > 25 ? `${album.title.substring(0, 25)}...` : album.title}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <div className="no-results">No albums found matching your criteria</div>
+              )}
             </div>
           </div>
           
@@ -339,4 +346,5 @@ const Discography = ({ isOpen, onClose }) => {
     </div>
   );
 };
+
 export default Discography;

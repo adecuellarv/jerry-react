@@ -50,7 +50,7 @@ const ShareMenu = () => {
           <img src={allImg} alt="all music" />
         </a>
         <a 
-          href="https://twitter.com" 
+          href="https://x.com/Jerryaudio" 
           target="_blank" 
           rel="noopener noreferrer"
           className="social-icon-link"

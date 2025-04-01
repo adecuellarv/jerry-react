@@ -104,7 +104,7 @@ const ParallaxSection = () => {
     } else {
       window.location.href = url;
     }
-  };
+  };  
 
   const setByWidth = () => {
     const screenWidth = window.outerWidth;
@@ -274,6 +274,7 @@ const ParallaxSection = () => {
           <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado')}></div>
           <div className="sen-ampli" onClick={toggleMusic}></div>
           <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
+          <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
