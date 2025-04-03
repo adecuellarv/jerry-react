@@ -62,8 +62,17 @@ const ParallaxSection = () => {
   };
 
   const handleCloseModal = () => {
-    setByWidth();
+    const screenWidth = window.outerWidth;
+    if (screenWidth <= 1024) {
+      const capaBlack = document.querySelector('.capa-black');
+      setByWidth('modal');
+      capaBlack.classList.add('active');
+      setTimeout(() => {
+        capaBlack.classList.remove('active');
+      }, 500);
+    }
     setTimeout(() => {
+
       setShowModal(false);
     }, 700);
   }
@@ -109,7 +118,7 @@ const ParallaxSection = () => {
     }
   };
 
-  const setByWidth = () => {
+  const setByWidth = (type) => {
     const screenWidth = window.outerWidth;
     const mainContainer = document.getElementById("main-container");
     const modalWelcomeContainer = document.getElementById("modal-welcome");
@@ -126,25 +135,14 @@ const ParallaxSection = () => {
       modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth - 70}px`;
     }
 
-    //document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    //document.body.style.overflowX = 'scroll';
-    //document.body.style.overflowY = "hidden";
-    //document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    //document.documentElement.style.overflowX = 'scroll';
-    //document.documentElement.style.overflowY = 'hidden';
-
     if (centerElement) {
       setTimeout(() => {
-
         centerElement.scrollIntoView({
           inline: "center",
           block: "nearest",  // Esto evita el desplazamiento vertical
-          //behavior: "smooth"
-
+          behavior: type === 'modal' ? 'auto' : "smooth"
         });
-
-      }, 600);
-
+      }, 300);
     }
   }
 
@@ -158,7 +156,7 @@ const ParallaxSection = () => {
       mainContainer.style.overflowX = '';
     }
     if (modalWelcomeContainer) {
-      modalWelcomeContainer.style.width = 'auto';
+      modalWelcomeContainer.style.width = '100%';
       modalWelcomeContainer.style.overflowX = '';
       modalWelcomeSubContainer.style.maxWidth = 'auto';
     }
@@ -336,7 +334,7 @@ const ParallaxSection = () => {
       </div>
       {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
-
+      <div className="capa-black"></div>
       <audio ref={audioRef} loop>
         <source src={audio} type="audio/mpeg" />
         Your browser does not support the audio element.
