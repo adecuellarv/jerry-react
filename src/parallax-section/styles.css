@@ -312,9 +312,16 @@
   opacity: 0.5; */
 }
 
+.sen-centerElement{
+  position: absolute;
+  width: 10%;
+  height: 10%;
+  background: transparent;
+  top: 45%;
+  left: 45%;
+}
 
 
-/* Estilos para móviles y tablets */
 /* Estilos para móviles y tablets */
 @media (max-width: 1024px) {
   /* Asegurar que los modals no se escalen */

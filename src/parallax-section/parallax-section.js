@@ -114,6 +114,7 @@ const ParallaxSection = () => {
     const mainContainer = document.getElementById("main-container");
     const modalWelcomeContainer = document.getElementById("modal-welcome");
     const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
+    const centerElement = document.getElementById("sen-centerElement");
 
     if (mainContainer) {
       mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
@@ -122,12 +123,29 @@ const ParallaxSection = () => {
     if (modalWelcomeContainer) {
       modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
       modalWelcomeContainer.style.overflowX = "scroll";
-      modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth}px`;
+      modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth - 70}px`;
     }
-    document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    document.body.style.overflowX = 'scroll';
-    document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    document.documentElement.style.overflowX = 'scroll';
+
+    //document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+    //document.body.style.overflowX = 'scroll';
+    //document.body.style.overflowY = "hidden";
+    //document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+    //document.documentElement.style.overflowX = 'scroll';
+    //document.documentElement.style.overflowY = 'hidden';
+
+    if (centerElement) {
+      setTimeout(() => {
+
+        centerElement.scrollIntoView({
+          inline: "center",
+          block: "nearest",  // Esto evita el desplazamiento vertical
+          //behavior: "smooth"
+
+        });
+
+      }, 600);
+
+    }
   }
 
   const setOriginalWidth = () => {
@@ -256,7 +274,7 @@ const ParallaxSection = () => {
           <div className="sen-iphone" onClick={() => goTo('https://www.instagram.com/jerryaudio', true)}></div>
           <div className="sen-mac" onClick={() => handleModal('mac')}></div>
           <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
-          <div className="sen-tonnys" onClick={() => handleModal('tonnys')}></div>
+          <div className="sen-tonnys" onClick={() => handleModal('tonnys')} id="sen-tonnys" ></div>
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
           <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
@@ -265,6 +283,7 @@ const ParallaxSection = () => {
           <div className="sen-ampli" onClick={toggleMusic}></div>
           <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
           <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
+          <div className="sen-centerElement" id="sen-centerElement"></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
