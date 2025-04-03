@@ -42,6 +42,7 @@ const ParallaxSection = () => {
   const [turnOnLights, setTurnOnLights] = useState(true);
   const [fistLoad, setFirstLoad] = useState(true);
   const [resizePage, setResizePage] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -57,12 +58,14 @@ const ParallaxSection = () => {
   const handleModal = (type) => {
     setTypeModal(type);
     setShowModal(true);
-    //setOriginalWidth();
+    setOriginalWidth();
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    //setByWidth()
+    setByWidth();
+    setTimeout(() => {
+      setShowModal(false);
+    }, 700);
   }
 
   const handleLoaded = (nameImg) => {
@@ -104,7 +107,7 @@ const ParallaxSection = () => {
     } else {
       window.location.href = url;
     }
-  };  
+  };
 
   const setByWidth = () => {
     const screenWidth = window.outerWidth;
@@ -112,11 +115,15 @@ const ParallaxSection = () => {
     const modalWelcomeContainer = document.getElementById("modal-welcome");
     const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
 
-    mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    mainContainer.style.overflowX = "scroll";
-    modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    modalWelcomeContainer.style.overflowX = "scroll";
-    modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth}px`;
+    if (mainContainer) {
+      mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+      mainContainer.style.overflowX = "scroll";
+    }
+    if (modalWelcomeContainer) {
+      modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+      modalWelcomeContainer.style.overflowX = "scroll";
+      modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth}px`;
+    }
     document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
     document.body.style.overflowX = 'scroll';
     document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
@@ -128,11 +135,15 @@ const ParallaxSection = () => {
     const modalWelcomeContainer = document.getElementById("modal-welcome");
     const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
 
-    mainContainer.style.width = 'auto';
-    mainContainer.style.overflowX = '';
-    modalWelcomeContainer.style.width = 'auto';
-    modalWelcomeContainer.style.overflowX = '';
-    modalWelcomeSubContainer.style.maxWidth = 'auto';
+    if (mainContainer) {
+      mainContainer.style.width = 'auto';
+      mainContainer.style.overflowX = '';
+    }
+    if (modalWelcomeContainer) {
+      modalWelcomeContainer.style.width = 'auto';
+      modalWelcomeContainer.style.overflowX = '';
+      modalWelcomeSubContainer.style.maxWidth = 'auto';
+    }
     document.body.style.width = 'auto';
     document.body.style.overflowX = '';
     document.documentElement.style.width = 'auto';
@@ -167,28 +178,7 @@ const ParallaxSection = () => {
         const screenWidth = window.outerWidth;
         if (screenWidth <= 1024) {
           setByWidth();
-          /*
-          setTimeout(() => {
-            mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
-            modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
-            document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
-            document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
 
-            const attemptScroll = () => {
-              const scrollAmount = (mainContainer.scrollWidth - window.innerWidth) / 2;
-              if (scrollAmount > 0) {
-                window.scrollTo({
-                  left: scrollAmount,
-                  behavior: "smooth"
-                });
-              } else {
-                setTimeout(attemptScroll, 100);
-              }
-            };
-
-            attemptScroll();
-          }, 100);
-          */
         } else {
           setOriginalWidth()
         }
@@ -320,7 +310,7 @@ const ParallaxSection = () => {
             </div>
           </div>
         </div>
-        {showModal && <Modal closeModal={handleCloseModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
+        {showModal && <Modal handleCloseModal={handleCloseModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
         {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}

@@ -311,3 +311,24 @@
   /* background-color: blue;
   opacity: 0.5; */
 }
+
+
+
+/* Estilos para móviles y tablets */
+/* Estilos para móviles y tablets */
+@media (max-width: 1024px) {
+  /* Asegurar que los modals no se escalen */
+
+  .div-close-btn{
+    left: 1%;
+  }
+
+  .right-panel{
+    padding: 0px;
+    font-size: 16px;
+    justify-content: initial;
+  }
+  .right-panel p{
+    padding: 10px;
+  }
+}

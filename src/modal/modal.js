@@ -154,15 +154,16 @@ const getText = (text) => {
 }
 
 const images = [cafeteria, grammy1, grammy2, grammyl1, grammyl2, grammyl3, honeymommas, incienso, iphone, hu, mac, tepemachine, tonnys, vela, vinil, yamaha];
-export default function Modal({ closeModal, typeModal = 'cafeteria', setModalLoaded }) {
+export default function Modal({ handleCloseModal, typeModal = 'cafeteria', setModalLoaded }) {
   const [open, setOpen] = useState(true);
   const [showButton, setShowButton] = useState(false);
   const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
+    handleCloseModal()
     setTimeout(() => {
-      closeModal()
+      
     }, 1200);
 
   }
