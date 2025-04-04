@@ -1,26 +1,29 @@
-import React, { useEffect, useRef, useState, route } from 'react';
-import Parallax from 'parallax-js';
-import Modal from '../modal/modal';
-import Video from '../video/video';
-import SSLConsole from '../ssl-console/ssl-console';
-import LoaderComponent from '../loader/loader-component';
-import WelcomeModal from '../welcome-modal/welcome-modal';
-import Menu from '../menu/menu';
-import ShareMenu from '../share-menu/ShareMenu';
-import SmoothIncenseSmoke from '../inciense/inciense';
-import S1 from './img/scenes/studio-cerrado/fondo_sin_persiana.jpg';
-import S2 from './img/scenes/studio-cerrado/2.png';
-import S3 from './img/scenes/studio-cerrado/3.png';
-import S4 from './img/scenes/studio-cerrado/4.png';
-import S5 from './img/scenes/studio-cerrado/5.png';
-import bgO from './img/scenes/studio-oscuro/bg-apagado.png';
-import S30 from './img/scenes/studio-oscuro/3.png';
-import Curtain from '../curtain/curtain';
-import logo from './img/logo_jerryordonez_mainpage.png'
-import audio from './audio/audio.wav';
-import audioOpen from '../modal/sounds/open.wav';
-import audioClose from '../modal/sounds/close.wav';
-import './styles.css';
+import React, { useEffect, useRef, useState, route } from "react";
+import Parallax from "parallax-js";
+import Modal from "../modal/modal";
+import Video from "../video/video";
+import SSLConsole from "../ssl-console/ssl-console";
+import LoaderComponent from "../loader/loader-component";
+import WelcomeModal from "../welcome-modal/welcome-modal";
+import Menu from "../menu/menu";
+import ShareMenu from "../share-menu/ShareMenu";
+import SmoothIncenseSmoke from "../inciense/inciense";
+import S1 from "./img/scenes/studio-cerrado/fondo_sin_persiana.jpg";
+import S2 from "./img/scenes/studio-cerrado/2.png";
+import S3 from "./img/scenes/studio-cerrado/3.png";
+import S4 from "./img/scenes/studio-cerrado/4.png";
+import S5 from "./img/scenes/studio-cerrado/5.png";
+import bgO from "./img/scenes/studio-oscuro/bg-apagado.png";
+import S30 from "./img/scenes/studio-oscuro/3.png";
+import Curtain from "../curtain/curtain";
+import logo from "./img/logo_jerryordonez_mainpage.png";
+import audio from "./audio/audio.wav";
+import audioOpen from "../modal/sounds/open.wav";
+import audioClose from "../modal/sounds/close.wav";
+import ModalPersiana from "../popup/modalPersiana";
+import ModalConsola from "../popup/modalConsola";
+import Discography from "../menu/Discography";
+import "./styles.css";
 
 //let elementsLoaded = 0;
 const ParallaxSection = () => {
@@ -30,18 +33,21 @@ const ParallaxSection = () => {
   const audioRef = useRef(null);
   const bgElementRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
-  const [typeModal, setTypeModal] = useState('');
+  const [typeModal, setTypeModal] = useState("");
   const [showConsole, setShowConsole] = useState(false);
   const [loader, setLoader] = useState(true);
   const [showModalWelcome, setShowModalWelcome] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showMenuIcon, setShowMenuIcon] = useState(false);
-  const [openWindow, setOpenWindow] = useState('initial');
+  const [openWindow, setOpenWindow] = useState("initial");
   const [curtainLoaded, setCurtainLoaded] = useState(false);
   const [modalLoaded, setModalLoaded] = useState(false);
   const [turnOnLights, setTurnOnLights] = useState(true);
   const [fistLoad, setFirstLoad] = useState(true);
   const [resizePage, setResizePage] = useState(false);
+  const [showModalPersiana, setShowModalPersiana] = useState(false);
+  const [showModalConsola, setShowModalConsola] = useState(false);
+  const [showDiscography, setshowDiscography] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -50,9 +56,8 @@ const ParallaxSection = () => {
     logo: false,
     bgLuz: false,
     bgOscuro: false,
-    mezcladoraOscuro: false
+    mezcladoraOscuro: false,
   });
-
 
   const handleModal = (type) => {
     setTypeModal(type);
@@ -63,7 +68,15 @@ const ParallaxSection = () => {
   const handleCloseModal = () => {
     setShowModal(false);
     //setByWidth()
-  }
+  };
+
+  const handleDiscography = () => {
+    setshowDiscography(true);
+  };
+
+  const handleCloseModalDiscography = () => {
+    setshowDiscography(false);
+  };
 
   const handleLoaded = (nameImg) => {
     setElementsLoaded((prevState) => ({
@@ -75,7 +88,7 @@ const ParallaxSection = () => {
   const handleCloseModalSSL = () => {
     setShowConsole(false);
     playSoundClose();
-  }
+  };
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -100,47 +113,65 @@ const ParallaxSection = () => {
 
   const goTo = (url, isTarget = false) => {
     if (isTarget) {
-      window.open(url, '_blank');
+      window.open(url, "_blank");
     } else {
       window.location.href = url;
     }
-  };  
+  };
 
   const setByWidth = () => {
     const screenWidth = window.outerWidth;
     const mainContainer = document.getElementById("main-container");
     const modalWelcomeContainer = document.getElementById("modal-welcome");
-    const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
+    const modalWelcomeSubContainer = document.getElementById(
+      "modal-welcome-subcontainer"
+    );
 
-    mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+    mainContainer.style.width =
+      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
     mainContainer.style.overflowX = "scroll";
-    modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+    modalWelcomeContainer.style.width =
+      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
     modalWelcomeContainer.style.overflowX = "scroll";
     modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth}px`;
-    document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    document.body.style.overflowX = 'scroll';
-    document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-    document.documentElement.style.overflowX = 'scroll';
-  }
+    document.body.style.width =
+      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
+    document.body.style.overflowX = "scroll";
+    document.documentElement.style.width =
+      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
+    document.documentElement.style.overflowX = "scroll";
+  };
 
   const setOriginalWidth = () => {
     const mainContainer = document.getElementById("main-container");
     const modalWelcomeContainer = document.getElementById("modal-welcome");
-    const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
+    const modalWelcomeSubContainer = document.getElementById(
+      "modal-welcome-subcontainer"
+    );
 
-    mainContainer.style.width = 'auto';
-    mainContainer.style.overflowX = '';
-    modalWelcomeContainer.style.width = 'auto';
-    modalWelcomeContainer.style.overflowX = '';
-    modalWelcomeSubContainer.style.maxWidth = 'auto';
-    document.body.style.width = 'auto';
-    document.body.style.overflowX = '';
-    document.documentElement.style.width = 'auto';
-    document.documentElement.style.overflowX = '';
-  }
+    mainContainer.style.width = "auto";
+    mainContainer.style.overflowX = "";
+    modalWelcomeContainer.style.width = "auto";
+    modalWelcomeContainer.style.overflowX = "";
+    modalWelcomeSubContainer.style.maxWidth = "auto";
+    document.body.style.width = "auto";
+    document.body.style.overflowX = "";
+    document.documentElement.style.width = "auto";
+    document.documentElement.style.overflowX = "";
+  };
 
   useEffect(() => {
-    if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded && elementsLoaded.bgLuz && elementsLoaded.bgOscuro && elementsLoaded.mezcladoraOscuro) {
+    if (
+      elementsLoaded.mezcladora &&
+      elementsLoaded.lampara &&
+      elementsLoaded.cafetera &&
+      elementsLoaded.sillon &&
+      elementsLoaded.logo &&
+      curtainLoaded &&
+      elementsLoaded.bgLuz &&
+      elementsLoaded.bgOscuro &&
+      elementsLoaded.mezcladoraOscuro
+    ) {
       setTimeout(() => {
         setLoader(false);
         if (fistLoad) {
@@ -190,15 +221,15 @@ const ParallaxSection = () => {
           }, 100);
           */
         } else {
-          setOriginalWidth()
+          setOriginalWidth();
         }
       }
     };
 
     adjustLayout();
-    window.addEventListener('resize', adjustLayout);
+    window.addEventListener("resize", adjustLayout);
     return () => {
-      window.removeEventListener('resize', adjustLayout);
+      window.removeEventListener("resize", adjustLayout);
     };
   }, [elementsLoaded.bgLuz, elementsLoaded.bgOscuro, resizePage]);
 
@@ -223,7 +254,7 @@ const ParallaxSection = () => {
         const offsetX = centerX + Math.sin(time) * 50; // Movimiento en X
         const offsetY = centerY + Math.cos(time) * 50; // Movimiento en Y
 
-        const event = new MouseEvent('mousemove', {
+        const event = new MouseEvent("mousemove", {
           clientX: offsetX,
           clientY: offsetY,
           bubbles: true,
@@ -248,68 +279,210 @@ const ParallaxSection = () => {
 
   return (
     <>
-      <div className={`div-main ${isMenuOpen ? 'menu-open' : ''}`} id="main-container">
+      <div
+        className={`div-main ${isMenuOpen ? "menu-open" : ""}`}
+        id="main-container"
+      >
         <div className="div-logo">
-          <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
+          <img src={logo} alt="logo" onLoad={() => handleLoaded("logo")} />
         </div>
         <div className="sen-areas">
-          <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
-          <div className="se-console" onClick={() => setShowConsole(true)}></div>
-          <div className="sen-grammy1" onClick={() => handleModal('grammy1')}></div>
-          <div className="sen-grammy2" onClick={() => handleModal('grammy2')}></div>
-          <div className="sen-grammyl1" onClick={() => handleModal('grammyl1')}></div>
-          <div className="sen-grammyl2" onClick={() => handleModal('grammyl2')}></div>
-          <div className="sen-grammyl3" onClick={() => handleModal('grammyl3')}></div>
-          <div className="sen-honeymommas" onClick={() => handleModal('honeymommas')}></div>
-          <div className="sen-hu" onClick={() => handleModal('hu')}></div>
-          <div className="sen-incienso" onClick={() => handleModal('incienso')}></div>
-          <div className="sen-iphone" onClick={() => goTo('https://www.instagram.com/jerryaudio', true)}></div>
-          <div className="sen-mac" onClick={() => handleModal('mac')}></div>
-          <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
-          <div className="sen-tonnys" onClick={() => handleModal('tonnys')}></div>
-          <div className="sen-vela" onClick={() => handleModal('vela')}></div>
-          <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
-          <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
-          <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
-          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado')}></div>
+          <div
+            className="sen-cafetera"
+            onClick={() => handleModal("cafeteria")}
+          ></div>
+          <div
+            className="se-console"
+            onClick={() => {
+              setShowModalConsola(true);
+              setTimeout(() => {
+                setShowModalConsola(false); 
+                setShowConsole(true);
+              }, 5000);
+
+            }}
+          ></div>
+          <div
+            className="sen-grammy1"
+            onClick={() => handleModal("grammy1")}
+          ></div>
+          <div
+            className="sen-grammy2"
+            onClick={() => handleModal("grammy2")}
+          ></div>
+          <div
+            className="sen-grammyl1"
+            onClick={() => handleModal("grammyl1")}
+          ></div>
+          <div
+            className="sen-grammyl2"
+            onClick={() => handleModal("grammyl2")}
+          ></div>
+          <div
+            className="sen-grammyl3"
+            onClick={() => handleModal("grammyl3")}
+          ></div>
+          <div
+            className="sen-honeymommas"
+            onClick={() => handleModal("honeymommas")}
+          ></div>
+          <div className="sen-hu" onClick={() => handleModal("hu")}></div>
+          <div
+            className="sen-incienso"
+            onClick={() => handleModal("incienso")}
+          ></div>
+          <div
+            className="sen-iphone"
+            onClick={() => goTo("https://www.instagram.com/jerryaudio", true)}
+          ></div>
+          <div className="sen-mac" onClick={() => handleModal("mac")}></div>
+          <div
+            className="sen-tepemachine"
+            onClick={() => handleModal("tepemachine")}
+          ></div>
+          <div
+            className="sen-tonnys"
+            onClick={() => handleModal("tonnys")}
+          ></div>
+          <div className="sen-vela" onClick={() => handleModal("vela")}></div>
+          <div className="sen-vinil" onClick={() => handleDiscography()}></div>
+          <div
+            className="sen-yamaha"
+            onClick={() => handleModal("yamaha")}
+          ></div>
+          <div
+            className="sen-yamaha-left"
+            onClick={() => handleModal("yamaha")}
+          ></div>
+          <div
+            className="sen-cortina"
+            onClick={() => {
+              const nuevaEstado = openWindow !== "abierto" ? "abierto" : "cerrado";
+              setOpenWindow(nuevaEstado);
+              if (nuevaEstado === "abierto") {
+                setShowModalPersiana(true);
+              }else if (nuevaEstado === "cerrado") {
+                setShowModalPersiana(false);
+              }
+            }}
+          ></div>{" "}
           <div className="sen-ampli" onClick={toggleMusic}></div>
-          <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
-          <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
+          <div
+            className="sen-lights"
+            onClick={() => setTurnOnLights(!turnOnLights)}
+          ></div>
+          <div
+            className="sen-tapes"
+            onClick={() =>
+              goTo(
+                "https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d",
+                true
+              )
+            }
+          ></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
             <div className="layer" data-depth="0.06">
-              <img src={bgO} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
-              <img src={S1} ref={bgElementRef} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
+              <img
+                src={bgO}
+                className="img-scenes bg-element"
+                alt="Fondo"
+                style={{
+                  opacity: turnOnLights ? 0 : 1,
+                  width: turnOnLights ? 0 : "100%",
+                }}
+                onLoad={() => handleLoaded("bgOscuro")}
+              />
+              <img
+                src={S1}
+                ref={bgElementRef}
+                className="img-scenes bg-element"
+                alt="Fondo"
+                style={{
+                  opacity: turnOnLights ? 1 : 0,
+                  width: turnOnLights ? "100%" : 0,
+                }}
+                onLoad={() => handleLoaded("bgLuz")}
+              />
               <div className="div-video">
                 <Video />
               </div>
               <div className="div-perciana">
-                <Curtain openWindow={openWindow} setCurtainLoaded={setCurtainLoaded} turnOnLights={turnOnLights} />
+                <Curtain
+                  openWindow={openWindow}
+                  setCurtainLoaded={setCurtainLoaded}
+                  turnOnLights={turnOnLights}
+                />
               </div>
             </div>
-            <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
-              <img src={S30} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladoraOscuro')} style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} />
-              <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} />
+            <div
+              className="layer div-layer-mezcladora"
+              data-depth="0.08"
+              onClick={() => alert("Mezcladora")}
+            >
+              <img
+                src={S30}
+                className="img-scenes layer-mezcladora"
+                alt="mezcladora"
+                onLoad={() => handleLoaded("mezcladoraOscuro")}
+                style={{
+                  opacity: turnOnLights ? 0 : 1,
+                  width: turnOnLights ? 0 : "100%",
+                }}
+              />
+              <img
+                src={S3}
+                className="img-scenes layer-mezcladora"
+                alt="mezcladora"
+                onLoad={() => handleLoaded("mezcladora")}
+                style={{
+                  opacity: turnOnLights ? 1 : 0,
+                  width: turnOnLights ? "100%" : 0,
+                }}
+              />
             </div>
-            <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
-              <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+            <div
+              className="layer div-layer-lampara"
+              data-depth="0.10"
+              onClick={() => alert("lampara")}
+            >
+              <img
+                src={S5}
+                className="img-scenes layer-lampara"
+                alt="lampara"
+                onLoad={() => handleLoaded("lampara")}
+                style={{ opacity: turnOnLights ? 1 : 0 }}
+              />
               <div className="candle">
                 <div className="flame"></div>
               </div>
             </div>
 
-            <div className="layer div-layer-cafetera" data-depth="0.12" onClick={() => alert('cafetera')}>
-              <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+            <div
+              className="layer div-layer-cafetera"
+              data-depth="0.12"
+              onClick={() => alert("cafetera")}
+            >
+              <img
+                src={S2}
+                className="img-scenes layer-cafetera"
+                alt="cafetera"
+                onLoad={() => handleLoaded("cafetera")}
+                style={{ opacity: turnOnLights ? 1 : 0 }}
+              />
 
               <SmoothIncenseSmoke turnOnLights={turnOnLights} />
             </div>
 
-            <div
-              className="layer div-layer-sillon"
-              data-depth="0.14"
-            >
-              <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+            <div className="layer div-layer-sillon" data-depth="0.14">
+              <img
+                src={S4}
+                className="img-scenes layer-sillon"
+                alt="sillon"
+                onLoad={() => handleLoaded("sillon")}
+                style={{ opacity: turnOnLights ? 1 : 0 }}
+              />
             </div>
 
             <div className="parent-particles">
@@ -320,12 +493,44 @@ const ParallaxSection = () => {
             </div>
           </div>
         </div>
-        {showModal && <Modal closeModal={handleCloseModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
-        {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
+        {showModal && (
+          <Modal
+            closeModal={handleCloseModal}
+            typeModal={typeModal}
+            setModalLoaded={setModalLoaded}
+          />
+        )}
+        {showConsole && (
+          <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />
+        )}
         <LoaderComponent open={loader} />
-        {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
+        {showModalPersiana && (
+          <ModalPersiana setShowModalPersiana={setShowModalPersiana} />
+        )}
+        {showModalConsola && (
+          <ModalConsola 
+          setShowModalConsola={() => {
+            setShowModalConsola(false); 
+            setShowConsole(true); 
+          }} />
+        )}
+        {showDiscography && (
+          <Discography
+            isOpen={handleDiscography}
+            onClose={handleCloseModalDiscography}
+          />
+        )}
+        {showModalWelcome && (
+          <WelcomeModal
+            setShowModalWelcome={setShowModalWelcome}
+            showModalWelcome={showModalWelcome}
+            toggleMusic={toggleMusic}
+          />
+        )}
       </div>
-      {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
+      {showMenuIcon && !showModal && !showConsole && (
+        <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+      )}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
 
       <audio ref={audioRef} loop>

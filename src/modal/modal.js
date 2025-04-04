@@ -87,7 +87,7 @@ const getTitle = (text) => {
     case 'incienso':
       return 'Incense'
     case 'tepemachine':
-      return 'tepemachine';
+      return 'Analog Recording';
     case 'tonnys':
       return 'Tony’s Chocolonley (Milk Hazelnut)';
     case 'vela':
@@ -134,7 +134,7 @@ const getText = (text) => {
           If the artist is ok with incense during the sessions, there’ll always be something really nice burning.        </>
       );  
     case 'tepemachine':
-      return 'Analog Recording: I love the sound of music on tape, and even though I prefer it over digital, I’m happy to work on either format.';
+      return 'I love the sound of music on tape, and even though I prefer it over digital, I’m happy to work on either format.';
     case 'tonnys':
       return 'My new addiction. ';
     case 'vela':

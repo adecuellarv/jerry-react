@@ -82,11 +82,11 @@
 .se-console{
   position: absolute;
   z-index: 4;
-  width: 10%;
-  height: 8.5%;
+  width: 3%;
+  height: 3%;
   background: transparent;
-  top: 42%;
-  left: 46%;
+  top: 46%;
+  left: 49%;
   cursor: pointer;
 }
 
