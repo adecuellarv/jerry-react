@@ -288,8 +288,18 @@ return (
           <img src={logo} alt="logo" onLoad={() => handleLoaded("logo")} />
         </div>
         <div className="sen-areas">
-          <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
-          <div className="se-console" onClick={() => setShowConsole(true)}></div>
+        <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
+          <div
+            className="se-console"
+            onClick={() => {
+              setShowModalConsola(true);
+              setTimeout(() => {
+                setShowModalConsola(false); 
+                setShowConsole(true);
+              }, 5000);
+
+            }}
+          ></div>
           <div className="sen-grammy1" onClick={() => handleModal('grammy1')}></div>
           <div className="sen-grammy2" onClick={() => handleModal('grammy2')}></div>
           <div className="sen-grammyl1" onClick={() => handleModal('grammyl1')}></div>
@@ -303,11 +313,21 @@ return (
           <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
           <div className="sen-tonnys" onClick={() => handleModal('tonnys')} id="sen-tonnys" ></div>
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
-          <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
+          <div className="sen-vinil" onClick={() => handleDiscography()}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
           <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
-          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado')}></div>
-          <div className="sen-ampli" onClick={toggleMusic}></div>
+          <div
+            className="sen-cortina"
+            onClick={() => {
+              const nuevaEstado = openWindow !== "abierto" ? "abierto" : "cerrado";
+              setOpenWindow(nuevaEstado);
+              if (nuevaEstado === "abierto") {
+                setShowModalPersiana(true);
+              }else if (nuevaEstado === "cerrado") {
+                setShowModalPersiana(false);
+              }
+            }}
+          ></div>{" "}          <div className="sen-ampli" onClick={toggleMusic}></div>
           <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
           <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
           <div className="sen-centerElement" id="sen-centerElement"></div>
