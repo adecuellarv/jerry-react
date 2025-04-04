@@ -48,6 +48,7 @@ const ParallaxSection = () => {
   const [showModalPersiana, setShowModalPersiana] = useState(false);
   const [showModalConsola, setShowModalConsola] = useState(false);
   const [showDiscography, setshowDiscography] = useState(false);
+  const [isMobileView, setIsMobileView] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -62,7 +63,7 @@ const ParallaxSection = () => {
   const handleModal = (type) => {
     setTypeModal(type);
     setShowModal(true);
-    //setOriginalWidth();
+    setOriginalWidth();
   };
 
   const handleCloseModal = () => {
@@ -77,6 +78,18 @@ const ParallaxSection = () => {
   const handleCloseModalDiscography = () => {
     setshowDiscography(false);
   };
+    const screenWidth = window.outerWidth;
+    if (screenWidth <= 1024) {
+      const capaBlack = document.querySelector('.capa-black');
+      setByWidth('modal');
+      capaBlack.classList.add('active');
+      setTimeout(() => {
+        capaBlack.classList.remove('active');
+      }, 500);
+    }
+  setTimeout(() => {
+    setShowModal(false);
+  }, 700);
 
   const handleLoaded = (nameImg) => {
     setElementsLoaded((prevState) => ({
@@ -119,28 +132,33 @@ const ParallaxSection = () => {
     }
   };
 
-  const setByWidth = () => {
+  const setByWidth = (type) => {
     const screenWidth = window.outerWidth;
     const mainContainer = document.getElementById("main-container");
     const modalWelcomeContainer = document.getElementById("modal-welcome");
-    const modalWelcomeSubContainer = document.getElementById(
-      "modal-welcome-subcontainer"
-    );
+    const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
+    const centerElement = document.getElementById("sen-centerElement");
 
-    mainContainer.style.width =
-      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
-    mainContainer.style.overflowX = "scroll";
-    modalWelcomeContainer.style.width =
-      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
-    modalWelcomeContainer.style.overflowX = "scroll";
-    modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth}px`;
-    document.body.style.width =
-      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
-    document.body.style.overflowX = "scroll";
-    document.documentElement.style.width =
-      screenWidth <= 740 ? `${window.outerWidth}vw` : "165vw";
-    document.documentElement.style.overflowX = "scroll";
-  };
+    if (mainContainer) {
+      mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+      mainContainer.style.overflowX = "scroll";
+    }
+    if (modalWelcomeContainer) {
+      modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
+      modalWelcomeContainer.style.overflowX = "scroll";
+      modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth - 70}px`;
+    }
+
+    if (centerElement) {
+      setTimeout(() => {
+        centerElement.scrollIntoView({
+          inline: "center",
+          block: "nearest",  // Esto evita el desplazamiento vertical
+          behavior: type === 'modal' ? 'auto' : "smooth"
+        });
+      }, 300);
+    }
+  }
 
   const setOriginalWidth = () => {
     const mainContainer = document.getElementById("main-container");
@@ -149,16 +167,20 @@ const ParallaxSection = () => {
       "modal-welcome-subcontainer"
     );
 
-    mainContainer.style.width = "auto";
-    mainContainer.style.overflowX = "";
-    modalWelcomeContainer.style.width = "auto";
-    modalWelcomeContainer.style.overflowX = "";
-    modalWelcomeSubContainer.style.maxWidth = "auto";
-    document.body.style.width = "auto";
-    document.body.style.overflowX = "";
-    document.documentElement.style.width = "auto";
-    document.documentElement.style.overflowX = "";
-  };
+    if (mainContainer) {
+      mainContainer.style.width = 'auto';
+      mainContainer.style.overflowX = '';
+    }
+    if (modalWelcomeContainer) {
+      modalWelcomeContainer.style.width = '100%';
+      modalWelcomeContainer.style.overflowX = '';
+      modalWelcomeSubContainer.style.maxWidth = 'auto';
+    }
+    document.body.style.width = 'auto';
+    document.body.style.overflowX = '';
+    document.documentElement.style.width = 'auto';
+    document.documentElement.style.overflowX = '';
+  }
 
   useEffect(() => {
     if (
@@ -198,28 +220,7 @@ const ParallaxSection = () => {
         const screenWidth = window.outerWidth;
         if (screenWidth <= 1024) {
           setByWidth();
-          /*
-          setTimeout(() => {
-            mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
-            modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
-            document.body.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
-            document.documentElement.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '265vw';
 
-            const attemptScroll = () => {
-              const scrollAmount = (mainContainer.scrollWidth - window.innerWidth) / 2;
-              if (scrollAmount > 0) {
-                window.scrollTo({
-                  left: scrollAmount,
-                  behavior: "smooth"
-                });
-              } else {
-                setTimeout(attemptScroll, 100);
-              }
-            };
-
-            attemptScroll();
-          }, 100);
-          */
         } else {
           setOriginalWidth();
         }
@@ -277,7 +278,7 @@ const ParallaxSection = () => {
     };
   }, []);
 
-  return (
+return (
     <>
       <div
         className={`div-main ${isMenuOpen ? "menu-open" : ""}`}
@@ -287,99 +288,29 @@ const ParallaxSection = () => {
           <img src={logo} alt="logo" onLoad={() => handleLoaded("logo")} />
         </div>
         <div className="sen-areas">
-          <div
-            className="sen-cafetera"
-            onClick={() => handleModal("cafeteria")}
-          ></div>
-          <div
-            className="se-console"
-            onClick={() => {
-              setShowModalConsola(true);
-              setTimeout(() => {
-                setShowModalConsola(false); 
-                setShowConsole(true);
-              }, 5000);
-
-            }}
-          ></div>
-          <div
-            className="sen-grammy1"
-            onClick={() => handleModal("grammy1")}
-          ></div>
-          <div
-            className="sen-grammy2"
-            onClick={() => handleModal("grammy2")}
-          ></div>
-          <div
-            className="sen-grammyl1"
-            onClick={() => handleModal("grammyl1")}
-          ></div>
-          <div
-            className="sen-grammyl2"
-            onClick={() => handleModal("grammyl2")}
-          ></div>
-          <div
-            className="sen-grammyl3"
-            onClick={() => handleModal("grammyl3")}
-          ></div>
-          <div
-            className="sen-honeymommas"
-            onClick={() => handleModal("honeymommas")}
-          ></div>
-          <div className="sen-hu" onClick={() => handleModal("hu")}></div>
-          <div
-            className="sen-incienso"
-            onClick={() => handleModal("incienso")}
-          ></div>
-          <div
-            className="sen-iphone"
-            onClick={() => goTo("https://www.instagram.com/jerryaudio", true)}
-          ></div>
-          <div className="sen-mac" onClick={() => handleModal("mac")}></div>
-          <div
-            className="sen-tepemachine"
-            onClick={() => handleModal("tepemachine")}
-          ></div>
-          <div
-            className="sen-tonnys"
-            onClick={() => handleModal("tonnys")}
-          ></div>
-          <div className="sen-vela" onClick={() => handleModal("vela")}></div>
-          <div className="sen-vinil" onClick={() => handleDiscography()}></div>
-          <div
-            className="sen-yamaha"
-            onClick={() => handleModal("yamaha")}
-          ></div>
-          <div
-            className="sen-yamaha-left"
-            onClick={() => handleModal("yamaha")}
-          ></div>
-          <div
-            className="sen-cortina"
-            onClick={() => {
-              const nuevaEstado = openWindow !== "abierto" ? "abierto" : "cerrado";
-              setOpenWindow(nuevaEstado);
-              if (nuevaEstado === "abierto") {
-                setShowModalPersiana(true);
-              }else if (nuevaEstado === "cerrado") {
-                setShowModalPersiana(false);
-              }
-            }}
-          ></div>{" "}
+          <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
+          <div className="se-console" onClick={() => setShowConsole(true)}></div>
+          <div className="sen-grammy1" onClick={() => handleModal('grammy1')}></div>
+          <div className="sen-grammy2" onClick={() => handleModal('grammy2')}></div>
+          <div className="sen-grammyl1" onClick={() => handleModal('grammyl1')}></div>
+          <div className="sen-grammyl2" onClick={() => handleModal('grammyl2')}></div>
+          <div className="sen-grammyl3" onClick={() => handleModal('grammyl3')}></div>
+          <div className="sen-honeymommas" onClick={() => handleModal('honeymommas')}></div>
+          <div className="sen-hu" onClick={() => handleModal('hu')}></div>
+          <div className="sen-incienso" onClick={() => handleModal('incienso')}></div>
+          <div className="sen-iphone" onClick={() => goTo('https://www.instagram.com/jerryaudio', true)}></div>
+          <div className="sen-mac" onClick={() => handleModal('mac')}></div>
+          <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
+          <div className="sen-tonnys" onClick={() => handleModal('tonnys')} id="sen-tonnys" ></div>
+          <div className="sen-vela" onClick={() => handleModal('vela')}></div>
+          <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
+          <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
+          <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
+          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado')}></div>
           <div className="sen-ampli" onClick={toggleMusic}></div>
-          <div
-            className="sen-lights"
-            onClick={() => setTurnOnLights(!turnOnLights)}
-          ></div>
-          <div
-            className="sen-tapes"
-            onClick={() =>
-              goTo(
-                "https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d",
-                true
-              )
-            }
-          ></div>
+          <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
+          <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
+          <div className="sen-centerElement" id="sen-centerElement"></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
@@ -532,7 +463,7 @@ const ParallaxSection = () => {
         <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
       )}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
-
+      <div className="capa-black"></div>
       <audio ref={audioRef} loop>
         <source src={audio} type="audio/mpeg" />
         Your browser does not support the audio element.

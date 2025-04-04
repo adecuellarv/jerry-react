@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronDown, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faChevronDown, faAngleDown, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import './Discography.css';
 
@@ -199,7 +199,8 @@ const Discography = ({ isOpen, onClose }) => {
       year = '', 
       genre = '', 
       credit = '',
-      isGrammyNominated = false 
+      isGrammyNominated = false,
+      content 
     } = selectedAlbum;
     
     const formattedTitle = title;
@@ -221,23 +222,15 @@ const Discography = ({ isOpen, onClose }) => {
               <img src={cover} alt={`${title} by ${artist}`} />
             </div>
             <div className="album-info">
-              <h3>{artist} - {formattedTitle}</h3>
-              <p>{year} / {genre}</p>
-              <p>Year Released: {year}</p>
-              <p>Genre: {genre}</p>
-              <p>Credit: {credit}</p>
-              {isGrammyNominated && (
-                <p className="grammy-nominated">
-                  <span className="grammy-icon">🏆</span> Grammy Nominated
-                </p>
-              )}
+              <h3>{formattedTitle}</h3>
+              <div dangerouslySetInnerHTML={{ __html: content }} />
             </div>
           </div>
         </div>
 
         <div className="back-button-container">
           <button className="back-button" onClick={() => setSelectedAlbum(null)}>
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon icon={faChevronLeft} />
             <span>back</span>
           </button>
         </div>

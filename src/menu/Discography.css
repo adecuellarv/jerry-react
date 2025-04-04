@@ -37,7 +37,6 @@
     background-color: #fff;
     border-radius: 12px;
     width: 90%;
-    max-width: 1100px;
     min-height: 500px;
     height: auto;
     max-height: 80vh;
@@ -214,8 +213,7 @@
    .album-detail-container {
     background-color: #fff;
     border-radius: 12px;
-    width: 90%;
-    max-width: 800px;
+    width: 70%;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 30px;
     margin-bottom: 40px;
