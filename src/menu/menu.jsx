@@ -101,10 +101,7 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
         onClose={closeContactModal}
       />
       
-      <Discography 
-        isOpen={isDiscographyModalOpen} 
-        onClose={closeDiscographyModal}
-      />
+
     </>
   );
 };

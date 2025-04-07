@@ -362,10 +362,12 @@ const ParallaxSection = () => {
         <source src={audio} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
-      <Discography
-        isOpen={isDiscographyModalOpen}
-        onClose={() => setIsDiscographyModalOpen(false)}
-      />
+      {isDiscographyModalOpen &&
+        <Discography
+          isOpen={isDiscographyModalOpen}
+          onClose={() => setIsDiscographyModalOpen()}
+        />
+      }
     </>
   );
 };

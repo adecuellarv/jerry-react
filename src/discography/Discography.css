@@ -34,7 +34,7 @@
   
  
   .albums-main-container {
-    background-color: #fff;
+    background-color: #000;
     border-radius: 12px;
     width: 90%;
     min-height: 500px;
@@ -116,6 +116,9 @@
   
   .albums-grid-container {
     padding: 30px;
+    height: 100vh;
+    overflow: scroll;
+    background: #fff;
   }
   
   .albums-grid {
@@ -192,12 +195,13 @@
     display: flex;
     justify-content: center;
     margin: 20px 0 30px;
+    color: #fff;
   }
   
   .scroll-button {
     background: none;
     border: none;
-    color: #000;
+    color: #fff;
     font-size: 24px;
     cursor: pointer;
     padding: 10px;
@@ -270,6 +274,7 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    color: #fff;
   }
   
   .back-button {
