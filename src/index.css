@@ -143,12 +143,12 @@ body {
   transform: translateX(-50%);
   width: 15px;
   height: 30px;
-  background: #ff7800;
+  background: rgba(255, 120, 0, 0.7);
   border-radius: 50% 50% 20% 20%;
   box-shadow: 
-    0 0 10px 5px #ff7800,
-    0 0 20px 10px #ffdc00,
-    0 0 30px 15px #ff5e00;
+  0 0 10px 5px rgba(255, 120, 0, 0.5),
+  0 0 20px 10px rgba(255, 220, 0, 0.4),
+  0 0 30px 15px rgba(255, 94, 0, 0.3);
   animation: flicker 1.5s ease-in-out infinite alternate;
   transform-origin: center bottom;
 }
