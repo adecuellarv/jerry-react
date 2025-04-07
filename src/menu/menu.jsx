@@ -1,14 +1,13 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import logoMonorama from './img/logo_monorama.png';
-import ContactModal from './contact-modal'; 
-import Discography from '../discography/Discography'; 
+import ContactModal from './contact-modal';
 import './menu.css';
 
-const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
+const Menu = ({ isMenuOpen, setIsMenuOpen, setIsDiscographyModalOpen, isDiscographyModalOpen }) => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const [isDiscographyModalOpen, setIsDiscographyModalOpen] = useState(false); 
+  //const [isDiscographyModalOpen, setIsDiscographyModalOpen] = useState(false);
 
   const toggleMenu = () => {
     if (isContactModalOpen || isDiscographyModalOpen) {
@@ -23,7 +22,7 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
   };
 
   const openContactModal = () => {
-    setIsMenuOpen(false); 
+    setIsMenuOpen(false);
     setTimeout(() => {
       setIsContactModalOpen(true);
     }, 300);
@@ -66,42 +65,45 @@ const Menu = ({ isMenuOpen, setIsMenuOpen }) => {
 
   return (
     <>
-      <div className="hamburger-icon" onClick={toggleMenu} style={{ right: isMenuOpen ? 110 : 20 }}>
-        {!isMenuOpen && !isContactModalOpen && !isDiscographyModalOpen &&
-          <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
-        }
-        {(isContactModalOpen || isDiscographyModalOpen) && 
-          <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
-        }
-        {isMenuOpen &&
-          <div className="div-close-btn">
-            <button className="close-button-m" onClick={toggleMenu}>
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-            <span>Close</span>
+      {!isDiscographyModalOpen &&
+        <>
+          <div className="hamburger-icon" onClick={toggleMenu} style={{ right: isMenuOpen ? 110 : 20 }}>
+            {!isMenuOpen && !isContactModalOpen && !isDiscographyModalOpen &&
+              <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
+            }
+            {(isContactModalOpen || isDiscographyModalOpen) &&
+              <FontAwesomeIcon icon={faBars} size="2x" color='#fff' />
+            }
+            {isMenuOpen &&
+              <div className="div-close-btn">
+                <button className="close-button-m" onClick={toggleMenu}>
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+                <span>Close</span>
+              </div>
+            }
           </div>
-        }
-      </div>
 
-      <div className="menu-overlay" style={{ right: isMenuOpen ? '0px' : '-306px' }}>
-        <ul>
-          <li>
-            <a>HOME</a>
-          </li>
-          <li><a onClick={openDiscographyModal}>DISCOGRAPHY</a></li>
-          <li><a onClick={openContactModal}>CONTACT</a></li>
-        </ul>
-        <div className="div-monorama">
-          <img src={logoMonorama} alt="monorama" />
-        </div>
-      </div>
+          <div className="menu-overlay" style={{ right: isMenuOpen ? '0px' : '-306px' }}>
+            <ul>
+              <li>
+                <a>HOME</a>
+              </li>
+              <li><a onClick={() => setIsDiscographyModalOpen(true)}>DISCOGRAPHY</a></li>
+              <li><a onClick={openContactModal}>CONTACT</a></li>
+            </ul>
+            <div className="div-monorama">
+              <img src={logoMonorama} alt="monorama" />
+            </div>
+          </div>
 
-      <ContactModal 
-        isOpen={isContactModalOpen} 
-        onClose={closeContactModal}
-      />
-      
+          <ContactModal
+            isOpen={isContactModalOpen}
+            onClose={closeContactModal}
+          />
 
+        </>
+      }
     </>
   );
 };

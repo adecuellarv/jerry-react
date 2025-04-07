@@ -355,7 +355,7 @@ const ParallaxSection = () => {
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
         {showModalCurtain && <CurtainModal setShowModalCurtain={toggleCurtainModal} />}
       </div>
-      {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
+      {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} setIsDiscographyModalOpen={setIsDiscographyModalOpen} isDiscographyModalOpen={isDiscographyModalOpen} />}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
       <div className="capa-black"></div>
       <audio ref={audioRef} loop>
