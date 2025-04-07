@@ -55,6 +55,7 @@ const ParallaxSection = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
+  const imageRef = useRef(null);
   const wrapperRef = useRef(null);
 
   const [elementsLoaded, setElementsLoaded] = useState({
@@ -155,6 +156,8 @@ const ParallaxSection = () => {
   const zoomContent = () => {
     //const firstDigit = parseInt(screenWidth.toString()[0], 10);
     //setZoomLevel(`${firstDigit}.20`);
+    //containerRef
+    /*
     const screenWidth = window.outerWidth;
     if (screenWidth <= minScreen) {
       setTimeout(() => {
@@ -165,6 +168,60 @@ const ParallaxSection = () => {
         setTimeout(() => {
           setPosition({ x: '0%', y: 0 })
         }, 100);
+      }, 1400);
+    }*/
+
+    const screenWidth = window.outerWidth;
+    const screenHeight = window.outerHeight;
+
+    if (screenWidth <= minScreen) {
+      setTimeout(() => {
+        if (sceneRef.current) {
+          resetParallax();
+        }
+
+        // 1. OBTENER EL CONTENEDOR PRINCIPAL
+
+
+        // 2. DEFINIR EL TAMAÑO ORIGINAL QUE DEBERÍA TENER (ajusta estos valores)
+        const originalWidth = 1920; // Ancho original de tu diseño
+        const originalHeight = 1080; // Alto original de tu diseño
+
+        // 3. CALCULAR FACTOR DE ZOOM PARA LLENAR LA PANTALLA
+        const widthRatio = screenWidth / originalWidth;
+        const heightRatio = screenHeight / originalHeight;
+
+        // Usamos el factor MÁS PEQUEÑO para asegurar que todo el contenido sea visible
+        const zoomFactor = Math.min(widthRatio, heightRatio);
+
+        // 4. APLICAR ZOOM IN (aumentar) en lugar de zoom out
+        // Invertimos la lógica: 1/zoomFactor para hacer zoom in
+        const zoomInFactor = 1 / zoomFactor;
+
+        // Limitamos el zoom máximo a 4x para que no se vea pixelado
+        const finalZoom = Math.min(zoomInFactor, 4).toFixed(2);
+
+        setZoomLevel(finalZoom);
+
+        // 5. CALCULAR POSICIÓN PARA CENTRADO VERTICAL
+        const scaledHeight = originalHeight * zoomInFactor;
+        let verticalOffset = 0;
+
+        // Solo centramos si el contenido escalado es más pequeño que la pantalla
+        setTimeout(() => {
+          const container = imageRef.current;
+          const element = document.querySelector('.layer');
+          console.log('#', element.offsetHeight, screenHeight); debugger
+          if (element.offsetHeight < screenHeight) {
+            verticalOffset = (screenHeight - scaledHeight);
+            console.log('#verticalOffset', verticalOffset)
+            //setPosition({ x: 0, y: verticalOffset });
+          }
+        }, 1200);
+
+
+        //setPosition({ x: 0, y: verticalOffset });
+
       }, 1400);
     }
   }
@@ -324,7 +381,7 @@ const ParallaxSection = () => {
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
-            <div className="layer" data-depth="0.06">
+            <div className="layer" data-depth="0.06" ref={imageRef}>
               <img src={bgO} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
               <img src={S1} ref={bgElementRef} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
               <div className="div-video">
