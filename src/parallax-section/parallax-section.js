@@ -1,30 +1,31 @@
-import React, { useEffect, useRef, useState, route } from "react";
-import Parallax from "parallax-js";
-import Modal from "../modal/modal";
-import Video from "../video/video";
-import SSLConsole from "../ssl-console/ssl-console";
-import LoaderComponent from "../loader/loader-component";
-import WelcomeModal from "../welcome-modal/welcome-modal";
-import Menu from "../menu/menu";
-import ShareMenu from "../share-menu/ShareMenu";
-import SmoothIncenseSmoke from "../inciense/inciense";
-import S1 from "./img/scenes/studio-cerrado/fondo_sin_persiana.jpg";
-import S2 from "./img/scenes/studio-cerrado/2.png";
-import S3 from "./img/scenes/studio-cerrado/3.png";
-import S4 from "./img/scenes/studio-cerrado/4.png";
-import S5 from "./img/scenes/studio-cerrado/5.png";
-import bgO from "./img/scenes/studio-oscuro/bg-apagado.png";
-import S30 from "./img/scenes/studio-oscuro/3.png";
-import Curtain from "../curtain/curtain";
-import logo from "./img/logo_jerryordonez_mainpage.png";
-import audio from "./audio/audio.wav";
-import audioOpen from "../modal/sounds/open.wav";
-import audioClose from "../modal/sounds/close.wav";
-import ModalPersiana from "../popup/modalPersiana";
-import ModalConsola from "../popup/modalConsola";
-import Discography from "../menu/Discography";
-import "./styles.css";
+import React, { useEffect, useRef, useState, route } from 'react';
+import Parallax from 'parallax-js';
+import Hammer from 'hammerjs';
+import Modal from '../modal/modal';
+import Video from '../video/video';
+import SSLConsole from '../ssl-console/ssl-console';
+import LoaderComponent from '../loader/loader-component';
+import WelcomeModal from '../welcome-modal/welcome-modal';
+import Menu from '../menu/menu';
+import ShareMenu from '../share-menu/ShareMenu';
+import SmoothIncenseSmoke from '../inciense/inciense';
+import CurtainModal from '../curtain-modal/curtain-modal';
+import Discography from '../discography/Discography';
+import S1 from './img/scenes/studio-cerrado/fondo_sin_persiana.jpg';
+import S2 from './img/scenes/studio-cerrado/2.png';
+import S3 from './img/scenes/studio-cerrado/3.png';
+import S4 from './img/scenes/studio-cerrado/4.png';
+import S5 from './img/scenes/studio-cerrado/5.png';
+import bgO from './img/scenes/studio-oscuro/bg-apagado.png';
+import S30 from './img/scenes/studio-oscuro/3.png';
+import Curtain from '../curtain/curtain';
+import logo from './img/logo_jerryordonez_mainpage.png'
+import audio from './audio/audio.wav';
+import audioOpen from '../modal/sounds/open.wav';
+import audioClose from '../modal/sounds/close.wav';
+import './styles.css';
 
+const minScreen = 1024;
 //let elementsLoaded = 0;
 const ParallaxSection = () => {
   const sceneRef = useRef(null);
@@ -49,6 +50,17 @@ const ParallaxSection = () => {
   const [showModalConsola, setShowModalConsola] = useState(false);
   const [showDiscography, setshowDiscography] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
+  const [showModalCurtain, setShowModalCurtain] = useState(false);
+  const [isDiscographyModalOpen, setIsDiscographyModalOpen] = useState(false);
+
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+  const wrapperRef = useRef(null);
+
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -63,33 +75,16 @@ const ParallaxSection = () => {
   const handleModal = (type) => {
     setTypeModal(type);
     setShowModal(true);
-    setOriginalWidth();
+    //setOriginalWidth();
+    //zoomOrigin();    
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    //setByWidth()
-  };
 
-  const handleDiscography = () => {
-    setshowDiscography(true);
-  };
-
-  const handleCloseModalDiscography = () => {
-    setshowDiscography(false);
-  };
-    const screenWidth = window.outerWidth;
-    if (screenWidth <= 1024) {
-      const capaBlack = document.querySelector('.capa-black');
-      setByWidth('modal');
-      capaBlack.classList.add('active');
-      setTimeout(() => {
-        capaBlack.classList.remove('active');
-      }, 500);
-    }
-  setTimeout(() => {
-    setShowModal(false);
-  }, 700);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 700);
+  }
 
   const handleLoaded = (nameImg) => {
     setElementsLoaded((prevState) => ({
@@ -102,6 +97,20 @@ const ParallaxSection = () => {
     setShowConsole(false);
     playSoundClose();
   };
+
+  const resetParallax = () => {
+    if (sceneRef.current) {
+      parallaxInstanceRef.current = new Parallax(sceneRef.current, {
+        relativeInput: true,
+        frictionX: 0.02,
+        frictionY: 0.02,
+        calibrateX: true,
+        calibrateY: true,
+        limitX: 100,
+        limitY: 100,
+      });
+    }
+  }
 
   const toggleMusic = () => {
     if (audioRef.current) {
@@ -132,54 +141,102 @@ const ParallaxSection = () => {
     }
   };
 
-  const setByWidth = (type) => {
-    const screenWidth = window.outerWidth;
-    const mainContainer = document.getElementById("main-container");
-    const modalWelcomeContainer = document.getElementById("modal-welcome");
-    const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
-    const centerElement = document.getElementById("sen-centerElement");
+  const toggleCurtainModal = () => {
+    setShowModalCurtain(false);
+    setOpenWindow('abierto');
+  }
 
-    if (mainContainer) {
-      mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-      mainContainer.style.overflowX = "scroll";
-    }
-    if (modalWelcomeContainer) {
-      modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-      modalWelcomeContainer.style.overflowX = "scroll";
-      modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth - 70}px`;
-    }
-
-    if (centerElement) {
-      setTimeout(() => {
-        centerElement.scrollIntoView({
-          inline: "center",
-          block: "nearest",  // Esto evita el desplazamiento vertical
-          behavior: type === 'modal' ? 'auto' : "smooth"
-        });
-      }, 300);
+  const handleCurtain = () => {
+    //setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado');
+    if (openWindow === 'cerrado' || openWindow === 'initial') {
+      setShowModalCurtain(true);
+    } else {
+      setOpenWindow('cerrado');
     }
   }
 
-  const setOriginalWidth = () => {
-    const mainContainer = document.getElementById("main-container");
-    const modalWelcomeContainer = document.getElementById("modal-welcome");
-    const modalWelcomeSubContainer = document.getElementById(
-      "modal-welcome-subcontainer"
-    );
+  const zoomContent = () => {
+    //const firstDigit = parseInt(screenWidth.toString()[0], 10);
+    //setZoomLevel(`${firstDigit}.20`);
+    //containerRef
+    /*
+    const screenWidth = window.outerWidth;
+    if (screenWidth <= minScreen) {
+      setTimeout(() => {
+        if (sceneRef.current) {
+          resetParallax();
+        }
+        setZoomLevel('4.10')
+        setTimeout(() => {
+          setPosition({ x: '0%', y: 0 })
+        }, 100);
+      }, 1400);
+    }*/
 
-    if (mainContainer) {
-      mainContainer.style.width = 'auto';
-      mainContainer.style.overflowX = '';
+    const screenWidth = window.outerWidth;
+    const screenHeight = window.outerHeight;
+
+    if (screenWidth <= minScreen) {
+      setTimeout(() => {
+        if (sceneRef.current) {
+          resetParallax();
+        }
+
+        // 1. OBTENER EL CONTENEDOR PRINCIPAL
+
+
+        // 2. DEFINIR EL TAMAÑO ORIGINAL QUE DEBERÍA TENER (ajusta estos valores)
+        const originalWidth = 1920; // Ancho original de tu diseño
+        const originalHeight = 1080; // Alto original de tu diseño
+
+        // 3. CALCULAR FACTOR DE ZOOM PARA LLENAR LA PANTALLA
+        const widthRatio = screenWidth / originalWidth;
+        const heightRatio = screenHeight / originalHeight;
+
+        // Usamos el factor MÁS PEQUEÑO para asegurar que todo el contenido sea visible
+        const zoomFactor = Math.min(widthRatio, heightRatio);
+
+        // 4. APLICAR ZOOM IN (aumentar) en lugar de zoom out
+        // Invertimos la lógica: 1/zoomFactor para hacer zoom in
+        const zoomInFactor = 1 / zoomFactor;
+
+        // Limitamos el zoom máximo a 4x para que no se vea pixelado
+        const finalZoom = Math.min(zoomInFactor, 4).toFixed(2);
+
+        setZoomLevel(finalZoom);
+
+        // 5. CALCULAR POSICIÓN PARA CENTRADO VERTICAL
+        const scaledHeight = originalHeight * zoomInFactor;
+        let verticalOffset = 0;
+
+        // Solo centramos si el contenido escalado es más pequeño que la pantalla
+        setTimeout(() => {
+          const container = imageRef.current;
+          const element = document.querySelector('.layer');
+          console.log('#', element.offsetHeight, screenHeight); debugger
+          if (element.offsetHeight < screenHeight) {
+            verticalOffset = (screenHeight - scaledHeight);
+            console.log('#verticalOffset', verticalOffset)
+            //setPosition({ x: 0, y: verticalOffset });
+          }
+        }, 1200);
+
+
+        //setPosition({ x: 0, y: verticalOffset });
+
+      }, 1400);
     }
-    if (modalWelcomeContainer) {
-      modalWelcomeContainer.style.width = '100%';
-      modalWelcomeContainer.style.overflowX = '';
-      modalWelcomeSubContainer.style.maxWidth = 'auto';
+  }
+
+  const zoomOrigin = () => {
+    setZoomLevel('1')
+    const screenWidth = window.outerWidth;
+    if (screenWidth <= minScreen) {
+      setZoomLevel('1')
+      setTimeout(() => {
+        setPosition({ x: '0%', y: 0 })
+      }, 100);
     }
-    document.body.style.width = 'auto';
-    document.body.style.overflowX = '';
-    document.documentElement.style.width = 'auto';
-    document.documentElement.style.overflowX = '';
   }
 
   useEffect(() => {
@@ -218,11 +275,16 @@ const ParallaxSection = () => {
     const adjustLayout = () => {
       if (bgElementRef.current && resizePage) {
         const screenWidth = window.outerWidth;
-        if (screenWidth <= 1024) {
-          setByWidth();
-
+        if (screenWidth <= minScreen) {
+          //setByWidth();
+          //setTimeout(() => {
+          zoomContent();
+          //centerContent();
+          //}, 1400);
         } else {
-          setOriginalWidth();
+          zoomOrigin();
+          //setZoomLevel(1);
+          //setOriginalWidth()
         }
       }
     };
@@ -235,6 +297,15 @@ const ParallaxSection = () => {
   }, [elementsLoaded.bgLuz, elementsLoaded.bgOscuro, resizePage]);
 
   useEffect(() => {
+    const screenWidth = window.outerWidth;
+    if (screenWidth <= minScreen) {
+      if (!showModal || !showConsole || !showModalCurtain || !showMenuIcon) {
+        resetParallax();
+      }
+    }
+  }, [showModal, showConsole, showModalCurtain, showMenuIcon, isDiscographyModalOpen])
+
+  useEffect(() => {
     if (sceneRef.current) {
       parallaxInstanceRef.current = new Parallax(sceneRef.current, {
         relativeInput: true,
@@ -245,26 +316,6 @@ const ParallaxSection = () => {
         limitX: 100,
         limitY: 100,
       });
-
-      const simulateMouseMove = () => {
-        if (!sceneRef.current) return;
-
-        const time = Date.now() * 0.002; // Velocidad del movimiento
-        const centerX = sceneRef.current.offsetWidth / 2;
-        const centerY = sceneRef.current.offsetHeight / 2;
-        const offsetX = centerX + Math.sin(time) * 50; // Movimiento en X
-        const offsetY = centerY + Math.cos(time) * 50; // Movimiento en Y
-
-        const event = new MouseEvent("mousemove", {
-          clientX: offsetX,
-          clientY: offsetY,
-          bubbles: true,
-        });
-
-        sceneRef.current.dispatchEvent(event);
-        animationRef.current = requestAnimationFrame(simulateMouseMove);
-      };
-
       //simulateMouseMove();
     }
 
@@ -278,11 +329,35 @@ const ParallaxSection = () => {
     };
   }, []);
 
-return (
-    <>
+  return (
+    <div
+      ref={wrapperRef}
+      style={{
+        width: '100vw',
+        height: '100vh',
+        overflowX: 'scroll',
+        overflowY: 'hidden',
+        position: 'relative'
+      }}
+    //onMouseDown={handleMouseDown}
+    //onMouseMove={handleMouseMove}
+    //onMouseUp={handleMouseUp}
+    //onMouseLeave={handleMouseUp}
+    >
       <div
-        className={`div-main ${isMenuOpen ? "menu-open" : ""}`}
+        className={`div-main ${isMenuOpen ? 'menu-open' : ''}`}
         id="main-container"
+        ref={containerRef}
+        style={{
+          transform: `scale(${zoomLevel}) translate(${position.x}, ${position.y}px)`,
+          transformOrigin: 'top left',
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          //willChange: 'transform'
+        }}
       >
         <div className="div-logo">
           <img src={logo} alt="logo" onLoad={() => handleLoaded("logo")} />
@@ -313,49 +388,24 @@ return (
           <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
           <div className="sen-tonnys" onClick={() => handleModal('tonnys')} id="sen-tonnys" ></div>
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
-          <div className="sen-vinil" onClick={() => handleDiscography()}></div>
+          <div className="sen-vinil" onClick={() => setIsDiscographyModalOpen(true)}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
           <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
-          <div
-            className="sen-cortina"
-            onClick={() => {
-              const nuevaEstado = openWindow !== "abierto" ? "abierto" : "cerrado";
-              setOpenWindow(nuevaEstado);
-              if (nuevaEstado === "abierto") {
-                setShowModalPersiana(true);
-              }else if (nuevaEstado === "cerrado") {
-                setShowModalPersiana(false);
-              }
-            }}
-          ></div>{" "}          <div className="sen-ampli" onClick={toggleMusic}></div>
+          <div className="sen-cortina" onClick={handleCurtain}></div>
+          <div className="sen-ampli" onClick={toggleMusic}></div>
           <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
           <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
+          <div className="se-console-top" onClick={() => handleModal('ssl')}></div>
+          <div className="se-console-right" onClick={() => handleModal('ssl')}></div>
+          <div className="se-console-bottom" onClick={() => handleModal('ssl')}></div>
+          <div className="se-console-left" onClick={() => handleModal('ssl')}></div>
           <div className="sen-centerElement" id="sen-centerElement"></div>
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
-            <div className="layer" data-depth="0.06">
-              <img
-                src={bgO}
-                className="img-scenes bg-element"
-                alt="Fondo"
-                style={{
-                  opacity: turnOnLights ? 0 : 1,
-                  width: turnOnLights ? 0 : "100%",
-                }}
-                onLoad={() => handleLoaded("bgOscuro")}
-              />
-              <img
-                src={S1}
-                ref={bgElementRef}
-                className="img-scenes bg-element"
-                alt="Fondo"
-                style={{
-                  opacity: turnOnLights ? 1 : 0,
-                  width: turnOnLights ? "100%" : 0,
-                }}
-                onLoad={() => handleLoaded("bgLuz")}
-              />
+            <div className="layer" data-depth="0.06" ref={imageRef}>
+              <img src={bgO} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
+              <img src={S1} ref={bgElementRef} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
               <div className="div-video">
                 <Video />
               </div>
@@ -444,51 +494,28 @@ return (
             </div>
           </div>
         </div>
-        {showModal && (
-          <Modal
-            closeModal={handleCloseModal}
-            typeModal={typeModal}
-            setModalLoaded={setModalLoaded}
-          />
-        )}
-        {showConsole && (
-          <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />
-        )}
-        <LoaderComponent open={loader} />
-        {showModalPersiana && (
-          <ModalPersiana setShowModalPersiana={setShowModalPersiana} />
-        )}
-        {showModalConsola && (
-          <ModalConsola 
-          setShowModalConsola={() => {
-            setShowModalConsola(false); 
-            setShowConsole(true); 
-          }} />
-        )}
-        {showDiscography && (
-          <Discography
-            isOpen={handleDiscography}
-            onClose={handleCloseModalDiscography}
-          />
-        )}
-        {showModalWelcome && (
-          <WelcomeModal
-            setShowModalWelcome={setShowModalWelcome}
-            showModalWelcome={showModalWelcome}
-            toggleMusic={toggleMusic}
-          />
-        )}
+
+
       </div>
-      {showMenuIcon && !showModal && !showConsole && (
-        <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      )}
+      {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} setIsDiscographyModalOpen={setIsDiscographyModalOpen} isDiscographyModalOpen={isDiscographyModalOpen} />}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
+      {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
+      <LoaderComponent open={loader} />
+      {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
+      {showModalCurtain && <CurtainModal setShowModalCurtain={toggleCurtainModal} />}
       <div className="capa-black"></div>
       <audio ref={audioRef} loop>
         <source src={audio} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
-    </>
+      {showModal && <Modal handleCloseModal={handleCloseModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
+      {isDiscographyModalOpen &&
+        <Discography
+          isOpen={isDiscographyModalOpen}
+          onClose={() => setIsDiscographyModalOpen()}
+        />
+      }
+    </div>
   );
 };
 

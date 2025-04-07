@@ -1,0 +1,31 @@
+.zoomable-div {
+  width: 100%;
+  max-width: 1200px; /* o el ancho que tengas actualmente */
+  margin: 0 auto;
+  padding: 20px;
+  background: #f0f0f0;
+  transition: transform 0.1s ease-out;
+}
+
+/* Opcional: agregar un overlay en móvil para indicar que es interactivo */
+@media (max-width: 768px) {
+  .zoomable-div::after {
+    content: "Usa dos dedos para hacer zoom";
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .zoomable-div:hover::after {
+    opacity: 1;
+  }
+}
