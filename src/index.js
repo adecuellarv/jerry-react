@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import ZoomableDiv from './zoom-test/zoom-test';
 import ParallaxSection from './parallax-section/parallax-section';
 import reportWebVitals from './reportWebVitals';
 

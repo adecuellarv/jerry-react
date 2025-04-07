@@ -1,6 +1,7 @@
 #main-container{
   overflow-x: scroll;
   white-space: nowrap;
+  transition: transform 0.3s ease;
 }
 #root{
   overflow-x: scroll;
@@ -397,5 +398,14 @@
   }
   .right-panel p{
     padding: 10px;
+  }
+
+  .div-logo{
+    top: -1px;
+    left: 1px;
+  }
+
+  .div-logo img {
+    width: 15%;
   }
 }

@@ -102,7 +102,7 @@ const SSLConsole = ({ handleCloseModalSSL }) => {
               </form>
             </div>
             <div className="ssl-time">
-              <span>0 : 00 : 0</span>
+              <span>0:00:0</span>
             </div>
           </div>
           <div className="ssl-info-jerry">

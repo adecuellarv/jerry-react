@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, route } from 'react';
 import Parallax from 'parallax-js';
+import Hammer from 'hammerjs';
 import Modal from '../modal/modal';
 import Video from '../video/video';
 import SSLConsole from '../ssl-console/ssl-console';
@@ -24,6 +25,7 @@ import audioOpen from '../modal/sounds/open.wav';
 import audioClose from '../modal/sounds/close.wav';
 import './styles.css';
 
+const minScreen = 1024;
 //let elementsLoaded = 0;
 const ParallaxSection = () => {
   const sceneRef = useRef(null);
@@ -47,6 +49,14 @@ const ParallaxSection = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [showModalCurtain, setShowModalCurtain] = useState(false);
   const [isDiscographyModalOpen, setIsDiscographyModalOpen] = useState(false);
+
+  const [zoomLevel, setZoomLevel] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+  const wrapperRef = useRef(null);
+
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -62,21 +72,13 @@ const ParallaxSection = () => {
   const handleModal = (type) => {
     setTypeModal(type);
     setShowModal(true);
-    setOriginalWidth();
+    //setOriginalWidth();
+    //zoomOrigin();    
   };
 
   const handleCloseModal = () => {
-    const screenWidth = window.outerWidth;
-    if (screenWidth <= 1024) {
-      const capaBlack = document.querySelector('.capa-black');
-      setByWidth('modal');
-      capaBlack.classList.add('active');
-      setTimeout(() => {
-        capaBlack.classList.remove('active');
-      }, 500);
-    }
-    setTimeout(() => {
 
+    setTimeout(() => {
       setShowModal(false);
     }, 700);
   }
@@ -91,6 +93,20 @@ const ParallaxSection = () => {
   const handleCloseModalSSL = () => {
     setShowConsole(false);
     playSoundClose();
+  }
+
+  const resetParallax = () => {
+    if (sceneRef.current) {
+      parallaxInstanceRef.current = new Parallax(sceneRef.current, {
+        relativeInput: true,
+        frictionX: 0.02,
+        frictionY: 0.02,
+        calibrateX: true,
+        calibrateY: true,
+        limitX: 100,
+        limitY: 100,
+      });
+    }
   }
 
   const toggleMusic = () => {
@@ -136,52 +152,32 @@ const ParallaxSection = () => {
     }
   }
 
-  const setByWidth = (type) => {
+  const zoomContent = () => {
+    //const firstDigit = parseInt(screenWidth.toString()[0], 10);
+    //setZoomLevel(`${firstDigit}.20`);
     const screenWidth = window.outerWidth;
-    const mainContainer = document.getElementById("main-container");
-    const modalWelcomeContainer = document.getElementById("modal-welcome");
-    const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
-    const centerElement = document.getElementById("sen-centerElement");
-
-    if (mainContainer) {
-      mainContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-      mainContainer.style.overflowX = "scroll";
-    }
-    if (modalWelcomeContainer) {
-      modalWelcomeContainer.style.width = screenWidth <= 740 ? `${window.outerWidth}vw` : '165vw';
-      modalWelcomeContainer.style.overflowX = "scroll";
-      modalWelcomeSubContainer.style.maxWidth = `${window.outerWidth - 70}px`;
-    }
-
-    if (centerElement) {
+    if (screenWidth <= minScreen) {
       setTimeout(() => {
-        centerElement.scrollIntoView({
-          inline: "center",
-          block: "nearest",  // Esto evita el desplazamiento vertical
-          behavior: type === 'modal' ? 'auto' : "smooth"
-        });
-      }, 300);
+        if (sceneRef.current) {
+          resetParallax();
+        }
+        setZoomLevel('4.10')
+        setTimeout(() => {
+          setPosition({ x: '0%', y: 0 })
+        }, 100);
+      }, 1400);
     }
   }
 
-  const setOriginalWidth = () => {
-    const mainContainer = document.getElementById("main-container");
-    const modalWelcomeContainer = document.getElementById("modal-welcome");
-    const modalWelcomeSubContainer = document.getElementById("modal-welcome-subcontainer");
-
-    if (mainContainer) {
-      mainContainer.style.width = 'auto';
-      mainContainer.style.overflowX = '';
+  const zoomOrigin = () => {
+    setZoomLevel('1')
+    const screenWidth = window.outerWidth;
+    if (screenWidth <= minScreen) {
+      setZoomLevel('1')
+      setTimeout(() => {
+        setPosition({ x: '0%', y: 0 })
+      }, 100);
     }
-    if (modalWelcomeContainer) {
-      modalWelcomeContainer.style.width = '100%';
-      modalWelcomeContainer.style.overflowX = '';
-      modalWelcomeSubContainer.style.maxWidth = 'auto';
-    }
-    document.body.style.width = 'auto';
-    document.body.style.overflowX = '';
-    document.documentElement.style.width = 'auto';
-    document.documentElement.style.overflowX = '';
   }
 
   useEffect(() => {
@@ -210,11 +206,16 @@ const ParallaxSection = () => {
     const adjustLayout = () => {
       if (bgElementRef.current && resizePage) {
         const screenWidth = window.outerWidth;
-        if (screenWidth <= 1024) {
-          setByWidth();
-
+        if (screenWidth <= minScreen) {
+          //setByWidth();
+          //setTimeout(() => {
+          zoomContent();
+          //centerContent();
+          //}, 1400);
         } else {
-          setOriginalWidth()
+          zoomOrigin();
+          //setZoomLevel(1);
+          //setOriginalWidth()
         }
       }
     };
@@ -227,6 +228,15 @@ const ParallaxSection = () => {
   }, [elementsLoaded.bgLuz, elementsLoaded.bgOscuro, resizePage]);
 
   useEffect(() => {
+    const screenWidth = window.outerWidth;
+    if (screenWidth <= minScreen) {
+      if (!showModal || !showConsole || !showModalCurtain || !showMenuIcon) {
+        resetParallax();
+      }
+    }
+  }, [showModal, showConsole, showModalCurtain, showMenuIcon, isDiscographyModalOpen])
+
+  useEffect(() => {
     if (sceneRef.current) {
       parallaxInstanceRef.current = new Parallax(sceneRef.current, {
         relativeInput: true,
@@ -237,26 +247,6 @@ const ParallaxSection = () => {
         limitX: 100,
         limitY: 100,
       });
-
-      const simulateMouseMove = () => {
-        if (!sceneRef.current) return;
-
-        const time = Date.now() * 0.002; // Velocidad del movimiento
-        const centerX = sceneRef.current.offsetWidth / 2;
-        const centerY = sceneRef.current.offsetHeight / 2;
-        const offsetX = centerX + Math.sin(time) * 50; // Movimiento en X
-        const offsetY = centerY + Math.cos(time) * 50; // Movimiento en Y
-
-        const event = new MouseEvent('mousemove', {
-          clientX: offsetX,
-          clientY: offsetY,
-          bubbles: true,
-        });
-
-        sceneRef.current.dispatchEvent(event);
-        animationRef.current = requestAnimationFrame(simulateMouseMove);
-      };
-
       //simulateMouseMove();
     }
 
@@ -271,8 +261,35 @@ const ParallaxSection = () => {
   }, []);
 
   return (
-    <>
-      <div className={`div-main ${isMenuOpen ? 'menu-open' : ''}`} id="main-container">
+    <div
+      ref={wrapperRef}
+      style={{
+        width: '100vw',
+        height: '100vh',
+        overflowX: 'scroll',
+        overflowY: 'hidden',
+        position: 'relative'
+      }}
+    //onMouseDown={handleMouseDown}
+    //onMouseMove={handleMouseMove}
+    //onMouseUp={handleMouseUp}
+    //onMouseLeave={handleMouseUp}
+    >
+      <div
+        className={`div-main ${isMenuOpen ? 'menu-open' : ''}`}
+        id="main-container"
+        ref={containerRef}
+        style={{
+          transform: `scale(${zoomLevel}) translate(${position.x}, ${position.y}px)`,
+          transformOrigin: 'top left',
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          //willChange: 'transform'
+        }}
+      >
         <div className="div-logo">
           <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
         </div>
@@ -349,26 +366,28 @@ const ParallaxSection = () => {
             </div>
           </div>
         </div>
-        {showModal && <Modal handleCloseModal={handleCloseModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
-        {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
-        <LoaderComponent open={loader} />
-        {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
-        {showModalCurtain && <CurtainModal setShowModalCurtain={toggleCurtainModal} />}
+
+
       </div>
       {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} setIsDiscographyModalOpen={setIsDiscographyModalOpen} isDiscographyModalOpen={isDiscographyModalOpen} />}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
+      {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
+      <LoaderComponent open={loader} />
+      {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
+      {showModalCurtain && <CurtainModal setShowModalCurtain={toggleCurtainModal} />}
       <div className="capa-black"></div>
       <audio ref={audioRef} loop>
         <source src={audio} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
+      {showModal && <Modal handleCloseModal={handleCloseModal} typeModal={typeModal} setModalLoaded={setModalLoaded} />}
       {isDiscographyModalOpen &&
         <Discography
           isOpen={isDiscographyModalOpen}
           onClose={() => setIsDiscographyModalOpen()}
         />
       }
-    </>
+    </div>
   );
 };
 
