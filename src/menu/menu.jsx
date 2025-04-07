@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import logoMonorama from './img/logo_monorama.png';
 import ContactModal from './contact-modal'; 
-import Discography from './Discography'; 
+import Discography from '../discography/Discography'; 
 import './menu.css';
 
 const Menu = ({ isMenuOpen, setIsMenuOpen }) => {

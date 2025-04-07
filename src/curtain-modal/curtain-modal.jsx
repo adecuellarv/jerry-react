@@ -3,17 +3,16 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import "./styles.css";
 import "./button.css";
 
-const WelcomeModal = ({ setShowModalWelcome, toggleMusic }) => {
+const CurtainModal = ({ setShowModalCurtain }) => {
 
   const handleClick = () => {
-    toggleMusic();
-    setShowModalWelcome(false)
+    setShowModalCurtain(false)
   }
 
   return (
     <div className="modal-container" id="modal-welcome">
       <div className="modal-welcome" id="modal-welcome-subcontainer">
-        <p>Welcome! Click anywhere in the room to find out more.</p>
+        <p>How long have I been mixing for?</p>
         <div className="div-wb">
           <button className="close-button-wm" onClick={handleClick}>
             <FontAwesomeIcon icon={faTimes} />
@@ -25,4 +24,4 @@ const WelcomeModal = ({ setShowModalWelcome, toggleMusic }) => {
   );
 };
 
-export default WelcomeModal;
+export default CurtainModal;

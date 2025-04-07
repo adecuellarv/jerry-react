@@ -101,11 +101,11 @@
 .se-console{
   position: absolute;
   z-index: 4;
-  width: 10%;
-  height: 8.5%;
+  width: 3%;
+  height: 3%;
   background: transparent;
-  top: 42%;
-  left: 46%;
+  top: 45%;
+  left: 48.5%;
   cursor: pointer;
 }
 
@@ -340,6 +340,47 @@
   left: 45%;
 }
 
+
+.se-console-top{
+  position: absolute;
+  z-index: 4;
+  width: 27%;
+  height: 3%;
+  background: transparent;
+  top: 42%;
+  left: 34%;
+  cursor: pointer;
+}
+.se-console-left{
+  position: absolute;
+  z-index: 4;
+  width: 15%;
+  height: 7%;
+  background: transparent;
+  top: 45%;
+  left: 33%;
+  cursor: pointer;
+}
+.se-console-right{
+  position: absolute;
+  z-index: 4;
+  width: 12%;
+  height: 5%;
+  background: transparent;
+  top: 45%;
+  left: 51.5%;
+  cursor: pointer;
+}
+.se-console-bottom{
+  position: absolute;
+  z-index: 4;
+  width: 3%;
+  height: 2.5%;
+  background: transparent;
+  top: 48.5%;
+  left: 48.5%;
+  cursor: pointer;
+}
 
 /* Estilos para móviles y tablets */
 @media (max-width: 1024px) {

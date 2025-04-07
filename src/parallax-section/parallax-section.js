@@ -8,6 +8,8 @@ import WelcomeModal from '../welcome-modal/welcome-modal';
 import Menu from '../menu/menu';
 import ShareMenu from '../share-menu/ShareMenu';
 import SmoothIncenseSmoke from '../inciense/inciense';
+import CurtainModal from '../curtain-modal/curtain-modal';
+import Discography from '../discography/Discography';
 import S1 from './img/scenes/studio-cerrado/fondo_sin_persiana.jpg';
 import S2 from './img/scenes/studio-cerrado/2.png';
 import S3 from './img/scenes/studio-cerrado/3.png';
@@ -43,6 +45,8 @@ const ParallaxSection = () => {
   const [fistLoad, setFirstLoad] = useState(true);
   const [resizePage, setResizePage] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
+  const [showModalCurtain, setShowModalCurtain] = useState(false);
+  const [isDiscographyModalOpen, setIsDiscographyModalOpen] = useState(false);
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
     lampara: false,
@@ -117,6 +121,20 @@ const ParallaxSection = () => {
       window.location.href = url;
     }
   };
+
+  const toggleCurtainModal = () => {
+    setShowModalCurtain(false);
+    setOpenWindow('abierto');
+  }
+
+  const handleCurtain = () => {
+    //setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado');
+    if (openWindow === 'cerrado' || openWindow === 'initial') {
+      setShowModalCurtain(true);
+    } else {
+      setOpenWindow('cerrado');
+    }
+  }
 
   const setByWidth = (type) => {
     const screenWidth = window.outerWidth;
@@ -274,13 +292,17 @@ const ParallaxSection = () => {
           <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
           <div className="sen-tonnys" onClick={() => handleModal('tonnys')} id="sen-tonnys" ></div>
           <div className="sen-vela" onClick={() => handleModal('vela')}></div>
-          <div className="sen-vinil" onClick={() => handleModal('vinil')}></div>
+          <div className="sen-vinil" onClick={() => setIsDiscographyModalOpen(true)}></div>
           <div className="sen-yamaha" onClick={() => handleModal('yamaha')}></div>
           <div className="sen-yamaha-left" onClick={() => handleModal('yamaha')}></div>
-          <div className="sen-cortina" onClick={() => setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado')}></div>
+          <div className="sen-cortina" onClick={handleCurtain}></div>
           <div className="sen-ampli" onClick={toggleMusic}></div>
           <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
           <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
+          <div className="se-console-top" onClick={() => handleModal('ssl')}></div>
+          <div className="se-console-right" onClick={() => handleModal('ssl')}></div>
+          <div className="se-console-bottom" onClick={() => handleModal('ssl')}></div>
+          <div className="se-console-left" onClick={() => handleModal('ssl')}></div>
           <div className="sen-centerElement" id="sen-centerElement"></div>
         </div>
         <div className="parallax-container">
@@ -331,6 +353,7 @@ const ParallaxSection = () => {
         {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
         <LoaderComponent open={loader} />
         {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}
+        {showModalCurtain && <CurtainModal setShowModalCurtain={toggleCurtainModal} />}
       </div>
       {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
@@ -339,6 +362,10 @@ const ParallaxSection = () => {
         <source src={audio} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
+      <Discography
+        isOpen={isDiscographyModalOpen}
+        onClose={() => setIsDiscographyModalOpen(false)}
+      />
     </>
   );
 };

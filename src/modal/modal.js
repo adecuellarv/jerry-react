@@ -21,6 +21,7 @@ import tonnys from './img/TONYS.jpg'
 import vela from './img/VELA.jpg'
 import vinil from './img/VINILRECORDS.jpg'
 import yamaha from './img/YAMAHA.jpg'
+import ssl from './img/SSLCONSOLE.jpg'
 import ContactModal from '../menu/contact-modal.jsx';
 import audioOpen from './sounds/open.wav';
 import audioClose from './sounds/close.wav';
@@ -59,6 +60,8 @@ const getImage = (text) => {
       return vinil;
     case 'yamaha':
       return yamaha;
+    case 'ssl':
+      return ssl;
     default:
       break;
   }
@@ -96,6 +99,8 @@ const getTitle = (text) => {
       return 'vinil';
     case 'yamaha':
       return 'Yamaha NS10s';
+    case 'ssl':
+      return 'SSL 4K E';
     default:
       break;
   }
@@ -110,7 +115,7 @@ const getText = (text) => {
           I really enjoy making coffee for me and my clients. In 2022 I went ALL in, I bought an espresso machine, and I’ve never looked back. <br />
           Better coffee = Better music.
         </>
-      );    
+      );
     case 'grammy1':
       return 'Best Latin Pop Album 2023';
     case 'grammy2':
@@ -132,7 +137,7 @@ const getText = (text) => {
         <>
           I’m big on smells. All senses should be triggered with excellence while creating art. <br />
           If the artist is ok with incense during the sessions, there’ll always be something really nice burning.        </>
-      );  
+      );
     case 'tepemachine':
       return 'Analog Recording: I love the sound of music on tape, and even though I prefer it over digital, I’m happy to work on either format.';
     case 'tonnys':
@@ -147,7 +152,14 @@ const getText = (text) => {
           Love them or hate them (they say) …<br />
           Well…I’m a lover. I’m happy to work with any speaker but would always prefer to have NS10 as I know them well.
         </>
-      );  
+      );
+    case 'ssl':
+      return (
+        <>
+          This was the first console I worked/learned on. The way it sounds when you push it just right, is unlike anything else. The automation is fantastic too. <br />
+          Neves, APIs, Tridents, Altecs…are all great. And I enjoy working in any of them.
+        </>
+      );
     default:
       break;
   }
@@ -163,7 +175,7 @@ export default function Modal({ handleCloseModal, typeModal = 'cafeteria', setMo
     setOpen(false);
     handleCloseModal()
     setTimeout(() => {
-      
+
     }, 1200);
 
   }
@@ -252,8 +264,8 @@ export default function Modal({ handleCloseModal, typeModal = 'cafeteria', setMo
         )}
 
         {typeModal === 'mac' && contactModalOpen ? (
-          <ContactModal 
-            isOpen={contactModalOpen}  
+          <ContactModal
+            isOpen={contactModalOpen}
             onClose={handleClose}
             showCloseButton={false}
             customCloseButton={(
