@@ -6,6 +6,7 @@
 #root{
   overflow-x: scroll;
   white-space: nowrap;
+  background: radial-gradient(circle, rgba(255, 253, 193, 1) 0%, rgba(249, 170, 116, 1) 100%);
 }
 .div-video{
   position: absolute;
@@ -401,10 +402,15 @@
   }
 
   .div-logo{
-    top: -1px;
+    top: 8px;
     left: 1px;
   }
 
+  .div-logo img {
+    width: 60%;
+  }
+}
+@media (max-width: 768px) {
   .div-logo img {
     width: 15%;
   }

@@ -171,3 +171,8 @@ body {
     transform: translateX(-50%) scale(1.05, 0.95) rotate(1deg);
   }
 }
+@media (max-width: 768px) {
+  .candle{
+    transform: scale(.05);
+  }
+}

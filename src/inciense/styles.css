@@ -6,3 +6,8 @@
   width: 5%;
   height: 10%;
 }
+@media (max-width: 768px) {
+  .lottie-humo{
+    top: 49%;
+  }
+}

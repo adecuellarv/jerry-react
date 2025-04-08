@@ -77,7 +77,7 @@ const ParallaxSection = () => {
   };
 
   const handleCloseModal = () => {
-
+    resetParallax();
     setTimeout(() => {
       setShowModal(false);
     }, 700);
@@ -144,6 +144,7 @@ const ParallaxSection = () => {
   }
 
   const handleCurtain = () => {
+    resetParallax();
     //setOpenWindow(openWindow !== 'abierto' ? 'abierto' : 'cerrado');
     if (openWindow === 'cerrado' || openWindow === 'initial') {
       setShowModalCurtain(true);
@@ -182,11 +183,11 @@ const ParallaxSection = () => {
 
   const centerContent = () => {
     const container = containerRef.current;
-    const screenHeight = window.outerHeight;
+    const screenHeight = window.innerHeight;
 
     if (screenHeight > container.offsetHeight) {
       console.log('#screenHeight', screenHeight, '#contett', container.offsetHeight)
-      const resta = screenHeight - container.offsetHeight;
+      const resta = (screenHeight - container.offsetHeight) / 2;
       setTopContent(resta);
     }
   }
@@ -194,8 +195,6 @@ const ParallaxSection = () => {
   const resetCenterContent = () => {
     setTopContent(0);
   }
-
-  
 
   useEffect(() => {
     if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded && elementsLoaded.bgLuz && elementsLoaded.bgOscuro && elementsLoaded.mezcladoraOscuro) {
@@ -222,7 +221,7 @@ const ParallaxSection = () => {
   useEffect(() => {
     const adjustLayout = () => {
       if (bgElementRef.current && resizePage) {
-        const screenWidth = window.outerWidth;
+        const screenWidth = window.innerWidth;
         if (screenWidth <= tableScreen && screenWidth > minScreen) {
           centerContent();
         } else if (screenWidth <= minScreen) {
@@ -245,11 +244,11 @@ const ParallaxSection = () => {
   useEffect(() => {
     const screenWidth = window.outerWidth;
     if (screenWidth <= minScreen) {
-      if (!showModal || !showConsole || !showModalCurtain || !showMenuIcon) {
+      if (!showModal || !showConsole || !showModalCurtain || !showMenuIcon || !turnOnLights) {
         resetParallax();
       }
     }
-  }, [showModal, showConsole, showModalCurtain, showMenuIcon, isDiscographyModalOpen])
+  }, [showModal, showConsole, showModalCurtain, showMenuIcon, isDiscographyModalOpen, turnOnLights])
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -293,7 +292,6 @@ const ParallaxSection = () => {
       <div
         className={`div-main ${isMenuOpen ? 'menu-open' : ''}`}
         id="main-container"
-        ref={containerRef}
         style={{
           transform: `scale(${zoomLevel}) translate(${position.x}, ${position.y}px)`,
           transformOrigin: 'top left',
@@ -339,7 +337,7 @@ const ParallaxSection = () => {
         </div>
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
-            <div className="layer" data-depth="0.06">
+            <div className="layer" data-depth="0.06" ref={containerRef}>
               <img src={bgO} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
               <img src={S1} ref={bgElementRef} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
               <div className="div-video">
