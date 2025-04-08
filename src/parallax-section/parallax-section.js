@@ -25,7 +25,7 @@ import audioOpen from '../modal/sounds/open.wav';
 import audioClose from '../modal/sounds/close.wav';
 import './styles.css';
 
-const minScreen = 1024;
+const minScreen = 768, tableScreen = 1024;
 //let elementsLoaded = 0;
 const ParallaxSection = () => {
   const sceneRef = useRef(null);
@@ -52,8 +52,8 @@ const ParallaxSection = () => {
 
   const [zoomLevel, setZoomLevel] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  //const [isDragging, setIsDragging] = useState(false);
+  const [topContent, setTopContent] = useState(0);
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
 
@@ -180,6 +180,23 @@ const ParallaxSection = () => {
     }
   }
 
+  const centerContent = () => {
+    const container = containerRef.current;
+    const screenHeight = window.outerHeight;
+
+    if (screenHeight > container.offsetHeight) {
+      console.log('#screenHeight', screenHeight, '#contett', container.offsetHeight)
+      const resta = screenHeight - container.offsetHeight;
+      setTopContent(resta);
+    }
+  }
+
+  const resetCenterContent = () => {
+    setTopContent(0);
+  }
+
+  
+
   useEffect(() => {
     if (elementsLoaded.mezcladora && elementsLoaded.lampara && elementsLoaded.cafetera && elementsLoaded.sillon && elementsLoaded.logo && curtainLoaded && elementsLoaded.bgLuz && elementsLoaded.bgOscuro && elementsLoaded.mezcladoraOscuro) {
       setTimeout(() => {
@@ -206,16 +223,14 @@ const ParallaxSection = () => {
     const adjustLayout = () => {
       if (bgElementRef.current && resizePage) {
         const screenWidth = window.outerWidth;
-        if (screenWidth <= minScreen) {
-          //setByWidth();
-          //setTimeout(() => {
+        if (screenWidth <= tableScreen && screenWidth > minScreen) {
+          centerContent();
+        } else if (screenWidth <= minScreen) {
           zoomContent();
-          //centerContent();
-          //}, 1400);
+          resetCenterContent()
         } else {
           zoomOrigin();
-          //setZoomLevel(1);
-          //setOriginalWidth()
+          resetCenterContent();
         }
       }
     };
@@ -285,7 +300,7 @@ const ParallaxSection = () => {
           width: '100%',
           height: '100%',
           position: 'absolute',
-          top: 0,
+          top: topContent,
           left: 0,
           //willChange: 'transform'
         }}
@@ -366,8 +381,6 @@ const ParallaxSection = () => {
             </div>
           </div>
         </div>
-
-
       </div>
       {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} setIsDiscographyModalOpen={setIsDiscographyModalOpen} isDiscographyModalOpen={isDiscographyModalOpen} />}
       {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
