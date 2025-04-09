@@ -72,15 +72,15 @@ const getTitle = (text) => {
     case 'cafeteria':
       return 'Cofee';
     case 'grammy1':
-      return 'Grammy 1';
+      return 'BEST LATIN POP ALBUM';
     case 'grammy2':
-      return 'Grammy 2';
+      return 'BEST LATIN ALTERNATIVE ALBUM';
     case 'grammyl1':
-      return 'Grammy Latino 1';
+      return 'BEST SINGER/SONGWRITER ALBUM';
     case 'grammyl2':
-      return 'Grammy Latino 2';
+      return 'RECORD OF THE YEAR';
     case 'grammyl3':
-      return 'Grammy Latino 3';
+      return 'BEST CHRISTIAN ALBUM';
     case 'honeymommas':
       return 'Honey Mama’s (Lavender Rose)';
     case 'hu':
@@ -90,7 +90,7 @@ const getTitle = (text) => {
     case 'incienso':
       return 'Incense'
     case 'tepemachine':
-      return 'tepemachine';
+      return 'Analog Recording';
     case 'tonnys':
       return 'Tony’s Chocolonley (Milk Hazelnut)';
     case 'vela':
@@ -117,15 +117,34 @@ const getText = (text) => {
         </>
       );
     case 'grammy1':
-      return 'Best Latin Pop Album 2023';
+      return <>
+        “X Mí (Vol. 1)”
+        <br />
+        Gaby Moreno
+      </>;
     case 'grammy2':
-      return 'Best Latin Alternative Album 2023';
+      return <>
+         “De Todas Las Flores”
+        <br />
+        Natalia Lafourcade
+      </>;
     case 'grammyl1':
-      return 'Record of the Year 2023';
+      return <>
+        “De Todas Las Flores”
+        <br />
+        Natalia Lafourcade
+      </>;
     case 'grammyl2':
-      return 'Best Christian Album 2024';
+      return <>
+        “De Todas Las Flores”
+        <br />
+        Natalia Lafourcade
+      </>;
     case 'grammyl3':
-      return 'Best Singer/Songwriter Album 2023';
+      return (<>
+        “Kintsugi”<br />
+        Un Corazon
+      </>);
     case 'honeymommas':
       return '(Chef’s kiss)';
     case 'hu':
@@ -139,7 +158,7 @@ const getText = (text) => {
           If the artist is ok with incense during the sessions, there’ll always be something really nice burning.        </>
       );
     case 'tepemachine':
-      return 'Analog Recording: I love the sound of music on tape, and even though I prefer it over digital, I’m happy to work on either format.';
+      return 'I love the sound of music on tape, and even though I prefer it over digital, I’m happy to work on either format.';
     case 'tonnys':
       return 'My new addiction. ';
     case 'vela':

@@ -49,11 +49,12 @@ const ParallaxSection = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const [showModalCurtain, setShowModalCurtain] = useState(false);
   const [isDiscographyModalOpen, setIsDiscographyModalOpen] = useState(false);
-
   const [zoomLevel, setZoomLevel] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   //const [isDragging, setIsDragging] = useState(false);
   const [topContent, setTopContent] = useState(0);
+  const [albums, setAlbums] = useState([])
+  const [filteredAlbums, setFilteredAlbums] = useState([])
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
 
@@ -396,6 +397,10 @@ const ParallaxSection = () => {
         <Discography
           isOpen={isDiscographyModalOpen}
           onClose={() => setIsDiscographyModalOpen()}
+          albums={albums}
+          setAlbums={setAlbums}
+          filteredAlbums={filteredAlbums}
+          setFilteredAlbums={setFilteredAlbums}
         />
       }
     </div>
