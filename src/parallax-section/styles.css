@@ -384,6 +384,9 @@
   cursor: pointer;
 }
 
+.sen-centerElement {
+ 
+}
 /* Estilos para móviles y tablets */
 @media (max-width: 1024px) {
   /* Asegurar que los modals no se escalen */

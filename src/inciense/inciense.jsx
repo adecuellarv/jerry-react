@@ -8,7 +8,7 @@ const SmoothIncenseSmoke = ({ turnOnLights }) => {
     <div className="lottie-humo" style={{
       opacity: turnOnLights ? .4 : .1
     }}>
-      <Lottie animationData={LoaderJson} loop autoplay style={{ width: '100%', height: '70%' }} />
+      <Lottie animationData={LoaderJson} loop autoplay style={{ width: '100%', height: '100%' }} />
     </div>
   );
 };

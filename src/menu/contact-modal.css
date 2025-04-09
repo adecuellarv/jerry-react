@@ -173,4 +173,8 @@
     .submit-button {
       width: 100%;
     }
+
+    .div-close-btn span{
+      display: none;
+    }
   }

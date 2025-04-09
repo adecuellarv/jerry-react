@@ -4,10 +4,10 @@
   left: 18%;
   opacity: .4;
   width: 5%;
-  height: 10%;
+  height: 7%;
 }
 @media (max-width: 768px) {
   .lottie-humo{
-    top: 49%;
+    top: 48.7%;
   }
 }

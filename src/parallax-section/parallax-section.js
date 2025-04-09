@@ -20,12 +20,13 @@ import bgO from './img/scenes/studio-oscuro/bg-apagado.png';
 import S30 from './img/scenes/studio-oscuro/3.png';
 import Curtain from '../curtain/curtain';
 import logo from './img/logo_jerryordonez_mainpage.png'
-import audio from './audio/audio.wav';
+import audio from './audio/audio.mp3';
 import audioOpen from '../modal/sounds/open.wav';
 import audioClose from '../modal/sounds/close.wav';
 import './styles.css';
 
 const minScreen = 768, tableScreen = 1024;
+const ZOOM_FACTOR = 4.10; // Nivel de zoom para móviles
 //let elementsLoaded = 0;
 const ParallaxSection = () => {
   const sceneRef = useRef(null);
@@ -57,6 +58,7 @@ const ParallaxSection = () => {
   const [filteredAlbums, setFilteredAlbums] = useState([])
   const containerRef = useRef(null);
   const wrapperRef = useRef(null);
+  const divScroll = useRef(null)
 
   const [elementsLoaded, setElementsLoaded] = useState({
     mezcladora: false,
@@ -111,6 +113,7 @@ const ParallaxSection = () => {
   }
 
   const toggleMusic = () => {
+    resetParallax();
     if (audioRef.current) {
       if (audioRef.current.paused) {
         audioRef.current.volume = 0.1;
@@ -154,22 +157,36 @@ const ParallaxSection = () => {
     }
   }
 
+  const handleScroll = () => {
+    // 1. Detect horizontal scroll
+    if (wrapperRef.current) {
+      const scrollLeft = wrapperRef.current.scrollLeft;
+      //console.log('#scrollLeft:', scrollLeft);
+      // If there's any horizontal scroll (scrollLeft > 0) and position.x is not '0'
+      if (scrollLeft <= 0 && position.x !== '0') {
+        // 2. Reset position to {x: '0', y: 0}
+        setPosition({ x: '0', y: 0 });
+      }
+    }
+  };
+
   const zoomContent = () => {
-    //const firstDigit = parseInt(screenWidth.toString()[0], 10);
-    //setZoomLevel(`${firstDigit}.20`);
     const screenWidth = window.outerWidth;
     if (screenWidth <= minScreen) {
       setTimeout(() => {
+        // Obtener el elemento central y su posición
+        setZoomLevel(ZOOM_FACTOR.toString());
+        setPosition({
+          x: '-150',
+          y: 0
+        });
+        //wrapperRef.current.scrollLeft = 150;
         if (sceneRef.current) {
           resetParallax();
         }
-        setZoomLevel('4.10')
-        setTimeout(() => {
-          setPosition({ x: '0%', y: 0 })
-        }, 100);
       }, 1400);
     }
-  }
+  };
 
   const zoomOrigin = () => {
     setZoomLevel('1')
@@ -245,11 +262,11 @@ const ParallaxSection = () => {
   useEffect(() => {
     const screenWidth = window.outerWidth;
     if (screenWidth <= minScreen) {
-      if (!showModal || !showConsole || !showModalCurtain || !showMenuIcon || !turnOnLights) {
+      if (!showModal || !showConsole || !showModalCurtain || !showMenuIcon || !turnOnLights || !showModalWelcome) {
         resetParallax();
       }
     }
-  }, [showModal, showConsole, showModalCurtain, showMenuIcon, isDiscographyModalOpen, turnOnLights])
+  }, [showModal, showConsole, showModalCurtain, showMenuIcon, isDiscographyModalOpen, turnOnLights, showModalWelcome])
 
   useEffect(() => {
     if (sceneRef.current) {
@@ -281,20 +298,23 @@ const ParallaxSection = () => {
       style={{
         width: '100vw',
         height: '100vh',
-        overflowX: 'scroll',
+        overflowX: 'auto',
         overflowY: 'hidden',
-        position: 'relative'
+        position: 'relative',
+        whiteSpace: 'nowrap'
       }}
+      onScroll={handleScroll}
     //onMouseDown={handleMouseDown}
     //onMouseMove={handleMouseMove}
     //onMouseUp={handleMouseUp}
     //onMouseLeave={handleMouseUp}
     >
       <div
+        ref={divScroll}
         className={`div-main ${isMenuOpen ? 'menu-open' : ''}`}
         id="main-container"
         style={{
-          transform: `scale(${zoomLevel}) translate(${position.x}, ${position.y}px)`,
+          transform: `scale(${zoomLevel}) translate(${position.x}px, ${position.y}px)`,
           transformOrigin: 'top left',
           width: '100%',
           height: '100%',
@@ -305,7 +325,7 @@ const ParallaxSection = () => {
         }}
       >
         <div className="div-logo">
-          <img src={logo} alt="logo" onLoad={() => handleLoaded('logo')} />
+          <img src={logo || "/placeholder.svg"} alt="logo" onLoad={() => handleLoaded('logo')} />
         </div>
         <div className="sen-areas">
           <div className="sen-cafetera" onClick={() => handleModal('cafeteria')}></div>
@@ -318,7 +338,14 @@ const ParallaxSection = () => {
           <div className="sen-honeymommas" onClick={() => handleModal('honeymommas')}></div>
           <div className="sen-hu" onClick={() => handleModal('hu')}></div>
           <div className="sen-incienso" onClick={() => handleModal('incienso')}></div>
-          <div className="sen-iphone" onClick={() => goTo('https://www.instagram.com/jerryaudio', true)}></div>
+          <div className="sen-iphone"
+            onClick={
+              () => {
+                resetParallax();
+                goTo('https://www.instagram.com/jerryaudio', true)
+              }
+            }
+          ></div>
           <div className="sen-mac" onClick={() => handleModal('mac')}></div>
           <div className="sen-tepemachine" onClick={() => handleModal('tepemachine')}></div>
           <div className="sen-tonnys" onClick={() => handleModal('tonnys')} id="sen-tonnys" ></div>
@@ -329,7 +356,14 @@ const ParallaxSection = () => {
           <div className="sen-cortina" onClick={handleCurtain}></div>
           <div className="sen-ampli" onClick={toggleMusic}></div>
           <div className="sen-lights" onClick={() => setTurnOnLights(!turnOnLights)}></div>
-          <div className="sen-tapes" onClick={() => goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)}></div>
+          <div className="sen-tapes"
+            onClick={
+              () => {
+                resetParallax();
+                goTo('https://open.spotify.com/playlist/0E3fVy92CzccUBGAg7ePez?si=419173cb6022404d', true)
+              }
+            }
+          ></div>
           <div className="se-console-top" onClick={() => handleModal('ssl')}></div>
           <div className="se-console-right" onClick={() => handleModal('ssl')}></div>
           <div className="se-console-bottom" onClick={() => handleModal('ssl')}></div>
@@ -339,8 +373,8 @@ const ParallaxSection = () => {
         <div className="parallax-container">
           <div ref={sceneRef} className="parallax-scene">
             <div className="layer" data-depth="0.06" ref={containerRef}>
-              <img src={bgO} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
-              <img src={S1} ref={bgElementRef} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
+              <img src={bgO || "/placeholder.svg"} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} onLoad={() => handleLoaded('bgOscuro')} />
+              <img src={S1 || "/placeholder.svg"} ref={bgElementRef} className="img-scenes bg-element" alt="Fondo" style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} onLoad={() => handleLoaded('bgLuz')} />
               <div className="div-video">
                 <Video />
               </div>
@@ -349,18 +383,18 @@ const ParallaxSection = () => {
               </div>
             </div>
             <div className="layer div-layer-mezcladora" data-depth="0.08" onClick={() => alert('Mezcladora')}>
-              <img src={S30} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladoraOscuro')} style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} />
-              <img src={S3} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} />
+              <img src={S30 || "/placeholder.svg"} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladoraOscuro')} style={{ opacity: turnOnLights ? 0 : 1, width: turnOnLights ? 0 : '100%' }} />
+              <img src={S3 || "/placeholder.svg"} className="img-scenes layer-mezcladora" alt="mezcladora" onLoad={() => handleLoaded('mezcladora')} style={{ opacity: turnOnLights ? 1 : 0, width: turnOnLights ? '100%' : 0 }} />
             </div>
             <div className="layer div-layer-lampara" data-depth="0.10" onClick={() => alert('lampara')}>
-              <img src={S5} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+              <img src={S5 || "/placeholder.svg"} className="img-scenes layer-lampara" alt="lampara" onLoad={() => handleLoaded('lampara')} style={{ opacity: turnOnLights ? 1 : 0 }} />
               <div className="candle">
                 <div className="flame"></div>
               </div>
             </div>
 
             <div className="layer div-layer-cafetera" data-depth="0.12" onClick={() => alert('cafetera')}>
-              <img src={S2} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+              <img src={S2 || "/placeholder.svg"} className="img-scenes layer-cafetera" alt="cafetera" onLoad={() => handleLoaded('cafetera')} style={{ opacity: turnOnLights ? 1 : 0 }} />
 
               <SmoothIncenseSmoke turnOnLights={turnOnLights} />
             </div>
@@ -369,7 +403,7 @@ const ParallaxSection = () => {
               className="layer div-layer-sillon"
               data-depth="0.14"
             >
-              <img src={S4} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} style={{ opacity: turnOnLights ? 1 : 0 }} />
+              <img src={S4 || "/placeholder.svg"} className="img-scenes layer-sillon" alt="sillon" onLoad={() => handleLoaded('sillon')} style={{ opacity: turnOnLights ? 1 : 0 }} />
             </div>
 
             <div className="parent-particles">
@@ -382,7 +416,7 @@ const ParallaxSection = () => {
         </div>
       </div>
       {showMenuIcon && !showModal && !showConsole && <Menu isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} setIsDiscographyModalOpen={setIsDiscographyModalOpen} isDiscographyModalOpen={isDiscographyModalOpen} />}
-      {showMenuIcon && !showModal && !showConsole && <ShareMenu />}
+      {showMenuIcon && !showModal && !showConsole && <ShareMenu resetParallax={resetParallax} />}
       {showConsole && <SSLConsole handleCloseModalSSL={handleCloseModalSSL} />}
       <LoaderComponent open={loader} />
       {showModalWelcome && <WelcomeModal setShowModalWelcome={setShowModalWelcome} showModalWelcome={showModalWelcome} toggleMusic={toggleMusic} />}

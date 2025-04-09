@@ -5,22 +5,22 @@ import twImg from './img/x_black.png';
 import allImg from './img/allmusic_black.png';
 import './styles.css';
 
-const ShareMenu = () => {
+const ShareMenu = ({ resetParallax }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (!menuRef.current) return;
-      
+
       const menuRect = menuRef.current.getBoundingClientRect();
-      
-      const isOutside = 
-        e.clientX < menuRect.left || 
-        e.clientX > menuRect.right || 
-        e.clientY < menuRect.top || 
+
+      const isOutside =
+        e.clientX < menuRect.left ||
+        e.clientX > menuRect.right ||
+        e.clientY < menuRect.top ||
         e.clientY > menuRect.bottom;
-      
+
       if (isOpen && isOutside) {
         setIsOpen(false);
       }
@@ -29,19 +29,20 @@ const ShareMenu = () => {
     if (isOpen) {
       document.addEventListener('mousemove', handleMouseMove);
     }
-    
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
     };
   }, [isOpen]);
 
   const handleMouseEnter = () => {
+    resetParallax();
     setIsOpen(true);
   };
 
   return (
-    <div 
-      className="share-menu-container" 
+    <div
+      className="share-menu-container"
       ref={menuRef}
       onMouseEnter={handleMouseEnter}
     >
@@ -49,9 +50,9 @@ const ShareMenu = () => {
         <a href="https://www.allmusic.com/artist/gerardo-jerry-ord%C3%B3%C3%B1ez-mn0002893562" className="social-icon-link" target="_blank" rel="noopener noreferrer">
           <img src={allImg} alt="all music" />
         </a>
-        <a 
-          href="https://x.com/Jerryaudio" 
-          target="_blank" 
+        <a
+          href="https://x.com/Jerryaudio"
+          target="_blank"
           rel="noopener noreferrer"
           className="social-icon-link"
         >

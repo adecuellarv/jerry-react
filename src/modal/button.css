@@ -71,3 +71,12 @@
 .close-button-m:hover svg {
   color: #000;
 }
+
+@media (max-width: 768px) {
+  .div-close-btn span{
+    display: none;
+  }
+  .div-close-btnd span{
+    display: none;
+  }
+}
