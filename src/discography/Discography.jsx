@@ -2,13 +2,12 @@ import { useState, useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTimes, faChevronDown, faArrowDown } from "@fortawesome/free-solid-svg-icons"
 import axios from "axios"
-// Remove the image import that's causing the error
 import icondDown from "./arrow_down_button.png"
 import "./Discography.css"
 
 const API_BASE_URL = "https://monorama.com.mx/jerryordonezadmin/wp-json/wp/v2"
 
-const Discography = ({ onClose, albums, setAlbums, filteredAlbums,  setFilteredAlbums }) => {
+const Discography = ({ onClose, albums, setAlbums, filteredAlbums, setFilteredAlbums }) => {
   const [filter, setFilter] = useState("all")
   const [yearFilter, setYearFilter] = useState([])
   const [categoriesFilter, setCategoriesFilter] = useState([])
@@ -20,7 +19,7 @@ const Discography = ({ onClose, albums, setAlbums, filteredAlbums,  setFilteredA
   const [loadFirts, setLoadFirts] = useState(false)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
-  const [buttonLoading, setButtonLoading] = useState(false) // New state for button loading
+  const [buttonLoading, setButtonLoading] = useState(false)
 
   const handleModal = (item) => {
     setShowModal(true)
@@ -31,62 +30,65 @@ const Discography = ({ onClose, albums, setAlbums, filteredAlbums,  setFilteredA
     setFilter("")
     setYear("")
     setCategory("")
+    setAlbums([])
+    setFilteredAlbums([])
+    setPage(1)
+    setHasMore(true)
 
     if (type === "year") {
       setYear(value)
-      const filter = albums?.filter((i) => i.year[0] === value)
-      if (filter) setFilteredAlbums(filter)
+      fetchAlbums(1, value, "")
     }
     if (type === "category") {
       setCategory(value)
-      const filter = albums?.filter((i) => i.categoria[0] === value)
-      if (filter) setFilteredAlbums(filter)
+      fetchAlbums(1, "", value)
     }
     if (type === "all") {
       setFilter("all")
-      setFilteredAlbums(albums)
+      fetchAlbums(1)
     }
   }
 
   const handleLoadMore = () => {
-    if (buttonLoading) return // Prevent multiple clicks while loading
-
-    setButtonLoading(true) // Start button loading animation
+    if (buttonLoading) return
+    setButtonLoading(true)
     const nextPage = page + 1
     setPage(nextPage)
-    fetchAlbums(nextPage)
+    fetchAlbums(nextPage, year, category)
   }
 
-  const fetchAlbums = async (pageNumber = 1) => {
+  const fetchAlbums = async (pageNumber = 1, selectedYear = "", selectedCategory = "") => {
     try {
-      if (page === 1) setLoading(true)
-      const response = await axios.get(`${API_BASE_URL}/discografia?per_page=12&page=${pageNumber}&_embed`)
+      if (pageNumber === 1) setLoading(true)
+
+      let url = `${API_BASE_URL}/discografia?per_page=12&page=${pageNumber}&_embed`
+      if (selectedYear) url += `&year=${selectedYear}`
+      if (selectedCategory) url += `&categoria=${selectedCategory}`
+
+      const response = await axios.get(url)
 
       if (response?.data) {
-        // Simulate a slight delay to show the loading animation
         setTimeout(() => {
           const newAlbums = response.data.map((album) => ({
             ...album,
             hasFeaturedImage: album?._embedded?.["wp:featuredmedia"]?.[0]?.source_url,
           }))
 
-          const combinedAlbums = [...albums, ...newAlbums]
+          const combinedAlbums = pageNumber === 1 ? newAlbums : [...albums, ...newAlbums]
           setAlbums(combinedAlbums)
           setFilteredAlbums(combinedAlbums)
 
-          // Si el número de resultados es menor a 10, no hay más para cargar
           if (newAlbums.length < 10) setHasMore(false)
-          setButtonLoading(false) // End button loading animation
-        }, 800) // Small delay to show the animation
+          setButtonLoading(false)
+        }, 800)
       }
     } catch (error) {
       if (error.response?.status === 400) {
-        // Fin de la paginación (sin más páginas)
         setHasMore(false)
       } else {
         console.error("Error fetching albums:", error.message)
       }
-      setButtonLoading(false) // End button loading animation on error
+      setButtonLoading(false)
     } finally {
       setLoading(false)
     }
@@ -214,7 +216,6 @@ const Discography = ({ onClose, albums, setAlbums, filteredAlbums,  setFilteredA
               <span>Loading...</span>
             </div>
           ) : (
-            // Replace the image with a FontAwesome icon
             <FontAwesomeIcon icon={faArrowDown} className="down-arrow-icon" />
           )}
         </button>
@@ -254,11 +255,14 @@ const Modal = ({ setShowModal, album }) => {
 
       <div className="back-button-container">
         <button className="back-button" onClick={() => setShowModal(false)}>
-          {/* Replace the image with a FontAwesome icon */}
-          <img src={icondDown} alt="down" style={{
-            transform: 'rotate(90deg)',
-            marginRight: 7
-          }} />
+          <img
+            src={icondDown}
+            alt="down"
+            style={{
+              transform: "rotate(90deg)",
+              marginRight: 7
+            }}
+          />
           <span>back</span>
         </button>
       </div>
