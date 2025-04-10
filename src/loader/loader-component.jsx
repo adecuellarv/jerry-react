@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import { motion, AnimatePresence } from "framer-motion";
 import LoaderJson from './loader.json';
+import imgloader from './anim_loader.gif';
 import './styles.css';
 
 const LoaderComponent = ({ open }) => {
@@ -25,7 +26,7 @@ const LoaderComponent = ({ open }) => {
           transition={{ duration: 0.9 }}
           className="div-loader"
         >
-          <Lottie animationData={LoaderJson} loop autoplay style={{ width: 250, height: 250 }} />
+          <img src={imgloader} alt="" style={{ width: 250 }} />
         </motion.div>
       )}
     </AnimatePresence>

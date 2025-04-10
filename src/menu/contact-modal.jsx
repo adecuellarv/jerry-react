@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import ReCAPTCHA from 'react-google-recaptcha';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 import './contact-modal.css';
 import '../modal/button.css';
 
@@ -15,15 +15,20 @@ const ContactModal = ({ isOpen, onClose, showCloseButton = true, customCloseButt
   const [captchaValue, setCaptchaValue] = useState(null);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const recaptchaRef = useRef();
+  const captchaRef = useRef();
 
+  // Efecto para renderizar el desafío cuando se abre el modal
   useEffect(() => {
-    if (isOpen && window.grecaptcha && recaptchaRef.current) {
-      try {
-        window.grecaptcha.execute(recaptchaRef.current);
-      } catch (e) {
-        console.log('No se pudo forzar el desafío automáticamente');
-      }
+    if (isOpen && captchaRef.current) {
+      // Pequeño timeout para asegurar que el componente está completamente renderizado
+      setTimeout(() => {
+        try {
+          captchaRef.current.resetCaptcha();
+          captchaRef.current.execute();
+        } catch (e) {
+          console.log('No se pudo ejecutar el desafío automáticamente');
+        }
+      }, 500);
     }
   }, [isOpen]);
 
@@ -35,44 +40,46 @@ const ContactModal = ({ isOpen, onClose, showCloseButton = true, customCloseButt
     }));
   };
 
-  const handleCaptchaChange = (value) => {
-    setCaptchaValue(value);
-    if (value) setError('');
+  const handleCaptchaVerify = (token) => {
+    setCaptchaValue(token);
+    if (token) setError('');
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!captchaValue) {
-      setError('Por favor, completa la verificación antes de enviar');
-      return;
+  const handleCaptchaExpire = () => {
+    setCaptchaValue(null);
+    // Volver a mostrar el desafío cuando expire
+    if (captchaRef.current) {
+      captchaRef.current.resetCaptcha();
+      captchaRef.current.execute();
     }
-    
-    setIsSubmitting(true);
-    setError('');
-    
-    // Simulación de envío (comentado como en el original)
-    /* 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          recaptchaToken: captchaValue,
-        })
-      });
+  };
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Error al enviar el formulario');
-      }
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      const result = await response.json();
-      
-      // Resetear el formulario
+  if (!captchaValue) {
+    setError('Por favor, completa la verificación antes de enviar');
+    if (captchaRef.current) {
+      captchaRef.current.execute();
+    }
+    return;
+  }
+
+  setIsSubmitting(true);
+  setError('');
+/*
+  try {
+    // Enviar datos a tu API
+    const response = await axios.post('https://tu-api.com/contacto', {
+      name: formData.name,
+      email: formData.email,
+      subject: formData.subject,
+      message: formData.message,
+      captcha: captchaValue
+    });
+
+    // Si la respuesta es exitosa
+    if (response.status === 200) {
       setFormData({
         name: '',
         email: '',
@@ -80,20 +87,24 @@ const ContactModal = ({ isOpen, onClose, showCloseButton = true, customCloseButt
         message: ''
       });
       setCaptchaValue(null);
-      
-      if (recaptchaRef.current) {
-        recaptchaRef.current.reset();
+
+      if (captchaRef.current) {
+        captchaRef.current.resetCaptcha();
+        captchaRef.current.execute();
       }
 
-      // Mostrar mensaje de éxito
       alert('Mensaje enviado exitosamente');
-      onClose();
-    } catch (err) {
-      setError(err.message || 'Hubo un problema al enviar el formulario');
-    } finally {
-      setIsSubmitting(false);
-    }*/
-  };
+    } else {
+      setError('Hubo un problema al enviar el mensaje. Inténtalo más tarde.');
+    }
+  } catch (error) {
+    setError('Error al enviar el formulario. Por favor, revisa tu conexión o inténtalo de nuevo.');
+    console.error('Error en envío:', error);
+  } finally {
+    setIsSubmitting(false);
+  }
+*/
+};
 
   return (
     <div className={`contact-modal ${isOpen ? 'open' : ''}`}>
@@ -172,14 +183,13 @@ const ContactModal = ({ isOpen, onClose, showCloseButton = true, customCloseButt
             </div>
             
             <div className="captcha-container">
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                sitekey="6Ldm5foqAAAAACCC-FifHrMDgfi3AKDItvd2Cbo4"
-                onChange={handleCaptchaChange}
+              <HCaptcha
+                ref={captchaRef}
+                sitekey="707ef164-f274-4858-8dfc-12623318f930" 
+                onVerify={handleCaptchaVerify}
+                onExpire={handleCaptchaExpire}
                 theme="dark"
-                size="normal"
-                badge="inline"
-                hl="es" 
+                languageOverride="es"
               />
               {error && <div className="error-message">{error}</div>}
             </div>
